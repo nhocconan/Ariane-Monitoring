@@ -8,7 +8,7 @@ KEY='INSERT_KEY_HERE';
 
 IP="$(/sbin/ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}')";
 if [ "$IP" == "" ];  then
-  IP="$(/sbin/ifconfig venet0:0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}')";
+  IP="$(/sbin/ifconfig venet0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}')";
 fi
 UPTIME=$(cat /proc/uptime | awk '{ print $1 }');
 KERNEL=$(uname -r);
