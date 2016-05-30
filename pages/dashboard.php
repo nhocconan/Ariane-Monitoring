@@ -693,8 +693,8 @@ if(!checkAcess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); }
 
    </div>
    <div class="col-md-6 text-left">
-     <p>CPU Model: <?= htmlspecialchars($server_cpu, ENT_QUOTES, 'UTF-8'); ?></p>
-     <p>CPU Speed: <?= $server_cpu_cores ?>x<?= $server_cpu_mhz ?> Mhz</p>
+     <p>CPU Model: <?= htmlspecialchars($server_cpu, ENT_QUOTES); ?></p>
+     <p>CPU Speed: <?= htmlspecialchars($server_cpu_cores, ENT_QUOTES); ?>x<?= htmlspecialchars($server_cpu_mhz, ENT_QUOTES); ?> Mhz</p>
 
    </div>
    <div class="col-md-12 ct-chart"><center><h2>Memory Usage</h2></center><div id="chart-memory"></div></div>

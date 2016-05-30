@@ -263,11 +263,11 @@ if ($result = $mysqli->query($query)) {
     while ($row = $result->fetch_row()) {
       $server_id = $row['0'];
       echo "<tr class='clickable-row' data-href='index.php?page=dashboard?server=".$server_id."'>";
-        echo "<td>".$row[1]."</td>";
+        echo "<td>".htmlspecialchars($row[1],ENT_QUOTES)."</td>";
         if (empty($row[2])) {
           echo "<td>n/a</td>";
         } else {
-          echo "<td>".$row[2]."</td>";
+          echo "<td>".htmlspecialchars($row[2],ENT_QUOTES)."</td>";
         }
         if (empty($row[3])) {
           echo "<td>Needs Data Bro</td>";
