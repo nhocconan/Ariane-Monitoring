@@ -1,33 +1,8 @@
--- phpMyAdmin SQL Dump
--- version 4.0.10.14
--- http://www.phpmyadmin.net
---
--- Host: localhost:3306
--- Generation Time: May 26, 2016 at 06:39 PM
--- Server version: 5.5.49-cll
--- PHP Version: 5.4.31
-
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-
---
--- Database: `nennet_mon`
---
-
--- --------------------------------------------------------
-
---
--- Table structure for table `servers`
---
-
-CREATE TABLE IF NOT EXISTS `servers` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `servers` (
+  `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `server_name` varchar(255) NOT NULL,
   `server_ip` varchar(60) DEFAULT NULL,
@@ -46,19 +21,11 @@ CREATE TABLE IF NOT EXISTS `servers` (
   `tx_alert` int(11) DEFAULT NULL,
   `tx_alert_send` int(11) NOT NULL DEFAULT '0',
   `rx_alert` int(11) DEFAULT NULL,
-  `rx_alert_send` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `server_key` (`server_key`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=21 ;
+  `rx_alert_send` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `servers_data`
---
-
-CREATE TABLE IF NOT EXISTS `servers_data` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `servers_data` (
+  `id` int(11) NOT NULL,
   `server_id` int(11) NOT NULL,
   `memory_total` int(11) NOT NULL,
   `memory_free` int(11) NOT NULL,
@@ -75,24 +42,31 @@ CREATE TABLE IF NOT EXISTS `servers_data` (
   `server_tx_diff` bigint(20) DEFAULT NULL,
   `hdd_total` bigint(20) NOT NULL,
   `hdd_usage` bigint(20) NOT NULL,
-  `server_timestamp` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=35912 ;
+  `server_timestamp` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `users`
---
-
-CREATE TABLE IF NOT EXISTS `users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
   `username` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+  `password` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+ALTER TABLE `servers`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `server_key` (`server_key`);
+
+ALTER TABLE `servers_data`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `username` (`username`);
+
+
+ALTER TABLE `servers`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `servers_data`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;

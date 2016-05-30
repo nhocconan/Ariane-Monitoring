@@ -42,7 +42,7 @@ if ($ip != "") {
 
 if(!is_numeric($uptime)){ die("Uptime contains invalid Letters!");}
 if(!preg_match("/^[A-Za-z0-9.-]+$/",$key)){ die("Kernel contains invalid Letters!");}
-if(!preg_match("/^[A-Za-z0-9 ()@.]+$/",$cpu)){ die("CPU Name contains invalid Letters!");}
+if(!preg_match("/^[A-Za-z0-9 ()@.-]+$/",$cpu)){ die("CPU Name contains invalid Letters!");}
 
 if(!is_numeric($cpu_cores)){ die("CPU contains invalid Letters!");}
 if(!is_numeric($cpu_mhz)){ die("CPU contains invalid Letters!");}
