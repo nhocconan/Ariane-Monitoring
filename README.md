@@ -13,11 +13,10 @@ work. If not, see https://creativecommons.org/licenses/by-nc-sa/4.0/
 Quick Setup:
 
 - Create a Database with a User, Import the ariane.sql file
-- Update /pages/functions.php with your mysql login details, also your timezone.
+- Update /pages/functions.php with your mysql login details, your timezone and your email for alerts.
 - Update agent.sh and install.sh with your URL (wget & curl)
 - Edit /pages/create_account.php, remove the exit()
 - Run URL/pages/create_account.php in your Browser.
 - Login with the Details from create_account.php
 - Delete create_account.php or add the exit() again.
 - Add the cron.php to your Crontab
-- And finally, Update API.php with your Email for alerts

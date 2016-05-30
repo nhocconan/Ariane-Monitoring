@@ -123,8 +123,8 @@ $stmt->close();
 if ($cpu_usage >= $db_cpu AND $db_cpu != NULL AND $db_cpu_send <= time()) {
 
     $msg = "Alert: The CPU Load of the Server ". $server_name . " has reached " . $cpu_usage . "%";
-    $headers = "From: noreply@mon.x8e.net" . "\r\n";
-    mail("alert@yourmail.net","Ariane - CPU Load Alert - " . $server_name,$msg,$headers);
+    $headers = "From: "._email_sender."\r\n";
+    mail(_email_target,"Ariane - CPU Load Alert - " . $server_name,$msg,$headers);
 
     $lock = strtotime('+30 minutes', time());
 
@@ -139,8 +139,8 @@ if ($cpu_usage >= $db_cpu AND $db_cpu != NULL AND $db_cpu_send <= time()) {
   if ($cpu_steal >= $db_cpu_steal AND $db_cpu_steal != NULL AND $db_cpu_steal_send <= time()) {
 
       $msg = "Alert: The CPU Steal of the Server ". $server_name . " has reached " . $cpu_steal . "%";
-      $headers = "From: noreply@mon.x8e.net" . "\r\n";
-      mail("alert@yourmail.net","Ariane - CPU Steal Alert - " . $server_name,$msg,$headers);
+      $headers = "From: "._email_sender."\r\n";
+      mail(_email_target,"Ariane - CPU Steal Alert - " . $server_name,$msg,$headers);
 
       $lock = strtotime('+30 minutes', time());
 
@@ -153,10 +153,9 @@ if ($cpu_usage >= $db_cpu AND $db_cpu != NULL AND $db_cpu_send <= time()) {
 
     //I/O Alert
     if ($io_wait >= $db_io_wait AND $db_io_wait != NULL AND $db_io_wait_send <= time()) {
-
         $msg = "Alert: The I/O Load of the Server ". $server_name . " has reached " . $io_wait . "%";
-        $headers = "From: noreply@mon.x8e.net" . "\r\n";
-        mail("alert@yourmail.net","Ariane - I/O Wait Alert - " . $server_name,$msg,$headers);
+        $headers = "From: "._email_sender."\r\n";
+        mail(_email_target,"Ariane - I/O Wait Alert - " . $server_name,$msg,$headers);
 
         $lock = strtotime('+30 minutes', time());
 
