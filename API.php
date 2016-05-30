@@ -41,6 +41,9 @@ if ($ip != "") {
 }
 
 if(!is_numeric($uptime)){ die("Uptime contains invalid Letters!");}
+if(!preg_match("/^[A-Za-z0-9.-]+$/",$key)){ die("Kernel contains invalid Letters!");}
+if(!preg_match("/^[A-Za-z0-9 ()@.]+$/",$cpu)){ die("CPU Name contains invalid Letters!");}
+
 if(!is_numeric($cpu_cores)){ die("CPU contains invalid Letters!");}
 if(!is_numeric($cpu_mhz)){ die("CPU contains invalid Letters!");}
 if(!is_numeric($cpu_usage)){ die("CPU contains invalid Letters!");}
@@ -61,11 +64,11 @@ if(!is_numeric($tx)){ die("NET contains invalid Letters!");}
 if(!is_numeric($rx)){ die("NET contains invalid Letters!");}
 
 
-$success = false;
+$success = true;
 
 $stmt = $mysqli->prepare("SELECT id,server_name FROM servers WHERE server_key = ? LIMIT 1");
 $stmt->bind_param('s', $key);
-if ($stmt->execute()) { $success = true; }
+if (!$stmt->execute()) { $success = false; }
 $stmt->bind_result($server_id,$server_name);
 $stmt->fetch();
 $stmt->close();
@@ -78,33 +81,34 @@ if (empty($server_id)) {
 }
 
 //Update IP
-$success = false;
 $stmt = $mysqli->prepare("UPDATE servers SET server_ip = ?,server_uptime = ?,server_kernel = ?,server_cpu = ?,server_cpu_cores = ?,server_cpu_mhz = ?  WHERE id = ?");
 $stmt->bind_param('ssssidi',$ip,$uptime,$kernel,$cpu,$cpu_cores,$cpu_mhz,$server_id);
-if ($stmt->execute()) { $success = true; }
+if (!$stmt->execute()) { $success = false; }
 $stmt->close();
 
 if ($success == false) {
   die ("MySQL Error");
 }
 
-$success = false;
-
 $server_time = time();
 
 $stmt = $mysqli->prepare("SELECT server_tx,server_rx FROM servers_data WHERE server_id = ? ORDER by id DESC LIMIT 1");
 $stmt->bind_param('i', $server_id);
-$stmt->execute();
+if (!$stmt->execute()) { $success = false; }
 $stmt->bind_result($db_server_tx,$db_server_rx);
 $stmt->fetch();
 $stmt->close();
+
+if ($success == false) {
+  die ("MySQL Error");
+}
 
 $tx_diff = $tx - $db_server_tx;
 $rx_diff = $rx - $db_server_rx;
 
 $stmt = $mysqli->prepare("INSERT INTO servers_data(server_id,memory_total,memory_free,memory_cached,memory_buffer,server_tx,server_rx,cpu_load,server_timestamp,server_tx_diff,server_rx_diff,memory_active,memory_inactive,hdd_usage,hdd_total,cpu_steal,io_wait) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,?, ?, ?)");
 $stmt->bind_param('iiiiiiididdiiiidd', $server_id,$memory_total,$memory_free,$memory_cached,$memory_buffer,$tx,$rx,$cpu_usage,$server_time,$tx_diff,$rx_diff,$memory_active,$memory_inactive,$hdd_usage,$hdd_total,$cpu_steal,$io_wait);
-if ($stmt->execute()) { $success = true; }
+if (!$stmt->execute()) { $success = false; }
 $stmt->close();
 
 if ($success == false) {
@@ -114,10 +118,14 @@ if ($success == false) {
 //Limit Check
 $stmt = $mysqli->prepare("SELECT cpu_alert,cpu_alert_send,cpu_steal_alert,cpu_steal_alert_send,io_wait_alert,io_wait_alert_send FROM servers WHERE id = ? LIMIT 1");
 $stmt->bind_param('i', $server_id);
-$stmt->execute();
+if (!$stmt->execute()) { $success = false; }
 $stmt->bind_result($db_cpu,$db_cpu_send,$db_cpu_steal,$db_cpu_steal_send,$db_io_wait,$db_io_wait_send);
 $stmt->fetch();
 $stmt->close();
+
+if ($success == false) {
+  die ("MySQL Error");
+}
 
 //CPU alert
 if ($cpu_usage >= $db_cpu AND $db_cpu != NULL AND $db_cpu_send <= time()) {
