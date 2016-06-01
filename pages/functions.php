@@ -8,6 +8,10 @@ if ($mysqli->connect_error) { //Checks if the MySQL Connection works, if not it 
    exit;
 }
 
+if (version_compare(PHP_VERSION, '5.5.1') < 0) { //PHP Version check
+    die("This Script needs at least PHP Version 5.5.0");
+}
+
 function startsWith($haystack, $needle) {
     // search backwards starting from haystack length characters from the end
     return $needle === "" || strrpos($haystack, $needle, -strlen($haystack)) !== false;
