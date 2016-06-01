@@ -1,11 +1,7 @@
 <?php
 session_start();
-date_default_timezone_set('Europe/Amsterdam');
 
-define("_email_sender","noreply@yoursite.net");
-define("_email_target","alert@yoursite.net");
-
-$mysqli = new mysqli("localhost", "", "password", "");
+include 'config.php';
 
 if ($mysqli->connect_error) { //Checks if the MySQL Connection works, if not it returns you a error msg and exits.
    echo "Not connected, error: " . $mysqli->connect_error;

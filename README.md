@@ -13,7 +13,7 @@ work. If not, see https://creativecommons.org/licenses/by-nc-sa/4.0/
 Quick Setup:
 
 - Create a Database with a User, Import the ariane.sql file
-- Update /pages/functions.php with your mysql login details, your timezone and your email for alerts.
+- Update /pages/config.php with your MySQL login details, your Timezone and your email for alerts.
 - Update agent.sh and install.sh with your URL (wget & curl)
 - Edit /pages/create_account.php, remove the exit()
 - Run URL/pages/create_account.php in your Browser.
