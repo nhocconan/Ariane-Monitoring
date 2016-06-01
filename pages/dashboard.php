@@ -223,7 +223,6 @@
      }
      });
    </script>
- </div>
  <?php
 
 
@@ -358,7 +357,6 @@ if(!checkAcess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); }
     }
     });
   </script>
-</div>
 <?php
 
 } elseif (strpos($page, 'cpu') !== false) {
@@ -500,7 +498,6 @@ if(!checkAcess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); }
      }
      });
    </script>
- </div>
  <?php
 
 } elseif (strpos($page, 'memory') !== false) {
@@ -655,7 +652,6 @@ if(!checkAcess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); }
      }
      });
    </script>
- </div>
  <?php
 
 } else {

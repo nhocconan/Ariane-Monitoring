@@ -29,7 +29,7 @@ if (!is_numeric($USER_ID)) {
     <link href="css/bg_night.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="js/jquery.min.js"></script>
 
     <!-- Load d3.js and c3.js -->
     <script src="c3js/d3.min.js" charset="utf-8"></script>
