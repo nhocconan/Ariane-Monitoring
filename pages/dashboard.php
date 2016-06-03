@@ -680,12 +680,12 @@ if(!checkAcess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); }
      <li><a href="index.php?page=logout">Logout</a></li>
    </ul>
    <div class="col-md-12">
-     <h3><?= $server_name?></h3>
+     <h3><?= htmlspecialchars($server_name, ENT_QUOTES); ?></h3>
    </div>
 
    <div class="col-md-6">
-     <p>Uptime: <?= $server_uptime ?></p>
-     <p>Kernel: <?= $server_kernel ?></p>
+     <p>Uptime: <?= htmlspecialchars($server_uptime, ENT_QUOTES); ?></p>
+     <p>Kernel: <?= htmlspecialchars($server_kernel, ENT_QUOTES); ?></p>
 
    </div>
    <div class="col-md-6 text-left">
@@ -697,7 +697,7 @@ if(!checkAcess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); }
 
    <div class="col-md-12 ct-chart_cpu"><center><h2>CPU Usage</h2></center><div id="chart-cpu"></div></div>
 
-   <div class="col-md-12 ct-chart_net"><center><h2>Network Usage</h2></center><div id="chart-net"></div>></div>
+   <div class="col-md-12 ct-chart_net"><center><h2>Network Usage</h2></center><div id="chart-net"></div></div>
 
    <div class="col-md-12 ct-chart_hdd"><center><h2>HDD Usage</h2></center><div id="chart-hdd"></div></div>
 

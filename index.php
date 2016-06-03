@@ -49,6 +49,8 @@ if ($page=="login") {
     $password = $_POST['password'];
 
     if(!preg_match("/^[a-zA-Z0-9]+$/",$username)){ $msg = "This Username contains invalid letters (a-z,A-Z,0-9 are allowed).<br>";  $error = true;}
+    if ($username == "") { $msg = "You need to enter a Username"; $error = true;}
+    if ($password == "") { $msg = "You need to enter a Password"; $error = true;}
 
 
       if ($error == false) {
@@ -140,8 +142,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $success = true;
 
-    if (strlen($pw) < 6 ) {$msg = "Passwords to short."; $success = false;}
-    if (strlen($pw) > 50 ) {$msg = "Passwords are to long."; $success = false;}
+    if (strlen($pw) < 10 ) {$msg = "Passwords to short."; $success = false;}
+    if (strlen($pw) > 160 ) {$msg = "Passwords are to long."; $success = false;}
     if ($pw != $pw2) {$msg = "Passwords not equal."; $success = false;}
 
     $stmt = $mysqli->prepare("SELECT password FROM users WHERE id = ?");
