@@ -51,7 +51,10 @@ if ($page=="login") {
     if(!preg_match("/^[a-zA-Z0-9]+$/",$username)){ $msg = "This Username contains invalid letters (a-z,A-Z,0-9 are allowed).<br>";  $error = true;}
     if ($username == "") { $msg = "You need to enter a Username"; $error = true;}
     if ($password == "") { $msg = "You need to enter a Password"; $error = true;}
-
+    if (strlen($password) < 10 ) {$msg = "The Password to short."; $error = true;}
+    if (strlen($password) > 160 ) {$msg = "The Password is to long."; $error = true;}
+    if (strlen($username) < 3 ) {$msg = "The Username is to short."; $error = true;}
+    if (strlen($username) > 50 ) {$msg = "The Username is to long."; $error = true;}
 
       if ($error == false) {
 

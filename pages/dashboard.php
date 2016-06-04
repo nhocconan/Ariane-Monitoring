@@ -69,25 +69,38 @@
                  </div>';
          }
         ?>
-        <form class="form-inline" role="form" action="index.php?page=dashboard?server=<?= $id ?>?trigger" method="post">
+        <form class="form-horizontal" role="form" action="index.php?page=dashboard?server=<?= $id ?>?trigger" method="post">
           <div class="col-sm-2">
             <h3>Trigger - CPU</h3>
            <div class="form-group">
+             <div class="col-xs-10">
              <label class="" for="email">CPU Load %</label>
              <input type="text" name="load" class="form-control" value="<?= $db_cpu; ?>">
+              </div>
            </div>
            <div class="form-group">
-             <label class="" for="pwd">I/O Wait %</label>
-             <input type="text" name="io" class="form-control" value="<?= $db_wait; ?>">
-           </div>
-           <div class="form-group">
+             <div class="col-xs-10">
              <label class="" for="pwd">CPU Steal %</label>
              <input type="text" name="steal" class="form-control" value="<?= $db_steal; ?>">
+              </div>
            </div>
-           <button type="submit" name="confirm" class="btn btn-default space_dat_button_bro btn-info">Save</button>
+           <div class="form-group">
+               <div class="col-xs-10">
+                   <button type="submit" name="confirm" class="btn btn-primary">Save</button>
+               </div>
+           </div>
+           </div>
+
+          <div class="col-sm-2">
+            <h3>Trigger - I/O</h3>
+           <div class="form-group">
+             <div class="col-xs-10">
+             <label class="" for="pwd">I/O Wait %</label>
+             <input type="text" name="io" class="form-control" value="<?= $db_wait; ?>">
+              </div>
+           </div>
            </div>
         </form>
-
 </div>
 
 <?php
