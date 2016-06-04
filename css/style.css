@@ -40,6 +40,14 @@
     }
 }
 
+.base-box {
+    background-color:white;
+    opacity:0.85;
+    margin-top:150px;
+    border-radius:8px;
+    min-width:500px;
+}
+
 .scrollable-menu {
     height: auto;
     max-height: 200px;
@@ -47,8 +55,6 @@
 }
 
 .space_dat_button_bro {
-
-margin-top:20px;
-margin-bottom:25px;
-
+    margin-top:20px;
+    margin-bottom:25px;
 }

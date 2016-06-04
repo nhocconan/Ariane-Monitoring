@@ -1,4 +1,4 @@
-<div class="col-md-8 col-md-offset-2" style="background-color:white;opacity:0.85;margin-top:150px;border-radius:8px;">
+<div class="col-md-8 col-md-offset-2 base-box">
 
 <?php if (strpos($page, 'trigger') !== false) {
 
@@ -697,7 +697,7 @@ if(!checkAcess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); }
    </div>
 
    <div class="col-md-6">
-     <p>Uptime: <?= htmlspecialchars($server_uptime, ENT_QUOTES); ?></p>
+     <p>Uptime: <?= htmlspecialchars(secondsToTime($server_uptime), ENT_QUOTES); ?></p>
      <p>Kernel: <?= htmlspecialchars($server_kernel, ENT_QUOTES); ?></p>
 
    </div>

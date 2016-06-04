@@ -49,12 +49,12 @@ if ($page=="login") {
     $password = $_POST['password'];
 
     if(!preg_match("/^[a-zA-Z0-9]+$/",$username)){ $msg = "This Username contains invalid letters (a-z,A-Z,0-9 are allowed).<br>";  $error = true;}
-    if ($username == "") { $msg = "You need to enter a Username"; $error = true;}
-    if ($password == "") { $msg = "You need to enter a Password"; $error = true;}
     if (strlen($password) < 10 ) {$msg = "The Password to short."; $error = true;}
     if (strlen($password) > 160 ) {$msg = "The Password is to long."; $error = true;}
     if (strlen($username) < 3 ) {$msg = "The Username is to short."; $error = true;}
     if (strlen($username) > 50 ) {$msg = "The Username is to long."; $error = true;}
+    if ($password == "") { $msg = "You need to enter a Password"; $error = true;}
+    if ($username == "") { $msg = "You need to enter a Username"; $error = true;}
 
       if ($error == false) {
 
@@ -240,7 +240,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
  } elseif ($page == "dashboard" AND $_SESSION['login'] === 1 AND $USER_ID != "") { ?>
 
   <meta http-equiv="refresh" content="60">
-  <div class="col-md-4 col-md-offset-4" style="background-color:white;opacity:0.85;margin-top:150px;border-radius:8px;">
+  <div class="col-md-4 col-md-offset-4 base-box">
     <form action="index.php?page=dashboard" method="post">
       <ul class="nav nav-tabs">
         <li class="active"><a href="index.php?page=dashboard">Servers</a></li>
