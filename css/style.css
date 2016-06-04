@@ -48,6 +48,10 @@
     min-width:500px;
 }
 
+.box-opacity {
+    opacity:0.85;
+}
+
 .scrollable-menu {
     height: auto;
     max-height: 200px;

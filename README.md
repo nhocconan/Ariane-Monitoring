@@ -8,7 +8,14 @@ work. If not, see https://creativecommons.org/licenses/by-nc-sa/4.0/
 
 ![alt tag](https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Cc-by-nc-sa_icon.svg/120px-Cc-by-nc-sa_icon.svg.png)
 
-![alt tag](http://i.imgur.com/xkuf6q5.png)
+Server Overview:
+![alt tag](http://i.imgur.com/TmG1gjr.png)
+
+Network History
+![alt tag](http://i.imgur.com/8HpxDE5.png)
+
+Triggers (We will adding more)
+![alt tag](http://i.imgur.com/EMIjhr8.png)
 
 Quick Setup:
 

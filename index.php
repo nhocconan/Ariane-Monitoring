@@ -88,7 +88,7 @@ if ($page=="login") {
     <div class="container">
         <div class="row vertical-offset-100">
         	<div class="col-md-4 col-md-offset-4">
-        		<div class="panel panel-default">
+        		<div class="panel panel-default box-opacity">
     			  	<div class="panel-heading">
     			    	<h3 class="panel-title">Please sign in</h3>
     			 	  </div>
