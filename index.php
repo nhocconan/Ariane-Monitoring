@@ -236,7 +236,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
  } elseif ($page == "dashboard" AND $_SESSION['login'] === 1 AND $USER_ID != "") { ?>
 
-
+  <meta http-equiv="refresh" content="60">
   <div class="col-md-4 col-md-offset-4" style="background-color:white;opacity:0.85;margin-top:150px;border-radius:8px;">
     <form action="index.php?page=dashboard" method="post">
       <ul class="nav nav-tabs">
@@ -250,6 +250,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <thead>
       <tr>
         <th>Server</th>
+        <th>CPU Load</th>
+        <th>Memory</th>
+        <th>HDD</th>
         <th>IP</th>
         <th>Status</th>
       </tr>
@@ -257,31 +260,38 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <tbody>
 
     <?php
-    $query = "SELECT id,server_name,server_ip,server_uptime FROM servers WHERE user_id = ".$USER_ID." ORDER by id";
 
-if ($result = $mysqli->query($query)) {
+       $query = "SELECT id,server_name,server_ip,server_uptime FROM servers WHERE user_id = ? ORDER by id";
+       $stmt = $mysqli->prepare($query);
+       $stmt->bind_param('i', $USER_ID);
+       $stmt->execute();
+       $result = $stmt->get_result();
+       while ($row = $result->fetch_assoc()) {
 
-    /* fetch object array */
-    while ($row = $result->fetch_row()) {
-      $server_id = $row['0'];
-      echo "<tr class='clickable-row' data-href='index.php?page=dashboard?server=".$server_id."'>";
-        echo "<td>".htmlspecialchars($row[1],ENT_QUOTES)."</td>";
-        if (empty($row[2])) {
-          echo "<td>n/a</td>";
-        } else {
-          echo "<td>".htmlspecialchars($row[2],ENT_QUOTES)."</td>";
-        }
-        if (empty($row[3])) {
-          echo "<td>Needs Data Bro</td>";
-        } else {
-          echo "<td>Okay</td>";
-        }
-      echo "<tr>";
+         $stmt = $mysqli->prepare("SELECT cpu_load, memory_free, memory_buffer, memory_cached, memory_total, hdd_total, hdd_usage   FROM servers_data WHERE server_id = ? ORDER by server_timestamp ASC LIMIT 1");
+         $stmt->bind_param('i', $row['id']);
+         $stmt->execute();
+         $stmt->bind_result($cpu_load,$memory_free,$memory_buffer,$memory_cached,$memory_total,$hdd_total,$hdd_usage);
+         $stmt->fetch();
+         $stmt->close();
 
-    }
-    /* free result set */
-    $result->close();
-}
+         echo "<tr class='clickable-row' data-href='index.php?page=dashboard?server=".htmlspecialchars($row['id'],ENT_QUOTES)."'>";
+           echo "<td>".htmlspecialchars($row['server_name'],ENT_QUOTES)."</td>";
+           echo "<td>".htmlspecialchars($cpu_load,ENT_QUOTES)."%</td>";
+           echo "<td>".htmlspecialchars(round(($memory_free + $memory_buffer + $memory_cached) / 1024,0)."/".round($memory_total / 1024,0),ENT_QUOTES)."MB</td>";
+           echo "<td>".htmlspecialchars(round(($hdd_usage) / 1024 / 1024 / 1024,0)."/".round($hdd_total / 1024 / 1024 / 1024,0),ENT_QUOTES)."GB</td>";
+           if (empty($row['server_ip'])) {
+             echo "<td>n/a</td>";
+           } else {
+             echo "<td>".htmlspecialchars($row['server_ip'],ENT_QUOTES)."</td>";
+           }
+           if (empty($row['server_uptime'])) {
+             echo "<td>Needs Data Bro</td>";
+           } else {
+             echo "<td>Okay</td>";
+           }
+         echo "<tr>";
+       }
 
 ?>
     </tbody>
