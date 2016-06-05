@@ -18,6 +18,22 @@
      <li class="active"><a href="index.php?page=dashboard?server=<?= $id ?>?trigger">Trigger</a></li>
      <li><a href="index.php?page=logout">Logout</a></li>
    </ul>
+
+   <script>
+        function addLoadEvent(func) {
+        var oldonload = window.onload;
+        if (typeof window.onload != 'function') {
+          window.onload = func;
+        } else {
+          window.onload = function() {
+            if (oldonload) {
+              oldonload();
+            }
+            func();
+          }
+        }
+      }
+  </script>
    <?php
 
    $msg = "";
@@ -30,16 +46,18 @@
     $io = $_POST['io'];
     $load = $_POST['load'];
 
-    $success = true;
+    $success = true; $reboot = 0; $offline = 0;
 
     if (!is_numeric($steal)) {$msg = "Not a Number."; $success = false;}
     if (!is_numeric($io)) {$msg =  "Not a Number."; $success = false;}
     if (!is_numeric($load)) {$msg =  "Not a Number."; $success = false;}
+    if (isset($_POST['reboot'])) { $reboot = 1;}
+    if (isset($_POST['offline'])) { $offline = 1;}
 
     if ($success == true) {
 
-      $stmt = $mysqli->prepare("UPDATE servers SET cpu_alert = ? ,cpu_steal_alert = ? ,io_wait_alert = ?  WHERE id = ?");
-      $stmt->bind_param('iiii',$load,$steal,$io,$id);
+      $stmt = $mysqli->prepare("UPDATE servers SET cpu_alert = ? ,cpu_steal_alert = ? ,io_wait_alert = ? , reboot_alert = ?, offline_alert = ? WHERE id = ?");
+      $stmt->bind_param('iiiiii',$load,$steal,$io,$reboot,$offline,$id);
       $stmt->execute();
       $stmt->close();
 
@@ -47,10 +65,10 @@
     }
   }
 
-  $stmt = $mysqli->prepare("SELECT cpu_alert,cpu_steal_alert,io_wait_alert FROM servers WHERE id = ? LIMIT 1");
+  $stmt = $mysqli->prepare("SELECT cpu_alert,cpu_steal_alert,io_wait_alert,reboot_alert,offline_alert  FROM servers WHERE id = ? LIMIT 1");
   $stmt->bind_param('i', $id);
   $stmt->execute();
-  $stmt->bind_result($db_cpu,$db_steal,$db_wait);
+  $stmt->bind_result($db_cpu,$db_steal,$db_wait,$db_reboot,$db_offline_alert);
   $stmt->fetch();
   $stmt->close();
 
@@ -95,11 +113,40 @@
             <h3>Trigger - I/O</h3>
            <div class="form-group">
              <div class="col-xs-10">
-             <label class="" for="pwd">I/O Wait %</label>
+             <label class="" for="io">I/O Wait %</label>
              <input type="text" name="io" class="form-control" value="<?= $db_wait; ?>">
               </div>
            </div>
            </div>
+           <div class="col-sm-2">
+             <h3>Trigger - System</h3>
+             <div class="checkbox">
+               <label><input type="checkbox" class="form-control" name="reboot" id="reboot" checked data-toggle="toggle" value="">Reboot</label>
+               <?php
+                 if ($db_reboot == 1) {
+                  ?>
+                  <script> function toggleOnreboot() { $('#reboot').bootstrapToggle('on'); } addLoadEvent(toggleOnreboot); </script>
+                  <?php
+                } elseif ($db_reboot == 0) { ?>
+                  <script> function toggleOffreboot() { $('#reboot').bootstrapToggle('off'); }  addLoadEvent(toggleOffreboot); </script>
+                  <?php
+                }
+              ?>
+            </div>
+            <div class="checkbox">
+              <label><input type="checkbox" class="form-control" name="offline" id="offline" checked data-toggle="toggle" value="">Outage</label>
+              <?php
+                if ($db_offline_alert == 1) {
+                 ?>
+                 <script> function toggleOnOffline() { $('#offline').bootstrapToggle('on'); } addLoadEvent(toggleOnOffline); </script>
+                 <?php
+               } elseif ($db_offline_alert == 0) { ?>
+                 <script> function toggleOffOffline() { $('#offline').bootstrapToggle('off'); }  addLoadEvent(toggleOffOffline); </script>
+                 <?php
+               }
+             ?>
+            </div>
+            </div>
         </form>
 </div>
 

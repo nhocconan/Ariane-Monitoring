@@ -80,9 +80,18 @@ if (empty($server_id)) {
   die("Invalid Key!");
 }
 
-//Update IP
-$stmt = $mysqli->prepare("UPDATE servers SET server_ip = ?,server_uptime = ?,server_kernel = ?,server_cpu = ?,server_cpu_cores = ?,server_cpu_mhz = ?  WHERE id = ?");
-$stmt->bind_param('ssssidi',$ip,$uptime,$kernel,$cpu,$cpu_cores,$cpu_mhz,$server_id);
+$stmt = $mysqli->prepare("SELECT server_uptime FROM servers WHERE id = ? LIMIT 1");
+$stmt->bind_param('i', $server_id);
+if (!$stmt->execute()) { $success = false; }
+$stmt->bind_result($db_uptime_before);
+$stmt->fetch();
+$stmt->close();
+
+$last_update = time();
+
+//Update IP/Uptime/CPU/Cores....
+$stmt = $mysqli->prepare("UPDATE servers SET server_ip = ?,server_uptime = ?,server_kernel = ?,server_cpu = ?,server_cpu_cores = ?,server_cpu_mhz = ?, last_update = ?  WHERE id = ?");
+$stmt->bind_param('ssssidii',$ip,$uptime,$kernel,$cpu,$cpu_cores,$cpu_mhz,$last_update,$server_id);
 if (!$stmt->execute()) { $success = false; }
 $stmt->close();
 
@@ -116,10 +125,10 @@ if ($success == false) {
 }
 
 //Limit Check
-$stmt = $mysqli->prepare("SELECT cpu_alert,cpu_alert_send,cpu_steal_alert,cpu_steal_alert_send,io_wait_alert,io_wait_alert_send FROM servers WHERE id = ? LIMIT 1");
+$stmt = $mysqli->prepare("SELECT cpu_alert,cpu_alert_send,cpu_steal_alert,cpu_steal_alert_send,io_wait_alert,io_wait_alert_send,reboot_alert FROM servers WHERE id = ? LIMIT 1");
 $stmt->bind_param('i', $server_id);
 if (!$stmt->execute()) { $success = false; }
-$stmt->bind_result($db_cpu,$db_cpu_send,$db_cpu_steal,$db_cpu_steal_send,$db_io_wait,$db_io_wait_send);
+$stmt->bind_result($db_cpu,$db_cpu_send,$db_cpu_steal,$db_cpu_steal_send,$db_io_wait,$db_io_wait_send,$db_reboot_alert);
 $stmt->fetch();
 $stmt->close();
 
@@ -130,9 +139,9 @@ if ($success == false) {
 //CPU alert
 if ($cpu_usage >= $db_cpu AND $db_cpu != NULL AND $db_cpu_send <= time()) {
 
-    $msg = "Alert: The CPU Load of the Server ". $server_name . " has reached " . $cpu_usage . "%";
+    $msg = "Alert: The CPU Load of the Server ". escape($server_name) . " has reached " . $cpu_usage . "%";
     $headers = "From: "._email_sender."\r\n";
-    mail(_email_target,"Ariane - CPU Load Alert - " . $server_name,$msg,$headers);
+    mail(_email_target,"Ariane - CPU Load Alert - " . escape($server_name),$msg,$headers);
 
     $lock = strtotime('+30 minutes', time());
 
@@ -146,9 +155,9 @@ if ($cpu_usage >= $db_cpu AND $db_cpu != NULL AND $db_cpu_send <= time()) {
   //CPU Steal Alert
   if ($cpu_steal >= $db_cpu_steal AND $db_cpu_steal != NULL AND $db_cpu_steal_send <= time()) {
 
-      $msg = "Alert: The CPU Steal of the Server ". $server_name . " has reached " . $cpu_steal . "%";
+      $msg = "Alert: The CPU Steal of the Server ". escape($server_name) . " has reached " . $cpu_steal . "%";
       $headers = "From: "._email_sender."\r\n";
-      mail(_email_target,"Ariane - CPU Steal Alert - " . $server_name,$msg,$headers);
+      mail(_email_target,"Ariane - CPU Steal Alert - " . escape($server_name),$msg,$headers);
 
       $lock = strtotime('+30 minutes', time());
 
@@ -161,9 +170,9 @@ if ($cpu_usage >= $db_cpu AND $db_cpu != NULL AND $db_cpu_send <= time()) {
 
     //I/O Alert
     if ($io_wait >= $db_io_wait AND $db_io_wait != NULL AND $db_io_wait_send <= time()) {
-        $msg = "Alert: The I/O Load of the Server ". $server_name . " has reached " . $io_wait . "%";
+        $msg = "Alert: The I/O Load of the Server ". escape($server_name) . " has reached " . $io_wait . "%";
         $headers = "From: "._email_sender."\r\n";
-        mail(_email_target,"Ariane - I/O Wait Alert - " . $server_name,$msg,$headers);
+        mail(_email_target,"Ariane - I/O Wait Alert - " . escape($server_name),$msg,$headers);
 
         $lock = strtotime('+30 minutes', time());
 
@@ -172,6 +181,13 @@ if ($cpu_usage >= $db_cpu AND $db_cpu != NULL AND $db_cpu_send <= time()) {
         $stmt->execute();
         $stmt->close();
 
+      }
+
+    //Reboot Alert
+    if ($db_uptime_before > $uptime AND $db_reboot_alert == 1) {
+        $msg = "Alert: The Server ". escape($server_name) . " has been rebooted.";
+        $headers = "From: "._email_sender."\r\n";
+        mail(_email_target,"Ariane - Reboot Alert - " . escape($server_name),$msg,$headers);
       }
 
 

@@ -28,6 +28,10 @@ function randomPassword() {
     return implode($pass); //turn the array into a string
 }
 
+function escape($text) {
+  return htmlspecialchars($text,ENT_QUOTES);
+}
+
 function secondsToTime($seconds) {
     $seconds = round($seconds,0);
     $dtF = new \DateTime('@0');

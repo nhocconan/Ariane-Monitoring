@@ -28,8 +28,10 @@ if (!is_numeric($USER_ID)) {
     <link href="c3js/c3.min.css" rel="stylesheet">
     <link href="css/bg_night.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+    <link href="css/bootstrap-toggle.min.css" rel="stylesheet">
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap-toggle.min.js"></script>
 
     <!-- Load d3.js and c3.js -->
     <script src="c3js/d3.min.js" charset="utf-8"></script>
