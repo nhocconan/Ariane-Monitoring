@@ -30,8 +30,8 @@ if ($result = $mysqli->query($query)) {
 
     /* fetch object array */
     while ($row = $result->fetch_row()) {
-      $last_run = strtotime('+1 minutes', $row['1']);
-      if ($row['2'] == 1 AND $row['3'] == 0 AND $last_run < time()) {
+      $last_run = strtotime('+2 minutes', $row['1']);
+      if ($row['2'] == 1 AND $row['3'] == 0 AND $last_run < time() AND $last_run != 0) {
 
         $msg = "Alert: The Server ". escape($row['4']) . " has gone offline.";
         $headers = "From: "._email_sender."\r\n";
@@ -44,7 +44,7 @@ if ($result = $mysqli->query($query)) {
         $stmt->execute();
         $stmt->close();
 
-      } elseif ($row['2'] == 1 AND $row['3'] == 1 AND $last_run > time()) {
+      } elseif ($row['2'] == 1 AND $row['3'] == 1 AND $last_run > time() AND $last_run != 0) {
 
         $msg = "Alert: The Server ". escape($row['4']) . " is back Online.";
         $headers = "From: "._email_sender."\r\n";
