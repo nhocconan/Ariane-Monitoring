@@ -11,7 +11,7 @@ CREATE TABLE `servers` (
   `server_cpu` varchar(50) DEFAULT NULL,
   `server_cpu_cores` int(11) DEFAULT NULL,
   `server_cpu_mhz` int(11) DEFAULT NULL,
-  `last_update` int(11) NOT NULL,
+  `last_update` int(11) DEFAULT NULL,
   `server_key` varchar(255) NOT NULL,
   `cpu_alert` int(11) NOT NULL DEFAULT '60',
   `cpu_alert_send` int(11) NOT NULL DEFAULT '0',
