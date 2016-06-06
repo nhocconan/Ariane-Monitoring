@@ -15,7 +15,7 @@ Network History
 ![alt tag](http://i.imgur.com/8HpxDE5.png)
 
 Triggers (We will adding more)
-![alt tag](http://i.imgur.com/EMIjhr8.png)
+![alt tag](http://i.imgur.com/TlLnbXf.png)
 
 Quick Setup:
 

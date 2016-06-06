@@ -25,7 +25,7 @@ if (!is_numeric($USER_ID)) {
     <title>Ariane</title>
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="c3js/c3.min.css" rel="stylesheet">
+    <link href="css/c3.min.css" rel="stylesheet">
     <link href="css/bg_night.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <link href="css/bootstrap-toggle.min.css" rel="stylesheet">
@@ -34,8 +34,8 @@ if (!is_numeric($USER_ID)) {
     <script src="js/bootstrap-toggle.min.js"></script>
 
     <!-- Load d3.js and c3.js -->
-    <script src="c3js/d3.min.js" charset="utf-8"></script>
-    <script src="c3js/c3.min.js"></script>
+    <script src="js/d3.min.js" charset="utf-8"></script>
+    <script src="js/c3.min.js"></script>
 
   </head>
   <body>
@@ -370,6 +370,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     });
     </script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.js"></script>
+    <script src="js/bootstrap.min.js"></script>
   </body>
 </html>
