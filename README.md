@@ -6,6 +6,8 @@ Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
 You should have received a copy of the license along with this
 work. If not, see https://creativecommons.org/licenses/by-nc-sa/4.0/
 
+<a href="https://codeclimate.com/github/Ne00n/Ariane-Monitoring"><img src="https://codeclimate.com/github/Ne00n/Ariane-Monitoring/badges/gpa.svg" /></a>
+
 ![alt tag](https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Cc-by-nc-sa_icon.svg/120px-Cc-by-nc-sa_icon.svg.png)
 
 Server Overview:
