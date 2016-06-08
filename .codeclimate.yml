@@ -20,5 +20,5 @@ ratings:
   - "**.js"
   - "**.php"
   exclude_paths:
-  - css/*
-  - js/*
+  - "css/"
+  - "js/"
