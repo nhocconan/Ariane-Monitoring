@@ -8,6 +8,8 @@ work. If not, see https://creativecommons.org/licenses/by-nc-sa/4.0/
 
 <a href="https://codeclimate.com/github/Ne00n/Ariane-Monitoring"><img src="https://codeclimate.com/github/Ne00n/Ariane-Monitoring/badges/gpa.svg" /></a>
 
+[![Build Status](https://travis-ci.org/Ne00n/Ariane-Monitoring.svg?branch=master)](https://travis-ci.org/Ne00n/Ariane-Monitoring)
+
 ![alt tag](https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Cc-by-nc-sa_icon.svg/120px-Cc-by-nc-sa_icon.svg.png)
 
 Server Overview:
