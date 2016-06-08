@@ -1,0 +1,7 @@
+language: php
+php:
+  - 5.5
+addons:
+  code_climate:
+      repo_token: a9d30068de4ac114dfd539c8abcb328cc4138c26ae4f6883a509a33d5c279efa
+script: phpunit pages/tests.php
