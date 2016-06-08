@@ -1,6 +1,6 @@
 <?php
-//MySQL Connection
-$mysqli = new mysqli("localhost", "user", "password", "db");
+//MySQL Connection, localhost, user, password, database
+$mysqli = new mysqli("localhost", "root", "", "ariane");
 
 //Timezone
 date_default_timezone_set('Europe/Amsterdam');
