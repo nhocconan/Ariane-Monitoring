@@ -5,6 +5,7 @@ include 'functions.php';
 class Test extends PHPUnit_Framework_TestCase
 {
 	public function testMySQLConnection() {
+	  global $mysqli;
 	  $this->assertEquals($mysqli->connect_error,NULL);
 	}
 
