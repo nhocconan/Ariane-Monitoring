@@ -15,10 +15,12 @@ class Test extends PHPUnit_Framework_TestCase
   	}
 
 	public function testCheckAccess_True() {
+		global $mysqli;
 		$this->assertEquals(checkAccess(1,1),1);
 	}
 
 	public function testCheckAccess_False() {
+		global $mysqli;
 		$this->assertEquals(checkAccess(5,1),0);
 	}
 }
