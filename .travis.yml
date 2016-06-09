@@ -5,7 +5,9 @@ services:
 
 before_script:
   - mysql -u root -e "CREATE DATABASE ariane;"
-  - mysql -u root ariane < ariane.sql
+  - mysql -u root ariane < sql/ariane.sql
+  - mysql -u root ariane < sql/example_server.sql
+  - mysql -u root ariane < sql/example_user.sql
 
 php:
   - '5.5'

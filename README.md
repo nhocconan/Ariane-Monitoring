@@ -22,7 +22,7 @@ Triggers (We will adding more)
 
 Quick Setup:
 
-- Create a Database with a User, Import the ariane.sql file
+- Create a Database with a User, Import the sql/ariane.sql file
 - Update /pages/config.php with your MySQL login details, your Timezone and your email for alerts.
 - Update agent.sh and install.sh with your URL (wget & curl)
 - Edit /pages/create_account.php, remove the exit()

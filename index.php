@@ -280,15 +280,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
          $stmt->fetch();
          $stmt->close();
 
-         echo "<tr class='clickable-row' data-href='index.php?page=dashboard?server=".htmlspecialchars($row['id'],ENT_QUOTES)."'>";
-           echo "<td>".htmlspecialchars($row['server_name'],ENT_QUOTES)."</td>";
-           echo "<td>".htmlspecialchars($cpu_load,ENT_QUOTES)."%</td>";
-           echo "<td>".htmlspecialchars(round(($memory_free + $memory_buffer + $memory_cached) / 1024,0)."/".round($memory_total / 1024,0),ENT_QUOTES)."MB</td>";
-           echo "<td>".htmlspecialchars(round(($hdd_usage) / 1024 / 1024 / 1024,0)."/".round($hdd_total / 1024 / 1024 / 1024,0),ENT_QUOTES)."GB</td>";
+         echo "<tr class='clickable-row' data-href='index.php?page=dashboard?server=".escape($row['id'])."'>";
+           echo "<td>".escape($row['server_name'])."</td>";
+           echo "<td>".escape($cpu_load)."%</td>";
+           echo "<td>".escape(round(($memory_free + $memory_buffer + $memory_cached) / 1024,0)."/".round($memory_total / 1024,0))."MB</td>";
+           echo "<td>".escape(round(($hdd_usage) / 1024 / 1024 / 1024,0)."/".round($hdd_total / 1024 / 1024 / 1024,0))."GB</td>";
            if (empty($row['server_ip'])) {
              echo "<td>n/a</td>";
            } else {
-             echo "<td>".htmlspecialchars($row['server_ip'],ENT_QUOTES)."</td>";
+             echo "<td>".escape($row['server_ip'])."</td>";
            }
            if (empty($row['server_uptime'])) {
              echo "<td>Needs Data Bro</td>";

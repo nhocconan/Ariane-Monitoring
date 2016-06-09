@@ -5,7 +5,7 @@
  $id = str_replace("dashboard?server=", "", $page);
  $id = str_replace("?trigger", "", $id);
  if(!preg_match("/^[0-9]+$/",$id)){ header('Location: index.php?page=dashboard'); }
- if(!checkAcess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); }
+ if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); }
 
  ?>
    <ul class="nav nav-tabs">
@@ -157,7 +157,7 @@
  $id = str_replace("dashboard?server=", "", $page);
  $id = str_replace("?network", "", $id);
  if(!preg_match("/^[0-9]+$/",$id)){ header('Location: index.php?page=dashboard'); }
- if(!checkAcess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); }
+ if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); }
 
  ?>
    <ul class="nav nav-tabs">
@@ -292,7 +292,7 @@
 $id = str_replace("dashboard?server=", "", $page);
 $id = str_replace("?hdd", "", $id);
 if(!preg_match("/^[0-9]+$/",$id)){ header('Location: index.php?page=dashboard'); }
-if(!checkAcess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); }
+if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); }
 
 ?>
   <ul class="nav nav-tabs">
@@ -424,7 +424,7 @@ if(!checkAcess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); }
  $id = str_replace("dashboard?server=", "", $page);
  $id = str_replace("?cpu", "", $id);
  if(!preg_match("/^[0-9]+$/",$id)){ header('Location: index.php?page=dashboard'); }
- if(!checkAcess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); }
+ if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); }
 
 
  ?>
@@ -566,7 +566,7 @@ if(!checkAcess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); }
  $id = str_replace("dashboard?server=", "", $page);
  $id = str_replace("?memory", "", $id);
  if(!preg_match("/^[0-9]+$/",$id)){ header('Location: index.php?page=dashboard'); }
- if(!checkAcess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); }
+ if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); }
 
  ?>
    <ul class="nav nav-tabs">
@@ -718,7 +718,7 @@ if(!checkAcess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); }
 
  $id = str_replace("dashboard?server=", "", $page);
  if(!preg_match("/^[0-9]+$/",$id)){ header('Location: index.php?page=dashboard'); }
- if(!checkAcess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); }
+ if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); }
 
  $stmt = $mysqli->prepare("SELECT server_name,server_ip,server_uptime,server_kernel,server_cpu,server_cpu_cores,server_cpu_mhz FROM servers WHERE id = ? LIMIT 1");
  $stmt->bind_param('i', $id);
@@ -740,17 +740,17 @@ if(!checkAcess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); }
      <li><a href="index.php?page=logout">Logout</a></li>
    </ul>
    <div class="col-md-12">
-     <h3><?= htmlspecialchars($server_name, ENT_QUOTES); ?></h3>
+     <h3><?= escape($server_name); ?></h3>
    </div>
 
    <div class="col-md-6">
-     <p>Uptime: <?= htmlspecialchars(secondsToTime($server_uptime), ENT_QUOTES); ?></p>
-     <p>Kernel: <?= htmlspecialchars($server_kernel, ENT_QUOTES); ?></p>
+     <p>Uptime: <?= escape(secondsToTime($server_uptime)); ?></p>
+     <p>Kernel: <?= escape($server_kernel); ?></p>
 
    </div>
    <div class="col-md-6 text-left">
-     <p>CPU Model: <?= htmlspecialchars($server_cpu, ENT_QUOTES); ?></p>
-     <p>CPU Speed: <?= htmlspecialchars($server_cpu_cores, ENT_QUOTES); ?>x<?= htmlspecialchars($server_cpu_mhz, ENT_QUOTES); ?> Mhz</p>
+     <p>CPU Model: <?= escape($server_cpu); ?></p>
+     <p>CPU Speed: <?= escape($server_cpu_cores); ?>x<?= escape($server_cpu_mhz); ?> Mhz</p>
 
    </div>
    <div class="col-md-12 ct-chart"><center><h2>Memory Usage</h2></center><div id="chart-memory"></div></div>

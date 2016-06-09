@@ -39,7 +39,7 @@ function secondsToTime($seconds) {
     return $dtF->diff($dtT)->format('%a days, %h hours, %i minutes');
 }
 
-function checkAcess($server_id,$user_id) {
+function checkAccess($server_id,$user_id) {
   global $mysqli;
 
   $stmt = $mysqli->prepare("SELECT user_id FROM servers WHERE id = ? LIMIT 1");
