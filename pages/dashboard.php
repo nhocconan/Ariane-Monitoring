@@ -766,7 +766,7 @@ if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); 
    </div>
 
    <?php
-   $atm = time() - 1300;
+   $atm = time() - 7200;
    $query = "SELECT memory_total,memory_free,memory_cached,memory_buffer,cpu_load,server_rx_diff,server_tx_diff,memory_active,memory_inactive,hdd_usage,hdd_total,cpu_steal,io_wait,server_timestamp FROM servers_data WHERE server_id = ".$id." AND server_timestamp >= ".$atm." ORDER by id";
 
    $memory_total = [];
@@ -838,11 +838,20 @@ if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); 
    size: {
      height: 200
    },
+   point: {
+        show: false
+    },
    axis: {
      x: {
-         type: 'category',
-         categories: [<?php echo implode(',',$server_time); ?>]
-     },
+           type: 'category',
+           categories: [<?php echo implode(',',$server_time); ?>],
+           tick: {
+           width: 80,
+               culling: {
+                   max: 7
+               }
+             }
+         },
      y: {
          label: 'MB'
      },
@@ -864,14 +873,23 @@ if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); 
            // 'line', 'spline', 'step', 'area', 'area-step' are also available to stack
        },
    },
+   point: {
+        show: false
+    },
    size: {
      height: 200
    },
    axis: {
      x: {
-         type: 'category',
-         categories: [<?php echo implode(',',$server_time); ?>]
-     },
+           type: 'category',
+           categories: [<?php echo implode(',',$server_time); ?>],
+           tick: {
+           width: 80,
+               culling: {
+                   max: 7
+               }
+             }
+         },
      y: {
          label: '%'
      },
@@ -891,14 +909,23 @@ if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); 
        },
        groups: [['RX' , 'TX']]
    },
+   point: {
+        show: false
+    },
    size: {
      height: 200
    },
    axis: {
      x: {
-         type: 'category',
-         categories: [<?php echo implode(',',$server_time); ?>]
-     },
+           type: 'category',
+           categories: [<?php echo implode(',',$server_time); ?>],
+           tick: {
+           width: 80,
+               culling: {
+                   max: 7
+               }
+             }
+         },
      y: {
          label: 'MB/s'
      },
@@ -917,18 +944,27 @@ if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); 
            // 'line', 'spline', 'step', 'area', 'area-step' are also available to stack
        },
    },
+   point: {
+        show: false
+    },
    size: {
      height: 200
    },
    axis: {
-     x: {
-         type: 'category',
-         categories: [<?php echo implode(',',$server_time); ?>]
-     },
-     y: {
+    x: {
+          type: 'category',
+          categories: [<?php echo implode(',',$server_time); ?>],
+          tick: {
+          width: 80,
+              culling: {
+                  max: 7
+              }
+            }
+        },
+        y: {
          label: 'GB'
      },
-   }
+    }
    });
    </script>
  </div>
