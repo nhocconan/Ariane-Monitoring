@@ -12,7 +12,7 @@ work. If not, see https://creativecommons.org/licenses/by-nc-sa/4.0/
 ![alt tag](https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Cc-by-nc-sa_icon.svg/120px-Cc-by-nc-sa_icon.svg.png)
 
 Server Overview:
-![alt tag](http://i.imgur.com/DsPDFLa.png)
+![alt tag](http://i.imgur.com/p3SbPMk.png)
 
 Network History
 ![alt tag](http://i.imgur.com/8HpxDE5.png)

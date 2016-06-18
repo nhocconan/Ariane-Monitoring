@@ -229,7 +229,7 @@
    </div>
 
    <?php $Beacon = generateBacon($id,0,$data_start,$data_stop); ?>
-   
+
    <script>
    (function($) {
 
