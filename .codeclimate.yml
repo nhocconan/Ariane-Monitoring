@@ -20,7 +20,6 @@ ratings:
   paths:
   - "**.css"
   - "**.inc"
-  - "**.js"
   - "**.php"
   exclude_paths:
   - "css/"
