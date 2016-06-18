@@ -19,6 +19,7 @@ class Test extends PHPUnit_Framework_TestCase
 	//	$this->assertEquals(checkAccess(1,1),1);
 	//}
 
+
 	//public function testCheckAccess_False() {
 	//	$this->assertEquals(checkAccess(5,1),0);
 	//}
