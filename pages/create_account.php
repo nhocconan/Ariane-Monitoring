@@ -2,7 +2,8 @@
 exit();
 include 'functions.php';
 
-$name = "Test"; $password = "123456789";
+//Well change that stuff here, its just an example
+$name = "Test"; $password = "1234567899";
 
 $hash = password_hash($password, PASSWORD_DEFAULT);
 
