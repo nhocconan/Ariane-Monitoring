@@ -272,6 +272,9 @@
          },
          groups: [['RX' , 'TX']]
      },
+     point: {
+          show: false
+      },
      axis: {
        x: {
            type: 'category',
@@ -406,6 +409,9 @@ if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); 
             // 'line', 'spline', 'step', 'area', 'area-step' are also available to stack
         },
     },
+    point: {
+         show: false
+     },
     axis: {
       x: {
           type: 'category',
@@ -544,6 +550,9 @@ if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); 
              // 'line', 'spline', 'step', 'area', 'area-step' are also available to stack
          },
      },
+     point: {
+          show: false
+      },
      size: {
        height: 200
      },
@@ -701,6 +710,9 @@ if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); 
              // 'line', 'spline', 'step', 'area', 'area-step' are also available to stack
          },
      },
+     point: {
+          show: false
+      },
      axis: {
        x: {
            type: 'category',
