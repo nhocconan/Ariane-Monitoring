@@ -228,26 +228,8 @@
 
    </div>
 
-   <?php
-   $query = "SELECT server_rx_diff,server_tx_diff,server_timestamp FROM servers_data WHERE server_id = ".$id." AND server_timestamp >= ".$data_start." AND server_timestamp <= ".$data_stop."   ORDER by id";
-
-   $server_rx = [];
-   $server_tx = [];
-   $server_time = [];
-
-   if ($result = $mysqli->query($query)) {
-
-       /* fetch object array */
-       while ($row = $result->fetch_row()) {
-          array_push($server_rx,round($row['0'] / 1048576 / 60,2));
-          array_push($server_tx,round($row['1'] / 1048576 / 60,2));
-          array_push($server_time,date("'H:i'",$row['2']));
-       }
-       /* free result set */
-       $result->close();
-   }
-
-   ?>
+   <?php $Beacon = generateBacon($id,0,$data_start,$data_stop); ?>
+   
    <script>
    (function($) {
 
@@ -262,8 +244,8 @@
        bindto: '#chart',
        data: {
          columns: [
-             ['TX', <?php echo implode(',',$server_tx); ?>],
-             ['RX', <?php echo implode(',',$server_rx); ?>]
+             ['TX', <?php echo implode(',',$Beacon['server_tx_diff']); ?>],
+             ['RX', <?php echo implode(',',$Beacon['server_rx_diff']); ?>]
          ],
          types: {
              TX: 'area',
@@ -278,7 +260,7 @@
      axis: {
        x: {
            type: 'category',
-           categories: [<?php echo implode(',',$server_time); ?>]
+           categories: [<?php echo implode(',',$Beacon['server_timestamp']); ?>]
        },
        y: {
            label: 'MB/s'
@@ -366,26 +348,8 @@ if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); 
 
   </div>
 
-  <?php
-  $query = "SELECT hdd_usage,hdd_total,server_timestamp FROM servers_data WHERE server_id = ".$id." AND server_timestamp >= ".$data_start." AND server_timestamp <= ".$data_stop."   ORDER by id";
+   <?php $Beacon = generateBacon($id,0,$data_start,$data_stop); ?>
 
-  $hdd_usage = [];
-  $hdd_total = [];
-  $server_time = [];
-
-  if ($result = $mysqli->query($query)) {
-
-      /* fetch object array */
-      while ($row = $result->fetch_row()) {
-         array_push($hdd_usage,round($row['0'] / 1024 / 1024 / 1024,1));
-         array_push($hdd_total,round($row['1'] / 1024 / 1024 / 1024,1));
-         array_push($server_time,date("'H:i'",$row['2']));
-      }
-      /* free result set */
-      $result->close();
-  }
-
-  ?>
   <script>
   (function($) {
 
@@ -400,8 +364,8 @@ if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); 
       bindto: '#chart',
       data: {
         columns: [
-            ['Usage', <?php echo implode(',',$hdd_usage); ?>],
-            ['Total', <?php echo implode(',',$hdd_total); ?>]
+            ['Usage', <?php echo implode(',',$Beacon['hdd_usage']); ?>],
+            ['Total', <?php echo implode(',',$Beacon['hdd_total']); ?>]
         ],
         types: {
             Usage: 'area',
@@ -415,7 +379,7 @@ if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); 
     axis: {
       x: {
           type: 'category',
-          categories: [<?php echo implode(',',$server_time); ?>]
+          categories: [<?php echo implode(',',$Beacon['server_timestamp']); ?>]
       },
       y: {
           label: 'GB'
@@ -502,28 +466,8 @@ if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); 
 
    </div>
 
-   <?php
-   $query = "SELECT cpu_load,io_wait,cpu_steal,server_timestamp FROM servers_data WHERE server_id = ".$id." AND server_timestamp >= ".$data_start." AND server_timestamp <= ".$data_stop."   ORDER by id";
+   <?php $Beacon = generateBacon($id,0,$data_start,$data_stop); ?>
 
-   $cpu_usage = [];
-   $io_wait = [];
-   $cpu_steal = [];
-   $server_time = [];
-
-   if ($result = $mysqli->query($query)) {
-
-       /* fetch object array */
-       while ($row = $result->fetch_row()) {
-          array_push($cpu_usage,round($row['0'],2));
-          array_push($io_wait,round($row['1'],2));
-          array_push($cpu_steal,round($row['2'],2));
-          array_push($server_time,date("'H:i'",$row['3']));
-       }
-       /* free result set */
-       $result->close();
-   }
-
-   ?>
    <script>
    (function($) {
 
@@ -538,9 +482,9 @@ if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); 
        bindto: '#chart',
        data: {
          columns: [
-             ['Usage', <?php echo implode(',',$cpu_usage); ?>],
-             ['Steal', <?php echo implode(',',$cpu_steal); ?>],
-             ['I/O Wait', <?php echo implode(',',$io_wait); ?>]
+             ['Usage', <?php echo implode(',',$Beacon['cpu_load']); ?>],
+             ['Steal', <?php echo implode(',',$Beacon['cpu_steal']); ?>],
+             ['I/O Wait', <?php echo implode(',',$Beacon['io_wait']); ?>]
          ],
          types: {
              Usage: 'area',
@@ -559,7 +503,7 @@ if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); 
      axis: {
        x: {
            type: 'category',
-           categories: [<?php echo implode(',',$server_time); ?>]
+           categories: [<?php echo implode(',',$Beacon['server_timestamp']); ?>]
        },
        y: {
            label: '%'
@@ -646,39 +590,8 @@ if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); 
 
    </div>
 
-   <?php
-   $query = "SELECT memory_total,memory_free,memory_cached,memory_buffer,memory_active,memory_inactive,server_timestamp FROM servers_data WHERE server_id = ".$id." AND server_timestamp >= ".$data_start." AND server_timestamp <= ".$data_stop."   ORDER by id";
+   <?php $Beacon = generateBacon($id,0,$data_start,$data_stop); ?>
 
-   $memory_total = [];
-   $memory_free = [];
-   $memory_cached = [];
-   $memory_buffer = [];
-   $memory_inactive = [];
-   $memory_active = [];
-   $memory_used = [];
-   $server_time = [];
-
-   $cache_rx = 0; $cache_tx = 0;
-   if ($result = $mysqli->query($query)) {
-
-       /* fetch object array */
-       while ($row = $result->fetch_row()) {
-          array_push($memory_total, round($row['0'] / 1024,1));
-          array_push($memory_free,round($row['1'] / 1024,1));
-          array_push($memory_cached,round($row['2'] / 1024,1));
-          array_push($memory_buffer,round($row['3'] / 1024,1));
-          array_push($memory_active,round($row['4'] / 1024,1));
-          array_push($memory_inactive,round($row['5'] / 1024,1));
-          array_push($server_time,date("'H:i'",$row['6']));
-          $used = $row['0']-($row['1']);
-          array_push($memory_used, round($used / 1024,1));
-
-       }
-       /* free result set */
-       $result->close();
-   }
-
-   ?>
    <script>
    (function($) {
 
@@ -693,12 +606,12 @@ if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); 
        bindto: '#chart',
        data: {
          columns: [
-             ['Free', <?php echo implode(',',$memory_free); ?>],
-             ['Cached', <?php echo implode(',',$memory_cached); ?>],
-             ['Buffer', <?php echo implode(',',$memory_buffer); ?>],
-             ['Used', <?php echo implode(',',$memory_used); ?>],
-             ['Active', <?php echo implode(',',$memory_active); ?>],
-             ['Inactive', <?php echo implode(',',$memory_inactive); ?>]
+             ['Free', <?php echo implode(',',$Beacon['memory_free']); ?>],
+             ['Cached', <?php echo implode(',',$Beacon['memory_cached']); ?>],
+             ['Buffer', <?php echo implode(',',$Beacon['memory_buffer']); ?>],
+             ['Used', <?php echo implode(',',$Beacon['memory_used']); ?>],
+             ['Active', <?php echo implode(',',$Beacon['memory_active']); ?>],
+             ['Inactive', <?php echo implode(',',$Beacon['memory_inactie']); ?>]
          ],
          types: {
              Free: 'line',
@@ -716,7 +629,7 @@ if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); 
      axis: {
        x: {
            type: 'category',
-           categories: [<?php echo implode(',',$server_time); ?>]
+           categories: [<?php echo implode(',',$Beacon['server_timestamp']); ?>]
        },
        y: {
            label: 'MB'
@@ -731,6 +644,14 @@ if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); 
  $id = str_replace("dashboard?server=", "", $page);
  if(!preg_match("/^[0-9]+$/",$id)){ header('Location: index.php?page=dashboard'); }
  if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); }
+
+ $timeframe = 2;
+
+if (isset($_POST['timeframe'])) {
+  if (is_numeric($_POST['timeframe'])) {
+    $timeframe = $_POST['timeframe'];
+  }
+}
 
  $stmt = $mysqli->prepare("SELECT server_name,server_ip,server_uptime,server_kernel,server_cpu,server_cpu_cores,server_cpu_mhz FROM servers WHERE id = ? LIMIT 1");
  $stmt->bind_param('i', $id);
@@ -758,13 +679,57 @@ if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); 
    <div class="col-md-6">
      <p>Uptime: <?= escape(secondsToTime($server_uptime)); ?></p>
      <p>Kernel: <?= escape($server_kernel); ?></p>
-
    </div>
+
    <div class="col-md-6 text-left">
      <p>CPU Model: <?= escape($server_cpu); ?></p>
      <p>CPU Speed: <?= escape($server_cpu_cores); ?>x<?= escape($server_cpu_mhz); ?> Mhz</p>
-
    </div>
+
+  <form method="post" id="selector">
+     <div class="btn-group pull-right" role="group">
+     <?php
+     if ($timeframe == 1) {
+       echo '<button type="submit" class="btn btn-primary" name="timeframe" value="1">1h</button>
+             <button type="submit" class="btn btn-default" name="timeframe" value="2">2h</button>
+             <button type="submit" class="btn btn-default" name="timeframe" value="4">4h</button>
+             <button type="submit" class="btn btn-default" name="timeframe" value="12">12h</button>
+             <button type="submit" class="btn btn-default" name="timeframe" value="24">24h</button>';
+    } elseif ($timeframe == 2) {
+      echo '<button type="submit" class="btn btn-default" name="timeframe" value="1">1h</button>
+            <button type="submit" class="btn btn-primary" name="timeframe" value="2">2h</button>
+            <button type="submit" class="btn btn-default" name="timeframe" value="4">4h</button>
+            <button type="submit" class="btn btn-default" name="timeframe" value="12">12h</button>
+            <button type="submit" class="btn btn-default" name="timeframe" value="24">24h</button>';
+    } elseif ($timeframe == 4) {
+      echo '<button type="submit" class="btn btn-default" name="timeframe" value="1">1h</button>
+            <button type="submit" class="btn btn-default" name="timeframe" value="2">2h</button>
+            <button type="submit" class="btn btn-primary" name="timeframe" value="4">4h</button>
+            <button type="submit" class="btn btn-default" name="timeframe" value="12">12h</button>
+            <button type="submit" class="btn btn-default" name="timeframe" value="24">24h</button>';
+    } elseif ($timeframe == 12) {
+      echo '<button type="submit" class="btn btn-default" name="timeframe" value="1">1h</button>
+            <button type="submit" class="btn btn-default" name="timeframe" value="2">2h</button>
+            <button type="submit" class="btn btn-default" name="timeframe" value="4">4h</button>
+            <button type="submit" class="btn btn-primary" name="timeframe" value="12">12h</button>
+            <button type="submit" class="btn btn-default" name="timeframe" value="24">24h</button>';
+    } elseif ($timeframe == 24) {
+      echo '<button type="submit" class="btn btn-default" name="timeframe" value="1">1h</button>
+            <button type="submit" class="btn btn-default" name="timeframe" value="2">2h</button>
+            <button type="submit" class="btn btn-default" name="timeframe" value="4">4h</button>
+            <button type="submit" class="btn btn-default" name="timeframe" value="12">12h</button>
+            <button type="submit" class="btn btn-primary" name="timeframe" value="24">24h</button>';
+     } else {
+       echo '<button type="submit" class="btn btn-default" name="timeframe" value="1">1h</button>
+             <button type="submit" class="btn btn-default" name="timeframe" value="2">2h</button>
+             <button type="submit" class="btn btn-default" name="timeframe" value="4">4h</button>
+             <button type="submit" class="btn btn-default" name="timeframe" value="12">12h</button>
+             <button type="submit" class="btn btn-default" name="timeframe" value="24">24h</button>';
+         }
+      ?>
+    </div>
+  </form>
+
    <div class="col-md-12 ct-chart"><center><h2>Memory Usage</h2></center><div id="chart-memory"></div></div>
 
    <div class="col-md-12 ct-chart_cpu"><center><h2>CPU Usage</h2></center><div id="chart-cpu"></div></div>
@@ -777,65 +742,19 @@ if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); 
 
    </div>
 
-   <?php
-   $atm = time() - 7200;
-   $query = "SELECT memory_total,memory_free,memory_cached,memory_buffer,cpu_load,server_rx_diff,server_tx_diff,memory_active,memory_inactive,hdd_usage,hdd_total,cpu_steal,io_wait,server_timestamp FROM servers_data WHERE server_id = ".$id." AND server_timestamp >= ".$atm." ORDER by id";
+   <?php $Beacon = generateBacon($id,$timeframe); ?>
 
-   $memory_total = [];
-   $memory_free = [];
-   $memory_cached = [];
-   $memory_buffer = [];
-   $memory_inactive = [];
-   $memory_active = [];
-   $memory_used = [];
-   $cpu_usage = [];
-   $server_rx = [];
-   $server_tx = [];
-   $hdd_usage = [];
-   $hdd_total = [];
-   $cpu_steal = [];
-   $io_wait = [];
-   $server_time = array();
-
-   $cache_rx = 0; $cache_tx = 0;
-   if ($result = $mysqli->query($query)) {
-
-       /* fetch object array */
-       while ($row = $result->fetch_row()) {
-          array_push($memory_total, round($row['0'] / 1024,1));
-          array_push($memory_free,round($row['1'] / 1024,1));
-          array_push($memory_cached,round($row['2'] / 1024,1));
-          array_push($memory_buffer,round($row['3'] / 1024,1));
-          array_push($cpu_usage,round($row['4'],2));
-          array_push($server_rx,round($row['5'] / 1048576 / 60,2));
-          array_push($server_tx,round($row['6'] / 1048576 / 60,2));
-          array_push($memory_active,round($row['7'] / 1024,1));
-          array_push($memory_inactive,round($row['8'] / 1024,1));
-          array_push($hdd_usage,round($row['9']  / 1024 / 1024 / 1024,1));
-          array_push($hdd_total,round($row['10']  / 1024 / 1024 / 1024,1));
-          array_push($cpu_steal,round($row['11'],2));
-          array_push($io_wait,round($row['12'],2));
-          array_push($server_time,date("'H:i'",$row['13']));
-          $used = $row['0']-($row['1']);
-          array_push($memory_used, round($used / 1024,1));
-
-       }
-       /* free result set */
-       $result->close();
-   }
-
-   ?>
    <script>
    var chart = c3.generate({
      bindto: '#chart-memory',
      data: {
        columns: [
-           ['Free', <?php echo implode(',',$memory_free); ?>],
-           ['Cached', <?php echo implode(',',$memory_cached); ?>],
-           ['Buffer', <?php echo implode(',',$memory_buffer); ?>],
-           ['Used', <?php echo implode(',',$memory_used); ?>],
-           ['Active', <?php echo implode(',',$memory_active); ?>],
-           ['Inactive', <?php echo implode(',',$memory_inactive); ?>]
+           ['Free', <?php echo implode(',',$Beacon['memory_free']); ?>],
+           ['Cached', <?php echo implode(',',$Beacon['memory_cached']); ?>],
+           ['Buffer', <?php echo implode(',',$Beacon['memory_buffer']); ?>],
+           ['Used', <?php echo implode(',',$Beacon['memory_used']); ?>],
+           ['Active', <?php echo implode(',',$Beacon['memory_active']); ?>],
+           ['Inactive', <?php echo implode(',',$Beacon['memory_inactive']); ?>]
        ],
        types: {
            Free: 'line',
@@ -856,7 +775,7 @@ if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); 
    axis: {
      x: {
            type: 'category',
-           categories: [<?php echo implode(',',$server_time); ?>],
+           categories: [<?php echo implode(',',$Beacon['server_timestamp']); ?>],
            tick: {
            width: 80,
                culling: {
@@ -873,9 +792,9 @@ if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); 
      bindto: '#chart-cpu',
      data: {
        columns: [
-           ['Usage', <?php echo implode(',',$cpu_usage); ?>],
-           ['Steal', <?php echo implode(',',$cpu_steal); ?>],
-           ['I/O Wait', <?php echo implode(',',$io_wait); ?>]
+           ['Usage', <?php echo implode(',',$Beacon['cpu_load']); ?>],
+           ['Steal', <?php echo implode(',',$Beacon['cpu_steal']); ?>],
+           ['I/O Wait', <?php echo implode(',',$Beacon['io_wait']); ?>]
        ],
        types: {
            Usage: 'area',
@@ -894,7 +813,7 @@ if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); 
    axis: {
      x: {
            type: 'category',
-           categories: [<?php echo implode(',',$server_time); ?>],
+           categories: [<?php echo implode(',',$Beacon['server_timestamp']); ?>],
            tick: {
            width: 80,
                culling: {
@@ -911,8 +830,8 @@ if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); 
      bindto: '#chart-net',
      data: {
        columns: [
-           ['TX', <?php echo implode(',',$server_tx); ?>],
-           ['RX', <?php echo implode(',',$server_rx); ?>]
+           ['TX', <?php echo implode(',',$Beacon['server_tx_diff']); ?>],
+           ['RX', <?php echo implode(',',$Beacon['server_rx_diff']); ?>]
        ],
        types: {
            TX: 'area',
@@ -930,7 +849,7 @@ if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); 
    axis: {
      x: {
            type: 'category',
-           categories: [<?php echo implode(',',$server_time); ?>],
+           categories: [<?php echo implode(',',$Beacon['server_timestamp']); ?>],
            tick: {
            width: 80,
                culling: {
@@ -947,8 +866,8 @@ if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); 
      bindto: '#chart-hdd',
      data: {
        columns: [
-           ['Usage', <?php echo implode(',',$hdd_usage); ?>],
-           ['Total', <?php echo implode(',',$hdd_total); ?>]
+           ['Usage', <?php echo implode(',',$Beacon['hdd_usage']); ?>],
+           ['Total', <?php echo implode(',',$Beacon['hdd_total']); ?>]
        ],
        types: {
            Usage: 'area',
@@ -965,7 +884,7 @@ if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); 
    axis: {
     x: {
           type: 'category',
-          categories: [<?php echo implode(',',$server_time); ?>],
+          categories: [<?php echo implode(',',$Beacon['server_timestamp']); ?>],
           tick: {
           width: 80,
               culling: {
