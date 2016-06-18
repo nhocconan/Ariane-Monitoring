@@ -309,7 +309,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $name = $_POST['servername'];
 
-    if(!preg_match("/^[a-zA-Z0-9 ]+$/",$name)){ $msg = "This Username contains invalid letters (a-z,A-Z,0-9 are allowed).<br>";  $error = true;}
+    if(!preg_match("/^[a-zA-Z0-9 .]+$/",$name)){ $msg = "This Username contains invalid letters (a-z,A-Z,0-9 are allowed).<br>";  $error = true;}
 
       if ($error == false) {
 
@@ -334,8 +334,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   </ul>
   <form action="index.php?page=dashboard?add" method="post" style="margin-top:10px;margin-bottom:10px;">
     <h2><center>Install Agent</center></h2>
-      <p><center>Please execute this Command on your Box to Add the Server.</center></p>
-      <pre>wget https://mon.x8e.net/install.sh && bash install.sh <?= $key ?></pre>
+      <?php
+
+      if (empty($key)) {
+        echo '<pre>Invalid Name</pre>';
+      } else {
+        echo '<p><center>Please execute this Command on your Box to Add the Server.</center></p>';
+        echo '<pre>wget https://mon.x8e.net/install.sh && bash install.sh '. $key.'</pre>';
+      }
+
+       ?>
 </form>
 </div>
 

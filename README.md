@@ -29,4 +29,10 @@ Quick Setup:
 - Run URL/pages/create_account.php in your Browser.
 - Login with the Details from create_account.php
 - Delete create_account.php or add the exit() again.
-- Add the cron.php to your Crontab, like:  1 * * * * /usr/bin/php /var/www/ariane/cron.php
+- Add the cron.php to your Crontab, like:  "* * * * * /usr/bin/php /var/www/ariane/cron.php"
+
+Quick Removal:
+
+- rm /var/spool/cron/crontabs/ariane_agent
+- userdel ariane_agent
+- rm -r /etc/ariane_agent
