@@ -340,7 +340,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo '<pre>Invalid Name</pre>';
       } else {
         echo '<p><center>Please execute this Command on your Box to Add the Server.</center></p>';
-        echo '<pre>wget '._URL.'install.sh && bash install.sh '. $key.'</pre>';
+        echo '<pre>wget '._URL.'scripts/install.sh && bash install.sh '. $key.'</pre>';
       }
 
        ?>
