@@ -189,11 +189,11 @@
          $data_start = $range['0'];
          $data_stop = $range['1'];
        } else {
-         $data_start = time() - 1500;
+         $data_start = time() - 6000;
          $data_stop = time();
        }
      } else {
-       $data_start = time() - 1500;
+       $data_start = time() - 6000;
        $data_stop = time();
      }
     ?>
@@ -217,7 +217,7 @@
 
                /* fetch object array */
                while ($row = $result->fetch_row()) {
-                 if ($cycles == 25) {
+                 if ($cycles == 60) {
                    if ($start != "") {
                      echo '<li><a href="#" data-value="'.$row['0'].'-'.$start.'">'.date("d.m.Y H:i",$row['0']).'-'.date("H:i",$start).'</a></li>';
                    }
@@ -267,11 +267,11 @@
         $data_start = $range['0'];
         $data_stop = $range['1'];
       } else {
-        $data_start = time() - 1500;
+        $data_start = time() - 6000;
         $data_stop = time();
       }
     } else {
-      $data_start = time() - 1500;
+      $data_start = time() - 6000;
       $data_stop = time();
     }
    ?>
@@ -295,7 +295,7 @@
 
               /* fetch object array */
               while ($row = $result->fetch_row()) {
-                if ($cycles == 25) {
+                if ($cycles == 60) {
                   if ($start != "") {
                     echo '<li><a href="#" data-value="'.$row['0'].'-'.$start.'">'.date("d.m.Y H:i",$row['0']).'-'.date("H:i",$start).'</a></li>';
                   }
@@ -343,11 +343,11 @@
          $data_start = $range['0'];
          $data_stop = $range['1'];
        } else {
-         $data_start = time() - 1500;
+         $data_start = time() - 6000;
          $data_stop = time();
        }
      } else {
-       $data_start = time() - 1500;
+       $data_start = time() - 6000;
        $data_stop = time();
      }
     ?>
@@ -371,7 +371,7 @@
 
                /* fetch object array */
                while ($row = $result->fetch_row()) {
-                 if ($cycles == 25) {
+                 if ($cycles == 60) {
                    if ($start != "") {
                      echo '<li><a href="#" data-value="'.$row['0'].'-'.$start.'">'.date("d.m.Y H:i",$row['0']).'-'.date("H:i",$start).'</a></li>';
                    }
@@ -420,11 +420,11 @@
          $data_start = $range['0'];
          $data_stop = $range['1'];
        } else {
-         $data_start = time() - 1500;
+         $data_start = time() - 6000;
          $data_stop = time();
        }
      } else {
-       $data_start = time() - 1500;
+       $data_start = time() - 6000;
        $data_stop = time();
      }
     ?>
@@ -448,7 +448,7 @@
 
                /* fetch object array */
                while ($row = $result->fetch_row()) {
-                 if ($cycles == 25) {
+                 if ($cycles == 60) {
                    if ($start != "") {
                      echo '<li><a href="#" data-value="'.$row['0'].'-'.$start.'">'.date("d.m.Y H:i",$row['0']).'-'.date("H:i",$start).'</a></li>';
                    }
