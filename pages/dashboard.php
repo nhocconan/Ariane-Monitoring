@@ -25,39 +25,48 @@
      $data_stop = time();
    }
 
+   $navbar_elments = "";
+
    ?>
 
   <ul class="nav nav-tabs">
     <li><a href="index.php?page=dashboard">Servers</a></li>
     <li><a href="index.php?page=dashboard?server=<?= $id ?>">Overview</a></li>
     <?php if (strpos($page, 'network') !== false) {
-          echo '<li class="active"><a href="index.php?page=dashboard?server='.$id.'?network">Network</a></li>';
+          $title = '<div class="col-md-12 ct-chart"><center><h2>Network Usage</h2></center>';
+          $navbar_elments .= '<li class="active"><a href="index.php?page=dashboard?server='.$id.'?network">Network</a></li>';
     } else {
-          echo '<li><a href="index.php?page=dashboard?server='.$id.'?network">Network</a></li>';
+          $navbar_elments .= '<li><a href="index.php?page=dashboard?server='.$id.'?network">Network</a></li>';
     }
      if (strpos($page, 'cpu') !== false) {
-          echo '<li class="active"><a href="index.php?page=dashboard?server='.$id.'?cpu">CPU</a></li>';
+          $title = '<div class="col-md-12 ct-chart"><center><h2>CPU Usage</h2></center>';
+          $navbar_elments .= '<li class="active"><a href="index.php?page=dashboard?server='.$id.'?cpu">CPU</a></li>';
     } else {
-          echo '<li><a href="index.php?page=dashboard?server='.$id.'?cpu">CPU</a></li>';
+          $navbar_elments .= '<li><a href="index.php?page=dashboard?server='.$id.'?cpu">CPU</a></li>';
     }
     if (strpos($page, 'memory') !== false) {
-          echo '<li class="active"><a href="index.php?page=dashboard?server='.$id.'?memory">Memory</a></li>';
+          $title = '<div class="col-md-12 ct-chart"><center><h2>Memory Usage</h2></center>';
+          $navbar_elments .= '<li class="active"><a href="index.php?page=dashboard?server='.$id.'?memory">Memory</a></li>';
     } else {
-          echo '<li><a href="index.php?page=dashboard?server='.$id.'?memory">Memory</a></li>';
+          $navbar_elments .= '<li><a href="index.php?page=dashboard?server='.$id.'?memory">Memory</a></li>';
     }
-     if (strpos($page, 'hdd') !== false) {;
-          echo '<li class="active"><a href="index.php?page=dashboard?server='.$id.'?hdd">HDD</a></li>';
+     if (strpos($page, 'hdd') !== false) {
+          $title = '<div class="col-md-12 ct-chart"><center><h2>HDD Usage</h2></center>';
+          $navbar_elments .= '<li class="active"><a href="index.php?page=dashboard?server='.$id.'?hdd">HDD</a></li>';
     } else {
-          echo '<li><a href="index.php?page=dashboard?server='.$id.'?hdd">HDD</a></li>';
+          $navbar_elments .= '<li><a href="index.php?page=dashboard?server='.$id.'?hdd">HDD</a></li>';
     }
      if (strpos($page, 'trigger') !== false) {
-          echo '<li class="active"><a href="index.php?page=dashboard?server='.$id.'?trigger">Trigger</a></li>';
+          $navbar_elments .= '<li class="active"><a href="index.php?page=dashboard?server='.$id.'?trigger">Trigger</a></li>';
     }  else {
-          echo '<li><a href="index.php?page=dashboard?server='.$id.'?trigger">Trigger</a></li>';
-      } ?>
+          $navbar_elments .= '<li><a href="index.php?page=dashboard?server='.$id.'?trigger">Trigger</a></li>';
+    }
+      echo $navbar_elments;
+      ?>
     <li><a href="index.php?page=logout">Logout</a></li>
   </ul>
 
+<?= $title ?>
 <?php if (strpos($page, 'trigger') !== false) {
 
  ?>
@@ -195,45 +204,50 @@
 
 <?php
 
-} elseif (strpos($page, 'network') !== false) {
+} elseif (strpos($page, 'network') !== false OR strpos($page, 'cpu') !== false OR strpos($page, 'memory') !== false OR strpos($page, 'hdd') !== false) {
+
+  ?>
+
+  <form method="post">
+    <div class="dropdown dropdown-submit-input">
+      <input type="hidden" name="selector" />
+      <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <?php echo date("d.m.Y H:i",$data_start).'-'.date("H:i",$data_stop); ?>
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu scrollable-menu" aria-labelledby="dropdownMenu1">
+        <?php
+        $query = "SELECT server_timestamp FROM servers_data WHERE server_id = ".$id." ORDER by id DESC";
+
+        if ($result = $mysqli->query($query)) {
+
+            $start="";
+            $cycles=1;
+
+            /* fetch object array */
+            while ($row = $result->fetch_row()) {
+              if ($cycles == 60) {
+                if ($start != "") {
+                  echo '<li><a href="#" data-value="'.$row['0'].'-'.$start.'">'.date("d.m.Y H:i",$row['0']).'-'.date("H:i",$start).'</a></li>';
+                }
+                $start = $row['0'];
+                $cycles = 1;
+              }
+              $cycles++;
+            }
+            /* free result set */
+            $result->close();
+        }
+        ?>
+      </ul>
+    </div>
+  </form>
+
+  <?php
+
+if (strpos($page, 'network') !== false) {
 
     ?>
-
-   <div class="col-md-12 ct-chart"><center><h2>Network Usage</h2></center>
-     <form method="post">
-       <div class="dropdown dropdown-submit-input">
-         <input type="hidden" name="selector" />
-         <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-           <?php echo date("d.m.Y H:i",$data_start).'-'.date("H:i",$data_stop); ?>
-           <span class="caret"></span>
-         </button>
-         <ul class="dropdown-menu scrollable-menu" aria-labelledby="dropdownMenu1">
-           <?php
-           $query = "SELECT server_timestamp FROM servers_data WHERE server_id = ".$id." ORDER by id DESC";
-
-           if ($result = $mysqli->query($query)) {
-
-               $start="";
-               $cycles=1;
-
-               /* fetch object array */
-               while ($row = $result->fetch_row()) {
-                 if ($cycles == 60) {
-                   if ($start != "") {
-                     echo '<li><a href="#" data-value="'.$row['0'].'-'.$start.'">'.date("d.m.Y H:i",$row['0']).'-'.date("H:i",$start).'</a></li>';
-                   }
-                   $start = $row['0'];
-                   $cycles = 1;
-                 }
-                 $cycles++;
-               }
-               /* free result set */
-               $result->close();
-           }
-           ?>
-         </ul>
-       </div>
-     </form>
      <div id="chart-net"></div>
    </div>
 
@@ -263,42 +277,6 @@
 }  elseif (strpos($page, 'hdd') !== false) {
 
    ?>
-
-  <div class="col-md-12 ct-chart"><center><h2>HDD Usage</h2></center>
-    <form method="post">
-      <div class="dropdown dropdown-submit-input">
-        <input type="hidden" name="selector" />
-        <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <?php echo date("d.m.Y H:i",$data_start).'-'.date("H:i",$data_stop); ?>
-          <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu scrollable-menu" aria-labelledby="dropdownMenu1">
-          <?php
-          $query = "SELECT server_timestamp FROM servers_data WHERE server_id = ".$id." ORDER by id DESC";
-
-          if ($result = $mysqli->query($query)) {
-
-              $start="";
-              $cycles=1;
-
-              /* fetch object array */
-              while ($row = $result->fetch_row()) {
-                if ($cycles == 60) {
-                  if ($start != "") {
-                    echo '<li><a href="#" data-value="'.$row['0'].'-'.$start.'">'.date("d.m.Y H:i",$row['0']).'-'.date("H:i",$start).'</a></li>';
-                  }
-                  $start = $row['0'];
-                  $cycles = 1;
-                }
-                $cycles++;
-              }
-              /* free result set */
-              $result->close();
-          }
-          ?>
-        </ul>
-      </div>
-    </form>
     <div id="chart-hdd"></div>
   </div>
 
@@ -326,42 +304,6 @@
 } elseif (strpos($page, 'cpu') !== false) {
 
     ?>
-
-   <div class="col-md-12 ct-chart"><center><h2>CPU Usage</h2></center>
-     <form method="post">
-       <div class="dropdown dropdown-submit-input">
-         <input type="hidden" name="selector" />
-         <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-           <?php echo date("d.m.Y H:i",$data_start).'-'.date("H:i",$data_stop); ?>
-           <span class="caret"></span>
-         </button>
-         <ul class="dropdown-menu scrollable-menu" aria-labelledby="dropdownMenu1">
-           <?php
-           $query = "SELECT server_timestamp FROM servers_data WHERE server_id = ".$id." ORDER by id DESC";
-
-           if ($result = $mysqli->query($query)) {
-
-               $start="";
-               $cycles=1;
-
-               /* fetch object array */
-               while ($row = $result->fetch_row()) {
-                 if ($cycles == 60) {
-                   if ($start != "") {
-                     echo '<li><a href="#" data-value="'.$row['0'].'-'.$start.'">'.date("d.m.Y H:i",$row['0']).'-'.date("H:i",$start).'</a></li>';
-                   }
-                   $start = $row['0'];
-                   $cycles = 1;
-                 }
-                 $cycles++;
-               }
-               /* free result set */
-               $result->close();
-           }
-           ?>
-         </ul>
-       </div>
-     </form>
      <div id="chart-cpu"></div>
    </div>
 
@@ -390,42 +332,6 @@
 } elseif (strpos($page, 'memory') !== false) {
 
     ?>
-
-   <div class="col-md-12 ct-chart"><center><h2>Memory Usage</h2></center>
-     <form method="post">
-       <div class="dropdown dropdown-submit-input">
-         <input type="hidden" name="selector" />
-         <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-           <?php echo date("d.m.Y H:i",$data_start).'-'.date("H:i",$data_stop); ?>
-           <span class="caret"></span>
-         </button>
-         <ul class="dropdown-menu scrollable-menu" aria-labelledby="dropdownMenu1">
-           <?php
-           $query = "SELECT server_timestamp FROM servers_data WHERE server_id = ".$id." ORDER by id DESC";
-
-           if ($result = $mysqli->query($query)) {
-
-               $start="";
-               $cycles=1;
-
-               /* fetch object array */
-               while ($row = $result->fetch_row()) {
-                 if ($cycles == 60) {
-                   if ($start != "") {
-                     echo '<li><a href="#" data-value="'.$row['0'].'-'.$start.'">'.date("d.m.Y H:i",$row['0']).'-'.date("H:i",$start).'</a></li>';
-                   }
-                   $start = $row['0'];
-                   $cycles = 1;
-                 }
-                 $cycles++;
-               }
-               /* free result set */
-               $result->close();
-           }
-           ?>
-         </ul>
-       </div>
-     </form>
      <div id="chart-memory"></div>
    </div>
 
@@ -453,6 +359,8 @@
    </script>
    <script src="../js/mem.js"></script>
  <?php
+
+}
 
 } else {
 
