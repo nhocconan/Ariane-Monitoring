@@ -11,6 +11,20 @@
    if(!preg_match("/^[0-9]+$/",$id)){ header('Location: index.php?page=dashboard'); }
    if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); }
 
+   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+     $range = explode("-", $_POST['selector']);
+     if (is_numeric($range['0']) AND is_numeric($range['1'])) {
+       $data_start = $range['0'];
+       $data_stop = $range['1'];
+     } else {
+       $data_start = time() - 6000;
+       $data_stop = time();
+     }
+   } else {
+     $data_start = time() - 6000;
+     $data_stop = time();
+   }
+
    ?>
 
   <ul class="nav nav-tabs">
@@ -183,19 +197,6 @@
 
 } elseif (strpos($page, 'network') !== false) {
 
-     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-       $range = explode("-", $_POST['selector']);
-       if (is_numeric($range['0']) AND is_numeric($range['1'])) {
-         $data_start = $range['0'];
-         $data_stop = $range['1'];
-       } else {
-         $data_start = time() - 6000;
-         $data_stop = time();
-       }
-     } else {
-       $data_start = time() - 6000;
-       $data_stop = time();
-     }
     ?>
 
    <div class="col-md-12 ct-chart"><center><h2>Network Usage</h2></center>
@@ -261,19 +262,6 @@
 
 }  elseif (strpos($page, 'hdd') !== false) {
 
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-      $range = explode("-", $_POST['selector']);
-      if (is_numeric($range['0']) AND is_numeric($range['1'])) {
-        $data_start = $range['0'];
-        $data_stop = $range['1'];
-      } else {
-        $data_start = time() - 6000;
-        $data_stop = time();
-      }
-    } else {
-      $data_start = time() - 6000;
-      $data_stop = time();
-    }
    ?>
 
   <div class="col-md-12 ct-chart"><center><h2>HDD Usage</h2></center>
@@ -337,19 +325,6 @@
 
 } elseif (strpos($page, 'cpu') !== false) {
 
-     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-       $range = explode("-", $_POST['selector']);
-       if (is_numeric($range['0']) AND is_numeric($range['1'])) {
-         $data_start = $range['0'];
-         $data_stop = $range['1'];
-       } else {
-         $data_start = time() - 6000;
-         $data_stop = time();
-       }
-     } else {
-       $data_start = time() - 6000;
-       $data_stop = time();
-     }
     ?>
 
    <div class="col-md-12 ct-chart"><center><h2>CPU Usage</h2></center>
@@ -414,19 +389,6 @@
 
 } elseif (strpos($page, 'memory') !== false) {
 
-     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-       $range = explode("-", $_POST['selector']);
-       if (is_numeric($range['0']) AND is_numeric($range['1'])) {
-         $data_start = $range['0'];
-         $data_stop = $range['1'];
-       } else {
-         $data_start = time() - 6000;
-         $data_stop = time();
-       }
-     } else {
-       $data_start = time() - 6000;
-       $data_stop = time();
-     }
     ?>
 
    <div class="col-md-12 ct-chart"><center><h2>Memory Usage</h2></center>
