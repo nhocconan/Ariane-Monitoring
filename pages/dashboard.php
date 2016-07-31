@@ -1,23 +1,52 @@
 <div class="col-md-8 col-md-offset-2 base-box">
 
+  <?php
+   $id = str_replace("dashboard?server=", "", $page);
+   $id = str_replace("?network", "", $id);
+   $id = str_replace("?cpu", "", $id);
+   $id = str_replace("?memory", "", $id);
+   $id = str_replace("?hdd", "", $id);
+   $id = str_replace("?trigger", "", $id);
+
+   if(!preg_match("/^[0-9]+$/",$id)){ header('Location: index.php?page=dashboard'); }
+   if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); }
+
+   ?>
+
+  <ul class="nav nav-tabs">
+    <li><a href="index.php?page=dashboard">Servers</a></li>
+    <li><a href="index.php?page=dashboard?server=<?= $id ?>">Overview</a></li>
+    <?php if (strpos($page, 'network') !== false) {
+          echo '<li class="active"><a href="index.php?page=dashboard?server='.$id.'?network">Network</a></li>';
+    } else {
+          echo '<li><a href="index.php?page=dashboard?server='.$id.'?network">Network</a></li>';
+    }
+     if (strpos($page, 'cpu') !== false) {
+          echo '<li class="active"><a href="index.php?page=dashboard?server='.$id.'?cpu">CPU</a></li>';
+    } else {
+          echo '<li><a href="index.php?page=dashboard?server='.$id.'?cpu">CPU</a></li>';
+    }
+    if (strpos($page, 'memory') !== false) {
+          echo '<li class="active"><a href="index.php?page=dashboard?server='.$id.'?memory">Memory</a></li>';
+    } else {
+          echo '<li><a href="index.php?page=dashboard?server='.$id.'?memory">Memory</a></li>';
+    }
+     if (strpos($page, 'hdd') !== false) {;
+          echo '<li class="active"><a href="index.php?page=dashboard?server='.$id.'?hdd">HDD</a></li>';
+    } else {
+          echo '<li><a href="index.php?page=dashboard?server='.$id.'?hdd">HDD</a></li>';
+    }
+     if (strpos($page, 'trigger') !== false) {
+          echo '<li class="active"><a href="index.php?page=dashboard?server='.$id.'?trigger">Trigger</a></li>';
+    }  else {
+          echo '<li><a href="index.php?page=dashboard?server='.$id.'?trigger">Trigger</a></li>';
+      } ?>
+    <li><a href="index.php?page=logout">Logout</a></li>
+  </ul>
+
 <?php if (strpos($page, 'trigger') !== false) {
 
- $id = str_replace("dashboard?server=", "", $page);
- $id = str_replace("?trigger", "", $id);
- if(!preg_match("/^[0-9]+$/",$id)){ header('Location: index.php?page=dashboard'); }
- if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); }
-
  ?>
-   <ul class="nav nav-tabs">
-     <li><a href="index.php?page=dashboard">Servers</a></li>
-     <li><a href="index.php?page=dashboard?server=<?= $id ?>">Overview</a></li>
-     <li><a href="index.php?page=dashboard?server=<?= $id ?>?network">Network</a></li>
-     <li><a href="index.php?page=dashboard?server=<?= $id ?>?cpu">CPU</a></li>
-     <li><a href="index.php?page=dashboard?server=<?= $id ?>?memory">Memory</a></li>
-     <li><a href="index.php?page=dashboard?server=<?= $id ?>?hdd">HDD</a></li>
-     <li class="active"><a href="index.php?page=dashboard?server=<?= $id ?>?trigger">Trigger</a></li>
-     <li><a href="index.php?page=logout">Logout</a></li>
-   </ul>
 
    <script>
         function addLoadEvent(func) {
@@ -154,25 +183,6 @@
 
 } elseif (strpos($page, 'network') !== false) {
 
- $id = str_replace("dashboard?server=", "", $page);
- $id = str_replace("?network", "", $id);
- if(!preg_match("/^[0-9]+$/",$id)){ header('Location: index.php?page=dashboard'); }
- if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); }
-
- ?>
-   <ul class="nav nav-tabs">
-     <li><a href="index.php?page=dashboard">Servers</a></li>
-     <li><a href="index.php?page=dashboard?server=<?= $id ?>">Overview</a></li>
-     <li class="active"><a href="index.php?page=dashboard?server=<?= $id ?>?network">Network</a></li>
-     <li><a href="index.php?page=dashboard?server=<?= $id ?>?cpu">CPU</a></li>
-     <li><a href="index.php?page=dashboard?server=<?= $id ?>?memory">Memory</a></li>
-     <li><a href="index.php?page=dashboard?server=<?= $id ?>?hdd">HDD</a></li>
-     <li><a href="index.php?page=dashboard?server=<?= $id ?>?trigger">Trigger</a></li>
-     <li><a href="index.php?page=logout">Logout</a></li>
-   </ul>
-
-   <?php
-
      if ($_SERVER['REQUEST_METHOD'] == 'POST') {
        $range = explode("-", $_POST['selector']);
        if (is_numeric($range['0']) AND is_numeric($range['1'])) {
@@ -251,25 +261,6 @@
 
 }  elseif (strpos($page, 'hdd') !== false) {
 
-$id = str_replace("dashboard?server=", "", $page);
-$id = str_replace("?hdd", "", $id);
-if(!preg_match("/^[0-9]+$/",$id)){ header('Location: index.php?page=dashboard'); }
-if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); }
-
-?>
-  <ul class="nav nav-tabs">
-    <li><a href="index.php?page=dashboard">Servers</a></li>
-    <li><a href="index.php?page=dashboard?server=<?= $id ?>">Overview</a></li>
-    <li><a href="index.php?page=dashboard?server=<?= $id ?>?network">Network</a></li>
-    <li><a href="index.php?page=dashboard?server=<?= $id ?>?cpu">CPU</a></li>
-    <li><a href="index.php?page=dashboard?server=<?= $id ?>?memory">Memory</a></li>
-    <li class="active"><a href="index.php?page=dashboard?server=<?= $id ?>?hdd">HDD</a></li>
-    <li><a href="index.php?page=dashboard?server=<?= $id ?>?trigger">Trigger</a></li>
-    <li><a href="index.php?page=logout">Logout</a></li>
-  </ul>
-
-  <?php
-
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       $range = explode("-", $_POST['selector']);
       if (is_numeric($range['0']) AND is_numeric($range['1'])) {
@@ -345,26 +336,6 @@ if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); 
 <?php
 
 } elseif (strpos($page, 'cpu') !== false) {
-
- $id = str_replace("dashboard?server=", "", $page);
- $id = str_replace("?cpu", "", $id);
- if(!preg_match("/^[0-9]+$/",$id)){ header('Location: index.php?page=dashboard'); }
- if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); }
-
-
- ?>
-   <ul class="nav nav-tabs">
-     <li><a href="index.php?page=dashboard">Servers</a></li>
-     <li><a href="index.php?page=dashboard?server=<?= $id ?>">Overview</a></li>
-     <li><a href="index.php?page=dashboard?server=<?= $id ?>?network">Network</a></li>
-     <li class="active"><a href="index.php?page=dashboard?server=<?= $id ?>?cpu">CPU</a></li>
-     <li><a href="index.php?page=dashboard?server=<?= $id ?>?memory">Memory</a></li>
-     <li><a href="index.php?page=dashboard?server=<?= $id ?>?hdd">HDD</a></li>
-     <li><a href="index.php?page=dashboard?server=<?= $id ?>?trigger">Trigger</a></li>
-     <li><a href="index.php?page=logout">Logout</a></li>
-   </ul>
-
-   <?php
 
      if ($_SERVER['REQUEST_METHOD'] == 'POST') {
        $range = explode("-", $_POST['selector']);
@@ -442,26 +413,6 @@ if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); 
  <?php
 
 } elseif (strpos($page, 'memory') !== false) {
-
-
- $id = str_replace("dashboard?server=", "", $page);
- $id = str_replace("?memory", "", $id);
- if(!preg_match("/^[0-9]+$/",$id)){ header('Location: index.php?page=dashboard'); }
- if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); }
-
- ?>
-   <ul class="nav nav-tabs">
-     <li><a href="index.php?page=dashboard">Servers</a></li>
-     <li><a href="index.php?page=dashboard?server=<?= $id ?>">Overview</a></li>
-     <li><a href="index.php?page=dashboard?server=<?= $id ?>?network">Network</a></li>
-     <li><a href="index.php?page=dashboard?server=<?= $id ?>?cpu">CPU</a></li>
-     <li class="active"><a href="index.php?page=dashboard?server=<?= $id ?>?memory">Memory</a></li>
-     <li><a href="index.php?page=dashboard?server=<?= $id ?>?hdd">HDD</a></li>
-     <li><a href="index.php?page=dashboard?server=<?= $id ?>?trigger">Trigger</a></li>
-     <li><a href="index.php?page=logout">Logout</a></li>
-   </ul>
-
-   <?php
 
      if ($_SERVER['REQUEST_METHOD'] == 'POST') {
        $range = explode("-", $_POST['selector']);
@@ -543,7 +494,6 @@ if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); 
 
 } else {
 
- $id = str_replace("dashboard?server=", "", $page);
  if(!preg_match("/^[0-9]+$/",$id)){ header('Location: index.php?page=dashboard'); }
  if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); }
 
@@ -564,16 +514,6 @@ if (isset($_POST['timeframe'])) {
 
  ?>
  <meta http-equiv="refresh" content="60">
-   <ul class="nav nav-tabs">
-     <li><a href="index.php?page=dashboard">Servers</a></li>
-     <li class="active"><a href="index.php?page=dashboard?server=<?= $id ?>">Overview</a></li>
-     <li><a href="index.php?page=dashboard?server=<?= $id ?>?network">Network</a></li>
-     <li><a href="index.php?page=dashboard?server=<?= $id ?>?cpu">CPU</a></li>
-     <li><a href="index.php?page=dashboard?server=<?= $id ?>?memory">Memory</a></li>
-     <li><a href="index.php?page=dashboard?server=<?= $id ?>?hdd">HDD</a></li>
-     <li><a href="index.php?page=dashboard?server=<?= $id ?>?trigger">Trigger</a></li>
-     <li><a href="index.php?page=logout">Logout</a></li>
-   </ul>
    <div class="col-md-12">
      <h3><?= escape($server_name); ?></h3>
    </div>
