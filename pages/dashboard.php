@@ -223,7 +223,7 @@
          </ul>
        </div>
      </form>
-     <div id="chart"></div>
+     <div id="chart-net"></div>
    </div>
 
    </div>
@@ -240,34 +240,11 @@
        });
 
      })(jQuery);
-     var chart = c3.generate({
-       bindto: '#chart',
-       data: {
-         columns: [
-             ['TX', <?php echo implode(',',$Beacon['server_tx_diff']); ?>],
-             ['RX', <?php echo implode(',',$Beacon['server_rx_diff']); ?>]
-         ],
-         types: {
-             TX: 'area',
-             RX: 'area'
-             // 'line', 'spline', 'step', 'area', 'area-step' are also available to stack
-         },
-         groups: [['RX' , 'TX']]
-     },
-     point: {
-          show: false
-      },
-     axis: {
-       x: {
-           type: 'category',
-           categories: [<?php echo implode(',',$Beacon['server_timestamp']); ?>]
-       },
-       y: {
-           label: 'MB/s'
-       },
-     }
-     });
+     var server_timestamp = [<?php echo implode(',',$Beacon['server_timestamp']); ?>];
+     var server_tx_diff = <?php echo json_encode($Beacon['server_tx_diff']); ?>;
+     var server_rx_diff = <?php echo json_encode($Beacon['server_rx_diff']); ?>;
    </script>
+   <script src="../js/net.js"></script>
  <?php
 
 
@@ -343,7 +320,7 @@ if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); 
         </ul>
       </div>
     </form>
-    <div id="chart"></div>
+    <div id="chart-hdd"></div>
   </div>
 
   </div>
@@ -360,33 +337,11 @@ if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); 
       });
 
     })(jQuery);
-    var chart = c3.generate({
-      bindto: '#chart',
-      data: {
-        columns: [
-            ['Usage', <?php echo implode(',',$Beacon['hdd_usage']); ?>],
-            ['Total', <?php echo implode(',',$Beacon['hdd_total']); ?>]
-        ],
-        types: {
-            Usage: 'area',
-            Total: 'area'
-            // 'line', 'spline', 'step', 'area', 'area-step' are also available to stack
-        },
-    },
-    point: {
-         show: false
-     },
-    axis: {
-      x: {
-          type: 'category',
-          categories: [<?php echo implode(',',$Beacon['server_timestamp']); ?>]
-      },
-      y: {
-          label: 'GB'
-      },
-    }
-    });
+    var server_timestamp = [<?php echo implode(',',$Beacon['server_timestamp']); ?>];
+    var hdd_usage = <?php echo json_encode($Beacon['hdd_usage']); ?>;
+    var hdd_total = <?php echo json_encode($Beacon['hdd_total']); ?>;
   </script>
+  <script src="../js/hdd.js"></script>
 <?php
 
 } elseif (strpos($page, 'cpu') !== false) {
@@ -461,7 +416,7 @@ if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); 
          </ul>
        </div>
      </form>
-     <div id="chart"></div>
+     <div id="chart-cpu"></div>
    </div>
 
    </div>
@@ -478,39 +433,12 @@ if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); 
        });
 
      })(jQuery);
-     var chart = c3.generate({
-       bindto: '#chart',
-       data: {
-         columns: [
-             ['Usage', <?php echo implode(',',$Beacon['cpu_load']); ?>],
-             ['Steal', <?php echo implode(',',$Beacon['cpu_steal']); ?>],
-             ['I/O Wait', <?php echo implode(',',$Beacon['io_wait']); ?>]
-         ],
-         types: {
-             Usage: 'area',
-             Steal :'area',
-             'I/O Wait' : 'area'
-
-             // 'line', 'spline', 'step', 'area', 'area-step' are also available to stack
-         },
-     },
-     point: {
-          show: false
-      },
-     size: {
-       height: 200
-     },
-     axis: {
-       x: {
-           type: 'category',
-           categories: [<?php echo implode(',',$Beacon['server_timestamp']); ?>]
-       },
-       y: {
-           label: '%'
-       },
-     }
-     });
+     var server_timestamp = [<?php echo implode(',',$Beacon['server_timestamp']); ?>];
+     var cpu_load = <?php echo json_encode($Beacon['cpu_load']); ?>;
+     var cpu_steal = <?php echo json_encode($Beacon['cpu_steal']); ?>;
+     var io_wait = <?php echo json_encode($Beacon['io_wait']); ?>;
    </script>
+   <script src="../js/cpu.js"></script>
  <?php
 
 } elseif (strpos($page, 'memory') !== false) {
@@ -585,7 +513,7 @@ if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); 
          </ul>
        </div>
      </form>
-     <div id="chart"></div>
+     <div id="chart-memory"></div>
    </div>
 
    </div>
@@ -602,41 +530,15 @@ if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); 
        });
 
      })(jQuery);
-     var chart = c3.generate({
-       bindto: '#chart',
-       data: {
-         columns: [
-             ['Free', <?php echo implode(',',$Beacon['memory_free']); ?>],
-             ['Cached', <?php echo implode(',',$Beacon['memory_cached']); ?>],
-             ['Buffer', <?php echo implode(',',$Beacon['memory_buffer']); ?>],
-             ['Used', <?php echo implode(',',$Beacon['memory_used']); ?>],
-             ['Active', <?php echo implode(',',$Beacon['memory_active']); ?>],
-             ['Inactive', <?php echo implode(',',$Beacon['memory_inactie']); ?>]
-         ],
-         types: {
-             Free: 'line',
-             Cached: 'line',
-             Buffer: 'line',
-             Used: 'line',
-             Active: 'line',
-             Inactive: 'line',
-             // 'line', 'spline', 'step', 'area', 'area-step' are also available to stack
-         },
-     },
-     point: {
-          show: false
-      },
-     axis: {
-       x: {
-           type: 'category',
-           categories: [<?php echo implode(',',$Beacon['server_timestamp']); ?>]
-       },
-       y: {
-           label: 'MB'
-       },
-     }
-     });
+     var server_timestamp = [<?php echo implode(',',$Beacon['server_timestamp']); ?>];
+     var memory_free = <?php echo json_encode($Beacon['memory_free']); ?>;
+     var memory_cached = <?php echo json_encode($Beacon['memory_cached']); ?>;
+     var memory_buffer = <?php echo json_encode($Beacon['memory_buffer']); ?>;
+     var memory_used = <?php echo json_encode($Beacon['memory_used']); ?>;
+     var memory_active = <?php echo json_encode($Beacon['memory_active']); ?>;
+     var memory_inactive = <?php echo json_encode($Beacon['memory_inactive']); ?>;
    </script>
+   <script src="../js/mem.js"></script>
  <?php
 
 } else {
@@ -745,159 +647,25 @@ if (isset($_POST['timeframe'])) {
    <?php $Beacon = generateBacon($id,$timeframe); ?>
 
    <script>
-   var chart = c3.generate({
-     bindto: '#chart-memory',
-     data: {
-       columns: [
-           ['Free', <?php echo implode(',',$Beacon['memory_free']); ?>],
-           ['Cached', <?php echo implode(',',$Beacon['memory_cached']); ?>],
-           ['Buffer', <?php echo implode(',',$Beacon['memory_buffer']); ?>],
-           ['Used', <?php echo implode(',',$Beacon['memory_used']); ?>],
-           ['Active', <?php echo implode(',',$Beacon['memory_active']); ?>],
-           ['Inactive', <?php echo implode(',',$Beacon['memory_inactive']); ?>]
-       ],
-       types: {
-           Free: 'line',
-           Cached: 'line',
-           Buffer: 'line',
-           Used: 'line',
-           Active: 'line',
-           Inactive: 'line',
-           // 'line', 'spline', 'step', 'area', 'area-step' are also available to stack
-       },
-   },
-   size: {
-     height: 200
-   },
-   point: {
-        show: false
-    },
-   axis: {
-     x: {
-           type: 'category',
-           categories: [<?php echo implode(',',$Beacon['server_timestamp']); ?>],
-           tick: {
-           width: 80,
-               culling: {
-                   max: 7
-               }
-             }
-         },
-     y: {
-         label: 'MB'
-     },
-   }
-   });
-   var chart = c3.generate({
-     bindto: '#chart-cpu',
-     data: {
-       columns: [
-           ['Usage', <?php echo implode(',',$Beacon['cpu_load']); ?>],
-           ['Steal', <?php echo implode(',',$Beacon['cpu_steal']); ?>],
-           ['I/O Wait', <?php echo implode(',',$Beacon['io_wait']); ?>]
-       ],
-       types: {
-           Usage: 'area',
-           Steal :'area',
-           'I/O Wait' : 'area'
-
-           // 'line', 'spline', 'step', 'area', 'area-step' are also available to stack
-       },
-   },
-   point: {
-        show: false
-    },
-   size: {
-     height: 200
-   },
-   axis: {
-     x: {
-           type: 'category',
-           categories: [<?php echo implode(',',$Beacon['server_timestamp']); ?>],
-           tick: {
-           width: 80,
-               culling: {
-                   max: 7
-               }
-             }
-         },
-     y: {
-         label: '%'
-     },
-   }
-   });
-   var chart = c3.generate({
-     bindto: '#chart-net',
-     data: {
-       columns: [
-           ['TX', <?php echo implode(',',$Beacon['server_tx_diff']); ?>],
-           ['RX', <?php echo implode(',',$Beacon['server_rx_diff']); ?>]
-       ],
-       types: {
-           TX: 'area',
-           RX: 'area'
-           // 'line', 'spline', 'step', 'area', 'area-step' are also available to stack
-       },
-       groups: [['RX' , 'TX']]
-   },
-   point: {
-        show: false
-    },
-   size: {
-     height: 200
-   },
-   axis: {
-     x: {
-           type: 'category',
-           categories: [<?php echo implode(',',$Beacon['server_timestamp']); ?>],
-           tick: {
-           width: 80,
-               culling: {
-                   max: 7
-               }
-             }
-         },
-     y: {
-         label: 'MB/s'
-     },
-   }
-   });
-   var chart = c3.generate({
-     bindto: '#chart-hdd',
-     data: {
-       columns: [
-           ['Usage', <?php echo implode(',',$Beacon['hdd_usage']); ?>],
-           ['Total', <?php echo implode(',',$Beacon['hdd_total']); ?>]
-       ],
-       types: {
-           Usage: 'area',
-           Total: 'area'
-           // 'line', 'spline', 'step', 'area', 'area-step' are also available to stack
-       },
-   },
-   point: {
-        show: false
-    },
-   size: {
-     height: 200
-   },
-   axis: {
-    x: {
-          type: 'category',
-          categories: [<?php echo implode(',',$Beacon['server_timestamp']); ?>],
-          tick: {
-          width: 80,
-              culling: {
-                  max: 7
-              }
-            }
-        },
-        y: {
-         label: 'GB'
-     },
-    }
-   });
+   var server_timestamp = [<?php echo implode(',',$Beacon['server_timestamp']); ?>];
+   var memory_free = <?php echo json_encode($Beacon['memory_free']); ?>;
+   var memory_cached = <?php echo json_encode($Beacon['memory_cached']); ?>;
+   var memory_buffer = <?php echo json_encode($Beacon['memory_buffer']); ?>;
+   var memory_used = <?php echo json_encode($Beacon['memory_used']); ?>;
+   var memory_active = <?php echo json_encode($Beacon['memory_active']); ?>;
+   var memory_inactive = <?php echo json_encode($Beacon['memory_inactive']); ?>;
+   var cpu_load = <?php echo json_encode($Beacon['cpu_load']); ?>;
+   var cpu_steal = <?php echo json_encode($Beacon['cpu_steal']); ?>;
+   var io_wait = <?php echo json_encode($Beacon['io_wait']); ?>;
+   var hdd_usage = <?php echo json_encode($Beacon['hdd_usage']); ?>;
+   var hdd_total = <?php echo json_encode($Beacon['hdd_total']); ?>;
+   var server_tx_diff = <?php echo json_encode($Beacon['server_tx_diff']); ?>;
+   var server_rx_diff = <?php echo json_encode($Beacon['server_rx_diff']); ?>;
    </script>
+   <script src="../js/mem.js"></script>
+   <script src="../js/cpu.js"></script>
+   <script src="../js/net.js"></script>
+   <script src="../js/hdd.js"></script>
  </div>
  <?php
 
