@@ -34,5 +34,6 @@ Quick Setup:
 Quick Removal:
 
 - rm /var/spool/cron/crontabs/ariane_agent
+- pkill -u ariane_agent
 - userdel ariane_agent
 - rm -r /etc/ariane_agent
