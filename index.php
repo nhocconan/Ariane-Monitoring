@@ -55,16 +55,31 @@ if ($page=="login") {
     include 'pages/account.php';
  } elseif ($page == "dashboard" AND $_SESSION['login'] === 1 AND $USER_ID != "") { ?>
 
+   <!-- Fixed navbar -->
+   <nav class="navbar navbar-default navbar-fixed-top navbar-opacity">
+     <div class="container">
+       <div class="navbar-header">
+         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+           <span class="sr-only">Toggle navigation</span>
+           <span class="icon-bar"></span>
+           <span class="icon-bar"></span>
+           <span class="icon-bar"></span>
+         </button>
+         <a class="navbar-brand" href="index.php?page=dashboard">Ariane</a>
+       </div>
+       <div id="navbar" class="navbar-collapse collapse">
+         <ul class="nav navbar-nav">
+           <li class="active"><a href="index.php?page=dashboard">Servers</a></li>
+           <li><a href="index.php?page=dashboard?add">Add Server</a></li>
+           <li><a href="index.php?page=dashboard?account">Account</a></li>
+           <li><a href="index.php?page=logout">Logout</a></li>
+         </ul>
+       </div>
+     </div>
+   </nav>
+
   <meta http-equiv="refresh" content="60">
-  <div class="col-md-4 col-md-offset-4 base-box">
-    <form action="index.php?page=dashboard" method="post">
-      <ul class="nav nav-tabs">
-        <li class="active"><a href="index.php?page=dashboard">Servers</a></li>
-        <li><a href="index.php?page=dashboard?add">Add Server</a></li>
-        <li><a href="index.php?page=dashboard?account">Account</a></li>
-        <li><a href="index.php?page=logout">Logout</a></li>
-      </ul>
-    </form>
+  <div class="container base-box">
     <table class="table table-hover">
     <thead>
       <tr>
@@ -139,13 +154,29 @@ if ($page=="login") {
       }
 ?>
 
-<div class="col-md-4 col-md-offset-4" style="background-color:white;opacity:0.8;margin-top:150px;border-radius:8px;">
-  <ul class="nav nav-tabs">
-    <li><a href="index.php?page=dashboard">Servers</a></li>
-    <li class="active"><a href="index.php?page=dashboard?add">Add Server</a></li>
-    <li><a href="index.php?page=dashboard?account">Account</a></li>
-    <li><a href="index.php?page=logout">Logout</a></li>
-  </ul>
+  <!-- Fixed navbar -->
+  <nav class="navbar navbar-default navbar-fixed-top navbar-opacity">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.php?page=dashboard">Ariane</a>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="index.php?page=dashboard">Servers</a></li>
+          <li class="active"><a href="index.php?page=dashboard?add">Add Server</a></li>
+          <li><a href="index.php?page=dashboard?account">Account</a></li>
+          <li><a href="index.php?page=logout">Logout</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="col-md-4 col-md-offset-4">
   <form action="index.php?page=dashboard?add" method="post" style="margin-top:10px;margin-bottom:10px;">
     <h2><center>Install Agent</center></h2>
       <?php
@@ -163,13 +194,28 @@ if ($page=="login") {
 
 <?php } else { ?>
 
-  <div class="col-md-4 col-md-offset-4" style="background-color:white;opacity:0.8;margin-top:150px;border-radius:8px;">
-    <ul class="nav nav-tabs">
-      <li><a href="index.php?page=dashboard">Servers</a></li>
-      <li class="active"><a href="index.php?page=dashboard?add">Add Server</a></li>
-      <li><a href="index.php?page=dashboard?account">Account</a></li>
-      <li><a href="index.php?page=logout">Logout</a></li>
-    </ul>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-opacity">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="index.php?page=dashboard">Ariane</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="index.php?page=dashboard">Servers</a></li>
+            <li class="active"><a href="index.php?page=dashboard?add">Add Server</a></li>
+            <li><a href="index.php?page=dashboard?account">Account</a></li>
+            <li><a href="index.php?page=logout">Logout</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="col-md-4 col-md-offset-4 base-box">
     <form action="index.php?page=dashboard?add" method="post" style="margin-top:10px;margin-bottom:10px;">
       <h2><center>New Server</center></h2>
       <div class="form-group">

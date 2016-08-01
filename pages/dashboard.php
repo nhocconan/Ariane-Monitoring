@@ -1,15 +1,72 @@
-<div class="col-md-8 col-md-offset-2 base-box">
+<?php
+
+$id = str_replace("dashboard?server=", "", $page);
+$id = str_replace("?network", "", $id);
+$id = str_replace("?cpu", "", $id);
+$id = str_replace("?memory", "", $id);
+$id = str_replace("?hdd", "", $id);
+$id = str_replace("?trigger", "", $id);
+
+if(!preg_match("/^[0-9]+$/",$id)){ header('Location: index.php?page=dashboard'); }
+if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); }
+
+ ?>
+
+<nav class="navbar navbar-default navbar-fixed-top navbar-opacity">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="index.php?page=dashboard">Ariane</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="index.php?page=dashboard">Servers</a></li>
+            <li><a href="index.php?page=dashboard?server=<?= $id ?>">Overview</a></li>
+            <?php if (strpos($page, 'network') !== false) {
+                  $title = '<div class="col-md-12 ct-chart"><center><h2>Network Usage</h2></center>';
+                  $navbar_elments .= '<li class="active"><a href="index.php?page=dashboard?server='.$id.'?network">Network</a></li>';
+            } else {
+                  $navbar_elments .= '<li><a href="index.php?page=dashboard?server='.$id.'?network">Network</a></li>';
+            }
+             if (strpos($page, 'cpu') !== false) {
+                  $title = '<div class="col-md-12 ct-chart"><center><h2>CPU Usage</h2></center>';
+                  $navbar_elments .= '<li class="active"><a href="index.php?page=dashboard?server='.$id.'?cpu">CPU</a></li>';
+            } else {
+                  $navbar_elments .= '<li><a href="index.php?page=dashboard?server='.$id.'?cpu">CPU</a></li>';
+            }
+            if (strpos($page, 'memory') !== false) {
+                  $title = '<div class="col-md-12 ct-chart"><center><h2>Memory Usage</h2></center>';
+                  $navbar_elments .= '<li class="active"><a href="index.php?page=dashboard?server='.$id.'?memory">Memory</a></li>';
+            } else {
+                  $navbar_elments .= '<li><a href="index.php?page=dashboard?server='.$id.'?memory">Memory</a></li>';
+            }
+             if (strpos($page, 'hdd') !== false) {
+                  $title = '<div class="col-md-12 ct-chart"><center><h2>HDD Usage</h2></center>';
+                  $navbar_elments .= '<li class="active"><a href="index.php?page=dashboard?server='.$id.'?hdd">HDD</a></li>';
+            } else {
+                  $navbar_elments .= '<li><a href="index.php?page=dashboard?server='.$id.'?hdd">HDD</a></li>';
+            }
+             if (strpos($page, 'trigger') !== false) {
+                  $navbar_elments .= '<li class="active"><a href="index.php?page=dashboard?server='.$id.'?trigger">Trigger</a></li>';
+            }  else {
+                  $navbar_elments .= '<li><a href="index.php?page=dashboard?server='.$id.'?trigger">Trigger</a></li>';
+            }
+              echo $navbar_elments;
+              ?>
+            <li><a href="index.php?page=logout">Logout</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+<div class="container base-box">
 
   <?php
-   $id = str_replace("dashboard?server=", "", $page);
-   $id = str_replace("?network", "", $id);
-   $id = str_replace("?cpu", "", $id);
-   $id = str_replace("?memory", "", $id);
-   $id = str_replace("?hdd", "", $id);
-   $id = str_replace("?trigger", "", $id);
-
-   if(!preg_match("/^[0-9]+$/",$id)){ header('Location: index.php?page=dashboard'); }
-   if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); }
 
    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
      $range = explode("-", $_POST['selector']);
@@ -29,42 +86,6 @@
 
    ?>
 
-  <ul class="nav nav-tabs">
-    <li><a href="index.php?page=dashboard">Servers</a></li>
-    <li><a href="index.php?page=dashboard?server=<?= $id ?>">Overview</a></li>
-    <?php if (strpos($page, 'network') !== false) {
-          $title = '<div class="col-md-12 ct-chart"><center><h2>Network Usage</h2></center>';
-          $navbar_elments .= '<li class="active"><a href="index.php?page=dashboard?server='.$id.'?network">Network</a></li>';
-    } else {
-          $navbar_elments .= '<li><a href="index.php?page=dashboard?server='.$id.'?network">Network</a></li>';
-    }
-     if (strpos($page, 'cpu') !== false) {
-          $title = '<div class="col-md-12 ct-chart"><center><h2>CPU Usage</h2></center>';
-          $navbar_elments .= '<li class="active"><a href="index.php?page=dashboard?server='.$id.'?cpu">CPU</a></li>';
-    } else {
-          $navbar_elments .= '<li><a href="index.php?page=dashboard?server='.$id.'?cpu">CPU</a></li>';
-    }
-    if (strpos($page, 'memory') !== false) {
-          $title = '<div class="col-md-12 ct-chart"><center><h2>Memory Usage</h2></center>';
-          $navbar_elments .= '<li class="active"><a href="index.php?page=dashboard?server='.$id.'?memory">Memory</a></li>';
-    } else {
-          $navbar_elments .= '<li><a href="index.php?page=dashboard?server='.$id.'?memory">Memory</a></li>';
-    }
-     if (strpos($page, 'hdd') !== false) {
-          $title = '<div class="col-md-12 ct-chart"><center><h2>HDD Usage</h2></center>';
-          $navbar_elments .= '<li class="active"><a href="index.php?page=dashboard?server='.$id.'?hdd">HDD</a></li>';
-    } else {
-          $navbar_elments .= '<li><a href="index.php?page=dashboard?server='.$id.'?hdd">HDD</a></li>';
-    }
-     if (strpos($page, 'trigger') !== false) {
-          $navbar_elments .= '<li class="active"><a href="index.php?page=dashboard?server='.$id.'?trigger">Trigger</a></li>';
-    }  else {
-          $navbar_elments .= '<li><a href="index.php?page=dashboard?server='.$id.'?trigger">Trigger</a></li>';
-    }
-      echo $navbar_elments;
-      ?>
-    <li><a href="index.php?page=logout">Logout</a></li>
-  </ul>
 
 <?= $title ?>
 <?php if (strpos($page, 'trigger') !== false) {
@@ -170,7 +191,7 @@
               </div>
            </div>
            </div>
-           <div class="col-sm-2">
+           <div class="col-sm-4">
              <h3>Trigger - System</h3>
              <div class="checkbox">
                <label><input type="checkbox" class="form-control" name="reboot" id="reboot" checked data-toggle="toggle" value="">Reboot</label>
@@ -200,7 +221,6 @@
             </div>
             </div>
         </form>
-</div>
 
 <?php
 
@@ -248,10 +268,8 @@
 if (strpos($page, 'network') !== false) {
 
     ?>
-     <div id="chart-net"></div>
-   </div>
 
-   </div>
+     <div id="chart-net"></div>
 
    <?php $Beacon = generateBacon($id,0,$data_start,$data_stop); ?>
 
@@ -278,9 +296,6 @@ if (strpos($page, 'network') !== false) {
 
    ?>
     <div id="chart-hdd"></div>
-  </div>
-
-  </div>
 
    <?php $Beacon = generateBacon($id,0,$data_start,$data_stop); ?>
 
@@ -305,9 +320,6 @@ if (strpos($page, 'network') !== false) {
 
     ?>
      <div id="chart-cpu"></div>
-   </div>
-
-   </div>
 
    <?php $Beacon = generateBacon($id,0,$data_start,$data_stop); ?>
 
@@ -333,9 +345,6 @@ if (strpos($page, 'network') !== false) {
 
     ?>
      <div id="chart-memory"></div>
-   </div>
-
-   </div>
 
    <?php $Beacon = generateBacon($id,0,$data_start,$data_stop); ?>
 
@@ -386,7 +395,6 @@ if (isset($_POST['timeframe'])) {
  <meta http-equiv="refresh" content="60">
    <div class="col-md-12">
      <h3><?= escape($server_name); ?></h3>
-   </div>
 
    <div class="col-md-6">
      <p>Uptime: <?= escape(secondsToTime($server_uptime)); ?></p>
@@ -397,6 +405,7 @@ if (isset($_POST['timeframe'])) {
      <p>CPU Model: <?= escape($server_cpu); ?></p>
      <p>CPU Speed: <?= escape($server_cpu_cores); ?>x<?= escape($server_cpu_mhz); ?> Mhz</p>
    </div>
+  </div>
 
   <form method="post" id="selector">
      <div class="btn-group pull-right" role="group">
@@ -450,10 +459,6 @@ if (isset($_POST['timeframe'])) {
 
    <div class="col-md-12 ct-chart_hdd"><center><h2>HDD Usage</h2></center><div id="chart-hdd"></div></div>
 
-   <div class="row col-md-12">
-
-   </div>
-
    <?php $Beacon = generateBacon($id,$timeframe); ?>
 
    <script>
@@ -476,9 +481,9 @@ if (isset($_POST['timeframe'])) {
    <script src="../js/cpu.js"></script>
    <script src="../js/net.js"></script>
    <script src="../js/hdd.js"></script>
- </div>
  <?php
 
 }
 
  ?>
+</div>

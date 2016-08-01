@@ -31,6 +31,8 @@ Quick Setup:
 - Delete create_account.php or add the exit() again.
 - Add the cron.php to your Crontab, like:  "* * * * * /usr/bin/php /var/www/ariane/cron.php"
 
+Wallpaper used: http://aquafugit.deviantart.com/art/Ubuntu-Grunge-165623955
+
 Quick Removal:
 
 - rm /var/spool/cron/crontabs/ariane_agent
