@@ -176,7 +176,7 @@ if ($page=="login") {
       </div>
     </div>
   </nav>
-  <div class="col-md-4 col-md-offset-4">
+  <div class="col-md-4 col-md-offset-4 base-box">
   <form action="index.php?page=dashboard?add" method="post" style="margin-top:10px;margin-bottom:10px;">
     <h2><center>Install Agent</center></h2>
       <?php
