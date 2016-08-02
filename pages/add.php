@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' AND isset($_POST['confirm'])) {
 
       $key = randomPassword();
 
-      $stmt = $mysqli->prepare("INSERT INTO servers(user_id,server_name,server_key) VALUES (?, ?, ?)");
+      $stmt = $database->prepare("INSERT INTO servers(user_id,server_name,server_key) VALUES (?, ?, ?)");
       $stmt->bind_param('iss', $USER_ID,$name,$key);
       if (!$stmt->execute()) {
         $error = true;

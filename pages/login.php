@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' AND isset($_POST['confirm'])) {
 
       $success = false;
 
-      $stmt = $mysqli->prepare("SELECT password,id FROM users WHERE username = ? LIMIT 1");
+      $stmt = $database->prepare("SELECT password,id FROM users WHERE username = ? LIMIT 1");
       $stmt->bind_param('s', $username);
       if ($stmt->execute()) { $success = true; }
       $stmt->bind_result($password_db,$id);

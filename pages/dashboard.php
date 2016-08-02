@@ -129,7 +129,7 @@ if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); 
 
     if ($success == true) {
 
-      $stmt = $mysqli->prepare("UPDATE servers SET cpu_alert = ? ,cpu_steal_alert = ? ,io_wait_alert = ? , reboot_alert = ?, offline_alert = ? WHERE id = ?");
+      $stmt = $database->prepare("UPDATE servers SET cpu_alert = ? ,cpu_steal_alert = ? ,io_wait_alert = ? , reboot_alert = ?, offline_alert = ? WHERE id = ?");
       $stmt->bind_param('iiiiii',$load,$steal,$io,$reboot,$offline,$id);
       $stmt->execute();
       $stmt->close();
@@ -138,7 +138,7 @@ if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); 
     }
   }
 
-  $stmt = $mysqli->prepare("SELECT cpu_alert,cpu_steal_alert,io_wait_alert,reboot_alert,offline_alert  FROM servers WHERE id = ? LIMIT 1");
+  $stmt = $database->prepare("SELECT cpu_alert,cpu_steal_alert,io_wait_alert,reboot_alert,offline_alert  FROM servers WHERE id = ? LIMIT 1");
   $stmt->bind_param('i', $id);
   $stmt->execute();
   $stmt->bind_result($db_cpu,$db_steal,$db_wait,$db_reboot,$db_offline_alert);
@@ -239,7 +239,7 @@ if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); 
         <?php
         $query = "SELECT server_timestamp FROM servers_data WHERE server_id = ".$id." ORDER by id DESC";
 
-        if ($result = $mysqli->query($query)) {
+        if ($result = $database->query($query)) {
 
             $start="";
             $cycles=1;
@@ -384,7 +384,7 @@ if (isset($_POST['timeframe'])) {
   }
 }
 
- $stmt = $mysqli->prepare("SELECT server_name,server_ip,server_uptime,server_kernel,server_cpu,server_cpu_cores,server_cpu_mhz FROM servers WHERE id = ? LIMIT 1");
+ $stmt = $database->prepare("SELECT server_name,server_ip,server_uptime,server_kernel,server_cpu,server_cpu_cores,server_cpu_mhz FROM servers WHERE id = ? LIMIT 1");
  $stmt->bind_param('i', $id);
  $stmt->execute();
  $stmt->bind_result($server_name,$server_ip,$server_uptime,$server_kernel,$server_cpu,$server_cpu_cores,$server_cpu_mhz);

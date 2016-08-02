@@ -16,7 +16,7 @@ if (isset($_POST['confirm'])) {
  if (strlen($pw) > 160 ) {$msg = "Passwords are to long."; $success = false;}
  if ($pw != $pw2) {$msg = "Passwords not equal."; $success = false;}
 
- $stmt = $mysqli->prepare("SELECT password FROM users WHERE id = ?");
+ $stmt = $database->prepare("SELECT password FROM users WHERE id = ?");
  $stmt->bind_param('i', $USER_ID);
  $stmt->execute();
  $stmt->bind_result($password_db);
@@ -34,7 +34,7 @@ if (isset($_POST['confirm'])) {
 
      $hash = password_hash($pw, PASSWORD_DEFAULT);
 
-     $stmt = $mysqli->prepare("UPDATE users SET password = ?  WHERE id = ?");
+     $stmt = $database->prepare("UPDATE users SET password = ?  WHERE id = ?");
      $stmt->bind_param('si',$hash,$_SESSION['user_id']);
      $stmt->execute();
      $stmt->close();

@@ -3,8 +3,10 @@ session_start();
 
 include 'config.php';
 
-if ($mysqli->connect_error) { //Checks if the MySQL Connection works, if not it returns you a error msg and exits.
-   echo "Not connected, error: " . $mysqli->connect_error;
+$database = new mysqli(_db_host, _db_login, _db_password, _db);
+
+if ($database->connect_error) { //Checks if the MySQL Connection works, if not it returns you a error msg and exits.
+   echo "Not connected, error: " . $database->connect_error;
    exit;
 }
 
@@ -40,7 +42,7 @@ function secondsToTime($seconds) {
 }
 
 function generateBacon($server_id,$timeframe,$start_in = 0,$end_in = 0) {
-  global $mysqli;
+  global $database;
 
   $server_data = array();
   $start = time() - 3600;
@@ -66,7 +68,7 @@ function generateBacon($server_id,$timeframe,$start_in = 0,$end_in = 0) {
   }
 
   $query = "SELECT memory_total,memory_free,memory_cached,memory_buffer,cpu_load,server_rx_diff,server_tx_diff,memory_active,memory_inactive,hdd_usage,hdd_total,cpu_steal,io_wait,server_timestamp FROM servers_data WHERE server_id = ? AND server_timestamp >= ? AND server_timestamp <= ? ORDER by id";
-  $stmt = $mysqli->prepare($query);
+  $stmt = $database->prepare($query);
   $stmt->bind_param('iii', $server_id,$start,$end);
   $stmt->execute();
   $result = $stmt->get_result();
@@ -106,9 +108,9 @@ function generateBacon($server_id,$timeframe,$start_in = 0,$end_in = 0) {
 }
 
 function checkAccess($server_id,$user_id) {
-  global $mysqli;
+  global $database;
 
-  $stmt = $mysqli->prepare("SELECT user_id FROM servers WHERE id = ? LIMIT 1");
+  $stmt = $database->prepare("SELECT user_id FROM servers WHERE id = ? LIMIT 1");
   $stmt->bind_param('i', $server_id);
   $stmt->execute();
   $stmt->bind_result($db_user_id);

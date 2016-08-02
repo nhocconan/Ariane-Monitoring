@@ -6,8 +6,8 @@ class Test extends PHPUnit_Framework_TestCase
 {
 
 	public function testMySQLConnection() {
-	  global $mysqli;
-	  $this->assertEquals($mysqli->connect_error,NULL);
+	  global $database;
+	  $this->assertEquals($database->connect_error,NULL);
 	}
 
 	public function testEscape() {
