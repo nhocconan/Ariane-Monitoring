@@ -22,11 +22,11 @@ Triggers (We will adding more)
 
 Quick Setup:
 
-- Create a Database with a User, Import the sql/ariane.sql file
+- Create a Database, add a User to the Database, Import the sql/ariane.sql file
 - Update /pages/config.php with your MySQL login details, your Timezone and your email for alerts.
-- Update agent.sh and install.sh with your URL (wget & curl)
-- Edit /pages/create_account.php, remove the exit()
-- Run URL/pages/create_account.php in your Browser.
+- Update /scripts/agent.sh and /scripts/install.sh with your URL (wget & curl)
+- Edit /tools/create_account.php, remove the exit()
+- Run URL/tools/create_account.php in your Browser.
 - Login with the Details from create_account.php
 - Delete create_account.php or add the exit() again.
 - Add the cron.php to your Crontab, like:  "* * * * * /usr/bin/php /var/www/ariane/cron.php"
