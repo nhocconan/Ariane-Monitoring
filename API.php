@@ -66,7 +66,7 @@ if(!is_numeric($rx)){ die("NET contains invalid Letters!");}
 
 $success = true;
 
-$stmt = $mysqli->prepare("SELECT id,server_name FROM servers WHERE server_key = ? LIMIT 1");
+$stmt = $database->prepare("SELECT id,server_name FROM servers WHERE server_key = ? LIMIT 1");
 $stmt->bind_param('s', $key);
 if (!$stmt->execute()) { $success = false; }
 $stmt->bind_result($server_id,$server_name);
@@ -80,7 +80,7 @@ if (empty($server_id)) {
   die("Invalid Key!");
 }
 
-$stmt = $mysqli->prepare("SELECT server_uptime FROM servers WHERE id = ? LIMIT 1");
+$stmt = $database->prepare("SELECT server_uptime FROM servers WHERE id = ? LIMIT 1");
 $stmt->bind_param('i', $server_id);
 if (!$stmt->execute()) { $success = false; }
 $stmt->bind_result($db_uptime_before);
@@ -90,7 +90,7 @@ $stmt->close();
 $last_update = time();
 
 //Update IP/Uptime/CPU/Cores....
-$stmt = $mysqli->prepare("UPDATE servers SET server_ip = ?,server_uptime = ?,server_kernel = ?,server_cpu = ?,server_cpu_cores = ?,server_cpu_mhz = ?, last_update = ?  WHERE id = ?");
+$stmt = $database->prepare("UPDATE servers SET server_ip = ?,server_uptime = ?,server_kernel = ?,server_cpu = ?,server_cpu_cores = ?,server_cpu_mhz = ?, last_update = ?  WHERE id = ?");
 $stmt->bind_param('ssssidii',$ip,$uptime,$kernel,$cpu,$cpu_cores,$cpu_mhz,$last_update,$server_id);
 if (!$stmt->execute()) { $success = false; }
 $stmt->close();
@@ -101,7 +101,7 @@ if ($success == false) {
 
 $server_time = time();
 
-$stmt = $mysqli->prepare("SELECT server_tx,server_rx FROM servers_data WHERE server_id = ? ORDER by id DESC LIMIT 1");
+$stmt = $database->prepare("SELECT server_tx,server_rx FROM servers_data WHERE server_id = ? ORDER by id DESC LIMIT 1");
 $stmt->bind_param('i', $server_id);
 if (!$stmt->execute()) { $success = false; }
 $stmt->bind_result($db_server_tx,$db_server_rx);
@@ -115,7 +115,7 @@ if ($success == false) {
 $tx_diff = $tx - $db_server_tx;
 $rx_diff = $rx - $db_server_rx;
 
-$stmt = $mysqli->prepare("INSERT INTO servers_data(server_id,memory_total,memory_free,memory_cached,memory_buffer,server_tx,server_rx,cpu_load,server_timestamp,server_tx_diff,server_rx_diff,memory_active,memory_inactive,hdd_usage,hdd_total,cpu_steal,io_wait) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,?, ?, ?)");
+$stmt = $database->prepare("INSERT INTO servers_data(server_id,memory_total,memory_free,memory_cached,memory_buffer,server_tx,server_rx,cpu_load,server_timestamp,server_tx_diff,server_rx_diff,memory_active,memory_inactive,hdd_usage,hdd_total,cpu_steal,io_wait) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,?, ?, ?)");
 $stmt->bind_param('iiiiiiididdiiiidd', $server_id,$memory_total,$memory_free,$memory_cached,$memory_buffer,$tx,$rx,$cpu_usage,$server_time,$tx_diff,$rx_diff,$memory_active,$memory_inactive,$hdd_usage,$hdd_total,$cpu_steal,$io_wait);
 if (!$stmt->execute()) { $success = false; }
 $stmt->close();
@@ -125,7 +125,7 @@ if ($success == false) {
 }
 
 //Limit Check
-$stmt = $mysqli->prepare("SELECT cpu_alert,cpu_alert_send,cpu_steal_alert,cpu_steal_alert_send,io_wait_alert,io_wait_alert_send,reboot_alert FROM servers WHERE id = ? LIMIT 1");
+$stmt = $database->prepare("SELECT cpu_alert,cpu_alert_send,cpu_steal_alert,cpu_steal_alert_send,io_wait_alert,io_wait_alert_send,reboot_alert FROM servers WHERE id = ? LIMIT 1");
 $stmt->bind_param('i', $server_id);
 if (!$stmt->execute()) { $success = false; }
 $stmt->bind_result($db_cpu,$db_cpu_send,$db_cpu_steal,$db_cpu_steal_send,$db_io_wait,$db_io_wait_send,$db_reboot_alert);
@@ -145,7 +145,7 @@ if ($cpu_usage >= $db_cpu AND $db_cpu != NULL AND $db_cpu_send <= time()) {
 
     $lock = strtotime('+30 minutes', time());
 
-    $stmt = $mysqli->prepare("UPDATE servers SET cpu_alert_send = ?  WHERE id = ?");
+    $stmt = $database->prepare("UPDATE servers SET cpu_alert_send = ?  WHERE id = ?");
     $stmt->bind_param('ii',$lock,$server_id);
     $stmt->execute();
     $stmt->close();
@@ -161,7 +161,7 @@ if ($cpu_usage >= $db_cpu AND $db_cpu != NULL AND $db_cpu_send <= time()) {
 
       $lock = strtotime('+30 minutes', time());
 
-      $stmt = $mysqli->prepare("UPDATE servers SET cpu_steal_alert_send = ?  WHERE id = ?");
+      $stmt = $database->prepare("UPDATE servers SET cpu_steal_alert_send = ?  WHERE id = ?");
       $stmt->bind_param('ii',$lock,$server_id);
       $stmt->execute();
       $stmt->close();
@@ -176,7 +176,7 @@ if ($cpu_usage >= $db_cpu AND $db_cpu != NULL AND $db_cpu_send <= time()) {
 
         $lock = strtotime('+30 minutes', time());
 
-        $stmt = $mysqli->prepare("UPDATE servers SET io_wait_alert_send = ?  WHERE id = ?");
+        $stmt = $database->prepare("UPDATE servers SET io_wait_alert_send = ?  WHERE id = ?");
         $stmt->bind_param('ii',$lock,$server_id);
         $stmt->execute();
         $stmt->close();
