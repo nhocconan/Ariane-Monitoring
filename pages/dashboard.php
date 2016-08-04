@@ -135,7 +135,7 @@ if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); 
       $stmt->close();
 
     }
-    }
+   }
   }
 
   $stmt = $database->prepare("SELECT cpu_alert,cpu_steal_alert,io_wait_alert,reboot_alert,offline_alert  FROM servers WHERE id = ? LIMIT 1");
@@ -147,32 +147,34 @@ if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); 
 
 
   ?>
-       <?php
-         if ($msg != "" and $success == false) {
-           echo'<div class="alert alert-danger col-md-12" style="text-align: center;">
-                 <h2>Error!</h3>
-                 <p>'.$msg.'</p>
-                 </div>';
-         } elseif ($msg != "" and $success == true) {
-           echo'<div class="alert alert-success col-md-12" style="text-align: center;">
-                 <h2>Okay!</h3>
-                 <p>'.$msg.'</p>
-                 </div>';
-         }
-        ?>
-        <form class="form-horizontal" role="form" action="index.php?page=dashboard?server=<?= $id ?>?trigger" method="post">
+        <form class="form-horizontal" role="form" action="index.php?page=dashboard?server=<?= escape($id) ?>?trigger" method="post">
+          <div class="col-sm-12 space-top">
+          <?php
+            if ($msg != "" and $success == false) {
+              echo'<div class="alert alert-danger col-md-12" style="text-align: center;">
+                    <h2>Error!</h3>
+                    <p>'.$msg.'</p>
+                    </div>';
+            } elseif ($msg != "" and $success == true) {
+              echo'<div class="alert alert-success col-md-12" style="text-align: center;">
+                    <h2>Okay!</h3>
+                    <p>'.$msg.'</p>
+                    </div>';
+            }
+           ?>
+         </div>
           <div class="col-sm-2">
             <h3>Trigger - CPU</h3>
            <div class="form-group">
              <div class="col-xs-10">
              <label class="" for="email">CPU Load %</label>
-             <input type="text" name="load" class="form-control" value="<?= $db_cpu; ?>">
+             <input type="text" name="load" class="form-control" value="<?= escape($db_cpu); ?>">
               </div>
            </div>
            <div class="form-group">
              <div class="col-xs-10">
              <label class="" for="pwd">CPU Steal %</label>
-             <input type="text" name="steal" class="form-control" value="<?= $db_steal; ?>">
+             <input type="text" name="steal" class="form-control" value="<?= escape($db_steal); ?>">
               </div>
            </div>
            <div class="form-group">
@@ -187,7 +189,7 @@ if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); 
            <div class="form-group">
              <div class="col-xs-10">
              <label class="" for="io">I/O Wait %</label>
-             <input type="text" name="io" class="form-control" value="<?= $db_wait; ?>">
+             <input type="text" name="io" class="form-control" value="<?= escape($db_wait); ?>">
               </div>
            </div>
            </div>
