@@ -232,7 +232,7 @@ if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); 
     <div class="dropdown dropdown-submit-input">
       <input type="hidden" name="selector" />
       <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <?php echo date("d.m.Y H:i",$data_start).'-'.date("H:i",$data_stop); ?>
+        <?php echo escape(date("d.m.Y H:i",$data_start)).'-'.escape(date("H:i",$data_stop)); ?>
         <span class="caret"></span>
       </button>
       <ul class="dropdown-menu scrollable-menu" aria-labelledby="dropdownMenu1">
@@ -248,7 +248,7 @@ if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); 
             while ($row = $result->fetch_row()) {
               if ($cycles == 60) {
                 if ($start != "") {
-                  echo '<li><a href="#" data-value="'.$row['0'].'-'.$start.'">'.date("d.m.Y H:i",$row['0']).'-'.date("H:i",$start).'</a></li>';
+                  echo '<li><a href="#" data-value="'.escape($row['0']).'-'.escape($start).'">'.escape(date("d.m.Y H:i",$row['0'])).'-'.escape(date("H:i",$start)).'</a></li>';
                 }
                 $start = $row['0'];
                 $cycles = 1;
@@ -372,9 +372,6 @@ if (strpos($page, 'network') !== false) {
 }
 
 } else {
-
- if(!preg_match("/^[0-9]+$/",$id)){ header('Location: index.php?page=dashboard'); }
- if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); }
 
  $timeframe = 2;
 

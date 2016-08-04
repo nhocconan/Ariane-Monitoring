@@ -78,27 +78,27 @@ function generateBacon($server_id,$timeframe,$start_in = 0,$end_in = 0) {
 
     if ($count == $steps) {
 
-      $server_data['memory_total'][] = round($row['memory_total'] / 1024,1);
-      $server_data['memory_free'][] = round($row['memory_free'] / 1024,1);
-      $server_data['memory_cached'][] = round($row['memory_cached'] / 1024,1);
-      $server_data['memory_buffer'][] = round($row['memory_buffer'] / 1024,1);
-      $server_data['memory_active'][] = round($row['memory_active'] / 1024,1);
-      $server_data['memory_inactive'][] = round($row['memory_inactive'] / 1024,1);
+      $server_data['memory_total'][] = escape(round($row['memory_total'] / 1024,1));
+      $server_data['memory_free'][] = escape(round($row['memory_free'] / 1024,1));
+      $server_data['memory_cached'][] = escape(round($row['memory_cached'] / 1024,1));
+      $server_data['memory_buffer'][] = escape(round($row['memory_buffer'] / 1024,1));
+      $server_data['memory_active'][] = escape(round($row['memory_active'] / 1024,1));
+      $server_data['memory_inactive'][] = escape(round($row['memory_inactive'] / 1024,1));
       $used = $row['memory_total']-($row['memory_free']);
-      $server_data['memory_used'][] = round($used/ 1024,1);
+      $server_data['memory_used'][] = escape(round($used/ 1024,1));
 
-      $server_data['cpu_load'][] = round($row['cpu_load'],2);
-      $server_data['cpu_steal'][] = round($row['cpu_steal'],2);
+      $server_data['cpu_load'][] = escape(round($row['cpu_load'],2));
+      $server_data['cpu_steal'][] = escape(round($row['cpu_steal'],2));
 
-      $server_data['server_rx_diff'][] = round($row['server_rx_diff'] / 1048576 / 60,2);
-      $server_data['server_tx_diff'][] = round($row['server_tx_diff'] / 1048576 / 60,2);
+      $server_data['server_rx_diff'][] = escape(round($row['server_rx_diff'] / 1048576 / 60,2));
+      $server_data['server_tx_diff'][] = escape(round($row['server_tx_diff'] / 1048576 / 60,2));
 
-      $server_data['hdd_usage'][] = round($row['hdd_usage'] / 1024 / 1024 / 1024,1);
-      $server_data['hdd_total'][] = round($row['hdd_total'] / 1024 / 1024 / 1024,1);
+      $server_data['hdd_usage'][] = escape(round($row['hdd_usage'] / 1024 / 1024 / 1024,1));
+      $server_data['hdd_total'][] = escape(round($row['hdd_total'] / 1024 / 1024 / 1024,1));
 
-      $server_data['io_wait'][] = round($row['io_wait'],2);
+      $server_data['io_wait'][] = escape(round($row['io_wait'],2));
 
-      $server_data['server_timestamp'][] = date("'H:i'",$row['server_timestamp']);
+      $server_data['server_timestamp'][] = date("'H:i'",escape($row['server_timestamp']));
 
       $count = 0;
 
