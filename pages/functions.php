@@ -109,6 +109,12 @@ function generateBacon($server_id,$timeframe,$start_in = 0,$end_in = 0) {
   return $server_data;
 }
 
+function isSecure() {
+  return
+    (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
+    || $_SERVER['SERVER_PORT'] == 443;
+}
+
 function checkAccess($server_id,$user_id) {
   global $database;
 

@@ -12,6 +12,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' AND isset($_POST['confirm'])) {
   if ($password == "") { $msg = "You need to enter a Password"; $error = true;}
   if ($username == "") { $msg = "You need to enter a Username"; $error = true;}
 
+  if (!isSecure()) {
+    $msg = "The Login works only with SSL enabled."; $error = true;
+  }
+
     if ($error == false) {
 
       $success = false;
