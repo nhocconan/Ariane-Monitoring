@@ -271,7 +271,7 @@ if (strpos($page, 'network') !== false) {
 
      <div id="chart-net"></div>
 
-   <?php $Beacon = generateBacon($id,0,$data_start,$data_stop); ?>
+   <?php $Bacon = generateBacon($id,0,$data_start,$data_stop); ?>
 
    <script>
    (function($) {
@@ -283,9 +283,9 @@ if (strpos($page, 'network') !== false) {
        });
 
      })(jQuery);
-     var server_timestamp = [<?php echo implode(',',$Beacon['server_timestamp']); ?>];
-     var server_tx_diff = <?php echo json_encode($Beacon['server_tx_diff']); ?>;
-     var server_rx_diff = <?php echo json_encode($Beacon['server_rx_diff']); ?>;
+     var server_timestamp = [<?php echo implode(',',$Bacon['server_timestamp']); ?>];
+     var server_tx_diff = <?php echo json_encode($Bacon['server_tx_diff']); ?>;
+     var server_rx_diff = <?php echo json_encode($Bacon['server_rx_diff']); ?>;
    </script>
    <script src="../js/net.js"></script>
  <?php
@@ -297,7 +297,7 @@ if (strpos($page, 'network') !== false) {
    ?>
     <div id="chart-hdd"></div>
 
-   <?php $Beacon = generateBacon($id,0,$data_start,$data_stop); ?>
+   <?php $Bacon = generateBacon($id,0,$data_start,$data_stop); ?>
 
   <script>
   (function($) {
@@ -309,9 +309,9 @@ if (strpos($page, 'network') !== false) {
       });
 
     })(jQuery);
-    var server_timestamp = [<?php echo implode(',',$Beacon['server_timestamp']); ?>];
-    var hdd_usage = <?php echo json_encode($Beacon['hdd_usage']); ?>;
-    var hdd_total = <?php echo json_encode($Beacon['hdd_total']); ?>;
+    var server_timestamp = [<?php echo implode(',',$Bacon['server_timestamp']); ?>];
+    var hdd_usage = <?php echo json_encode($Bacon['hdd_usage']); ?>;
+    var hdd_total = <?php echo json_encode($Bacon['hdd_total']); ?>;
   </script>
   <script src="../js/hdd.js"></script>
 <?php
@@ -321,7 +321,7 @@ if (strpos($page, 'network') !== false) {
     ?>
      <div id="chart-cpu"></div>
 
-   <?php $Beacon = generateBacon($id,0,$data_start,$data_stop); ?>
+   <?php $Bacon = generateBacon($id,0,$data_start,$data_stop); ?>
 
    <script>
    (function($) {
@@ -333,10 +333,10 @@ if (strpos($page, 'network') !== false) {
        });
 
      })(jQuery);
-     var server_timestamp = [<?php echo implode(',',$Beacon['server_timestamp']); ?>];
-     var cpu_load = <?php echo json_encode($Beacon['cpu_load']); ?>;
-     var cpu_steal = <?php echo json_encode($Beacon['cpu_steal']); ?>;
-     var io_wait = <?php echo json_encode($Beacon['io_wait']); ?>;
+     var server_timestamp = [<?php echo implode(',',$Bacon['server_timestamp']); ?>];
+     var cpu_load = <?php echo json_encode($Bacon['cpu_load']); ?>;
+     var cpu_steal = <?php echo json_encode($Bacon['cpu_steal']); ?>;
+     var io_wait = <?php echo json_encode($Bacon['io_wait']); ?>;
    </script>
    <script src="../js/cpu.js"></script>
  <?php
@@ -346,7 +346,7 @@ if (strpos($page, 'network') !== false) {
     ?>
      <div id="chart-memory"></div>
 
-   <?php $Beacon = generateBacon($id,0,$data_start,$data_stop); ?>
+   <?php $Bacon = generateBacon($id,0,$data_start,$data_stop); ?>
 
    <script>
    (function($) {
@@ -358,13 +358,13 @@ if (strpos($page, 'network') !== false) {
        });
 
      })(jQuery);
-     var server_timestamp = [<?php echo implode(',',$Beacon['server_timestamp']); ?>];
-     var memory_free = <?php echo json_encode($Beacon['memory_free']); ?>;
-     var memory_cached = <?php echo json_encode($Beacon['memory_cached']); ?>;
-     var memory_buffer = <?php echo json_encode($Beacon['memory_buffer']); ?>;
-     var memory_used = <?php echo json_encode($Beacon['memory_used']); ?>;
-     var memory_active = <?php echo json_encode($Beacon['memory_active']); ?>;
-     var memory_inactive = <?php echo json_encode($Beacon['memory_inactive']); ?>;
+     var server_timestamp = [<?php echo implode(',',$Bacon['server_timestamp']); ?>];
+     var memory_free = <?php echo json_encode($Bacon['memory_free']); ?>;
+     var memory_cached = <?php echo json_encode($Bacon['memory_cached']); ?>;
+     var memory_buffer = <?php echo json_encode($Bacon['memory_buffer']); ?>;
+     var memory_used = <?php echo json_encode($Bacon['memory_used']); ?>;
+     var memory_active = <?php echo json_encode($Bacon['memory_active']); ?>;
+     var memory_inactive = <?php echo json_encode($Bacon['memory_inactive']); ?>;
    </script>
    <script src="../js/mem.js"></script>
  <?php
@@ -459,23 +459,23 @@ if (isset($_POST['timeframe'])) {
 
    <div class="col-md-12 ct-chart_hdd"><center><h2>HDD Usage</h2></center><div id="chart-hdd"></div></div>
 
-   <?php $Beacon = generateBacon($id,$timeframe); ?>
+   <?php $Bacon = generateBacon($id,$timeframe); ?>
 
    <script>
-   var server_timestamp = [<?php echo implode(',',$Beacon['server_timestamp']); ?>];
-   var memory_free = <?php echo json_encode($Beacon['memory_free']); ?>;
-   var memory_cached = <?php echo json_encode($Beacon['memory_cached']); ?>;
-   var memory_buffer = <?php echo json_encode($Beacon['memory_buffer']); ?>;
-   var memory_used = <?php echo json_encode($Beacon['memory_used']); ?>;
-   var memory_active = <?php echo json_encode($Beacon['memory_active']); ?>;
-   var memory_inactive = <?php echo json_encode($Beacon['memory_inactive']); ?>;
-   var cpu_load = <?php echo json_encode($Beacon['cpu_load']); ?>;
-   var cpu_steal = <?php echo json_encode($Beacon['cpu_steal']); ?>;
-   var io_wait = <?php echo json_encode($Beacon['io_wait']); ?>;
-   var hdd_usage = <?php echo json_encode($Beacon['hdd_usage']); ?>;
-   var hdd_total = <?php echo json_encode($Beacon['hdd_total']); ?>;
-   var server_tx_diff = <?php echo json_encode($Beacon['server_tx_diff']); ?>;
-   var server_rx_diff = <?php echo json_encode($Beacon['server_rx_diff']); ?>;
+   var server_timestamp = [<?php echo implode(',',$Bacon['server_timestamp']); ?>];
+   var memory_free = <?php echo json_encode($Bacon['memory_free']); ?>;
+   var memory_cached = <?php echo json_encode($Bacon['memory_cached']); ?>;
+   var memory_buffer = <?php echo json_encode($Bacon['memory_buffer']); ?>;
+   var memory_used = <?php echo json_encode($Bacon['memory_used']); ?>;
+   var memory_active = <?php echo json_encode($Bacon['memory_active']); ?>;
+   var memory_inactive = <?php echo json_encode($Bacon['memory_inactive']); ?>;
+   var cpu_load = <?php echo json_encode($Bacon['cpu_load']); ?>;
+   var cpu_steal = <?php echo json_encode($Bacon['cpu_steal']); ?>;
+   var io_wait = <?php echo json_encode($Bacon['io_wait']); ?>;
+   var hdd_usage = <?php echo json_encode($Bacon['hdd_usage']); ?>;
+   var hdd_total = <?php echo json_encode($Bacon['hdd_total']); ?>;
+   var server_tx_diff = <?php echo json_encode($Bacon['server_tx_diff']); ?>;
+   var server_rx_diff = <?php echo json_encode($Bacon['server_rx_diff']); ?>;
    </script>
    <script src="../js/mem.js"></script>
    <script src="../js/cpu.js"></script>
