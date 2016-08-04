@@ -1,7 +1,9 @@
 <?php
-session_start();
 
 include 'config.php';
+
+session_set_cookie_params(0,'/','.'._Domain,true,true);
+session_start();
 
 $database = new mysqli(_db_host, _db_login, _db_password, _db);
 
