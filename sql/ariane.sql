@@ -1,5 +1,10 @@
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
+CREATE TABLE `logs` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `type` int(2) NOT NULL,
+  `msg` varchar(255) NOT NULL,
+  `timestamp` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `servers` (
   `id` int(11) NOT NULL,
@@ -56,6 +61,9 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
+ALTER TABLE `logs`
+  ADD PRIMARY KEY (`id`);
+
 ALTER TABLE `servers`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `server_key` (`server_key`);
@@ -68,6 +76,8 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `username` (`username`);
 
 
+ALTER TABLE `logs`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `servers`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `servers_data`

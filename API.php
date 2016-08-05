@@ -40,36 +40,12 @@ if ($ip != "") {
   if(!filter_var($ip, FILTER_VALIDATE_IP)) { die("Invalid IP!"); }
 }
 
-if(!is_numeric($uptime)){ die("Uptime contains invalid Letters!");}
-if(!preg_match("/^[A-Za-z0-9.-]+$/",$key)){ die("Kernel contains invalid Letters!");}
-if(!preg_match("/^[A-Za-z0-9 ()@.-]+$/",$cpu)){ die("CPU Name contains invalid Letters!");}
-
-if(!is_numeric($cpu_cores)){ die("CPU contains invalid Letters!");}
-if(!is_numeric($cpu_mhz)){ die("CPU contains invalid Letters!");}
-if(!is_numeric($cpu_usage)){ die("CPU contains invalid Letters!");}
-if(!is_numeric($cpu_steal)){ die("CPU contains invalid Letters!");}
-if(!is_numeric($io_wait)){ die("IO contains invalid Letters!");}
-
-if(!is_numeric($memory_total)){ die("Memory contains invalid Letters!");}
-if(!is_numeric($memory_free)){ die("Memory contains invalid Letters!");}
-if(!is_numeric($memory_cached)){ die("Memory contains invalid Letters!");}
-if(!is_numeric($memory_buffer)){ die("Memory contains invalid Letters!");}
-if(!is_numeric($memory_active)){ die("Memory contains invalid Letters!");}
-if(!is_numeric($memory_inactive)){ die("Memory contains invalid Letters!");}
-
-if(!is_numeric($hdd_usage)){ die("HDD contains invalid Letters!");}
-if(!is_numeric($hdd_total)){ die("HDD contains invalid Letters!");}
-
-if(!is_numeric($tx)){ die("NET contains invalid Letters!");}
-if(!is_numeric($rx)){ die("NET contains invalid Letters!");}
-
-
 $success = true;
 
-$stmt = $database->prepare("SELECT id,server_name FROM servers WHERE server_key = ? LIMIT 1");
+$stmt = $database->prepare("SELECT id,server_name,user_id FROM servers WHERE server_key = ? LIMIT 1");
 $stmt->bind_param('s', $key);
 if (!$stmt->execute()) { $success = false; }
-$stmt->bind_result($server_id,$server_name);
+$stmt->bind_result($server_id,$server_name,$user_id);
 $stmt->fetch();
 $stmt->close();
 
@@ -79,6 +55,29 @@ if ($success == false) {
 if (empty($server_id)) {
   die("Invalid Key!");
 }
+
+if(!is_numeric($uptime)){ addLog($user_id,1,"Uptime contains invalid Letters!"); die("Uptime contains invalid Letters!");}
+if(!preg_match("/^[A-Za-z0-9.-]+$/",$key)){ addLog($user_id,1,"Kernel contains invalid Letters!"); die("Kernel contains invalid Letters!");}
+if(!preg_match("/^[A-Za-z0-9 ()@.-]+$/",$cpu)){ addLog($user_id,1,"CPU Name contains invalid Letters!"); die("CPU Name contains invalid Letters!");}
+
+if(!is_numeric($cpu_cores)){ addLog($user_id,1,"CPU Cores contains invalid Letters!"); die("CPU contains invalid Letters!");}
+if(!is_numeric($cpu_mhz)){ addLog($user_id,1,"CPU Mhz contains invalid Letters!"); die("CPU contains invalid Letters!");}
+if(!is_numeric($cpu_usage)){ addLog($user_id,1,"CPU Usage contains invalid Letters!"); die("CPU contains invalid Letters!");}
+if(!is_numeric($cpu_steal)){ addLog($user_id,1,"CPU Steal contains invalid Letters!"); die("CPU contains invalid Letters!");}
+if(!is_numeric($io_wait)){ addLog($user_id,1,"I/O Wait contains invalid Letters!"); die("IO contains invalid Letters!");}
+
+if(!is_numeric($memory_total)){ addLog($user_id,1,"Memory Total contains invalid Letters!"); die("Memory contains invalid Letters!");}
+if(!is_numeric($memory_free)){ addLog($user_id,1,"Memory Free contains invalid Letters!"); die("Memory contains invalid Letters!");}
+if(!is_numeric($memory_cached)){ addLog($user_id,1,"Memory Cached invalid Letters!"); die("Memory contains invalid Letters!");}
+if(!is_numeric($memory_buffer)){ addLog($user_id,1,"Memory Buffer contains invalid Letters!"); die("Memory contains invalid Letters!");}
+if(!is_numeric($memory_active)){ addLog($user_id,1,"Memory Active contains invalid Letters!"); die("Memory contains invalid Letters!");}
+if(!is_numeric($memory_inactive)){ addLog($user_id,1,"Memory Inactive contains invalid Letters!"); die("Memory contains invalid Letters!");}
+
+if(!is_numeric($hdd_usage)){ addLog($user_id,1,"HDD Usage contains invalid Letters!"); die("HDD contains invalid Letters!");}
+if(!is_numeric($hdd_total)){ addLog($user_id,1,"HDD Total contains invalid Letters!"); die("HDD contains invalid Letters!");}
+
+if(!is_numeric($tx)){ addLog($user_id,1,"Network TX contains invalid Letters!"); die("NET contains invalid Letters!");}
+if(!is_numeric($rx)){ addLog($user_id,1,"Network RX contains invalid Letters!"); die("NET contains invalid Letters!");}
 
 $stmt = $database->prepare("SELECT server_uptime FROM servers WHERE id = ? LIMIT 1");
 $stmt->bind_param('i', $server_id);
@@ -96,6 +95,7 @@ if (!$stmt->execute()) { $success = false; }
 $stmt->close();
 
 if ($success == false) {
+  addLog($user_id,1,"MySQL Error after Updating IP/Uptime...");
   die ("MySQL Error");
 }
 
@@ -109,6 +109,7 @@ $stmt->fetch();
 $stmt->close();
 
 if ($success == false) {
+  addLog($user_id,1,"MySQL Error after selecting TX/RX...");
   die ("MySQL Error");
 }
 
@@ -121,6 +122,7 @@ if (!$stmt->execute()) { $success = false; }
 $stmt->close();
 
 if ($success == false) {
+  addLog($user_id,1,"MySQL Error after Insert new Data...");
   die ("MySQL Error");
 }
 

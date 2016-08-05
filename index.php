@@ -57,6 +57,9 @@ if ($page=="login") {
  } elseif ($page == "dashboard" AND $_SESSION['login'] === 1 AND $USER_ID != "") {
     getNavbar($page);
     include 'pages/overview.php';
+  } elseif ($page == "dashboard?logs" AND $_SESSION['login'] === 1 AND $USER_ID != "") {
+     getNavbar($page);
+     include 'pages/logs.php';
  } elseif ($page == "dashboard?add" AND $_SESSION['login'] === 1) {
     getNavbar($page);
    include 'pages/add.php';

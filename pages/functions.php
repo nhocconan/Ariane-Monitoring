@@ -109,6 +109,18 @@ function generateBacon($server_id,$timeframe,$start_in = 0,$end_in = 0) {
   return $server_data;
 }
 
+function addLog($user,$type,$msg) {
+  global $database;
+
+  $current_time = time();
+
+  $stmt = $database->prepare("INSERT INTO logs(user_id,type,msg,timestamp) VALUES (?, ?, ?, ?)");
+  $stmt->bind_param('iisi', $user,$type,$msg,$current_time);
+  $stmt->execute();
+  $stmt->close();
+
+}
+
 function getNavbar($page) {
 
 $navbar = '<nav class="navbar navbar-default navbar-fixed-top navbar-opacity">
@@ -136,9 +148,14 @@ $navbar = '<nav class="navbar navbar-default navbar-fixed-top navbar-opacity">
                }
                if ($page == 'dashboard?account') {
                     $navbar .= '<li class="active"><a href="index.php?page=dashboard?account">Account</a></li>';
-              } else {
+               } else {
                     $navbar .= '<li><a href="index.php?page=dashboard?account">Account</a></li>';
-              }
+               }
+               if ($page == 'dashboard?logs') {
+                    $navbar .= '<li class="active"><a href="index.php?page=dashboard?logs">Logs</a></li>';
+               } else {
+                    $navbar .= '<li><a href="index.php?page=dashboard?logs">Logs</a></li>';
+               }
 
         $navbar .='<li><a href="index.php?page=logout">Logout</a></li>
             </ul>
