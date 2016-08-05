@@ -52,10 +52,13 @@ if ($page=="login") {
     session_destroy();
     header('Location: index.php');
  } elseif ($page == "dashboard?account" AND $_SESSION['login'] === 1 AND $USER_ID != "") {
+    getNavbar($page);
     include 'pages/account.php';
  } elseif ($page == "dashboard" AND $_SESSION['login'] === 1 AND $USER_ID != "") {
+    getNavbar($page);
     include 'pages/overview.php';
  } elseif ($page == "dashboard?add" AND $_SESSION['login'] === 1) {
+    getNavbar($page);
    include 'pages/add.php';
  } else { header('Location: index.php?page=login'); } ?>
 

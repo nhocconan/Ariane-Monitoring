@@ -109,6 +109,47 @@ function generateBacon($server_id,$timeframe,$start_in = 0,$end_in = 0) {
   return $server_data;
 }
 
+function getNavbar($page) {
+
+$navbar = '<nav class="navbar navbar-default navbar-fixed-top navbar-opacity">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.php?page=dashboard">Ariane</a>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">';
+                if ($page == 'dashboard') {
+                      $navbar .= '<li class="active"><a href="index.php?page=dashboard">Servers</a></li>';
+                } else {
+                      $navbar .= '<li><a href="index.php?page=dashboard">Servers</a></li>';
+                }
+                if ($page == 'dashboard?add') {
+                     $navbar .= '<li class="active"><a href="index.php?page=dashboard?add">Add Server</a></li>';
+               } else {
+                     $navbar .= '<li><a href="index.php?page=dashboard?add">Add Server</a></li>';
+               }
+               if ($page == 'dashboard?account') {
+                    $navbar .= '<li class="active"><a href="index.php?page=dashboard?account">Account</a></li>';
+              } else {
+                    $navbar .= '<li><a href="index.php?page=dashboard?account">Account</a></li>';
+              }
+
+        $navbar .='<li><a href="index.php?page=logout">Logout</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>';
+
+     echo $navbar;
+
+}
+
 function isSecure() {
   return
     (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
