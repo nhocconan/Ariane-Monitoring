@@ -26,8 +26,12 @@ if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); 
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li><a href="index.php?page=dashboard">Servers</a></li>
-            <li><a href="index.php?page=dashboard?server=<?= $id ?>">Overview</a></li>
-            <?php if (strpos($page, 'network') !== false) {
+            <?php if ($page == 'dashboard?server='.$id) {
+                  $navbar_elments = '<li class="active"><a href="index.php?page=dashboard?server='.$id.'">Overview</a></li>';
+            } else {
+                  $navbar_elments = '<li><a href="index.php?page=dashboard?server='.$id.'">Overview</a></li>';
+            }
+             if (strpos($page, 'network') !== false) {
                   $title = '<div class="col-md-12 ct-chart"><center><h2>Network Usage</h2></center>';
                   $navbar_elments .= '<li class="active"><a href="index.php?page=dashboard?server='.$id.'?network">Network</a></li>';
             } else {
