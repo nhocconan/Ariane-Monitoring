@@ -141,6 +141,11 @@ $navbar = '<nav class="navbar navbar-default navbar-fixed-top navbar-opacity">
                 } else {
                       $navbar .= '<li><a href="index.php?page=dashboard">Servers</a></li>';
                 }
+                if ($page == 'overview') {
+                      $navbar .= '<li class="active"><a href="index.php?page=overview">Overview</a></li>';
+                } else {
+                      $navbar .= '<li><a href="index.php?page=overview">Overview</a></li>';
+                }
                 if ($page == 'dashboard?add') {
                      $navbar .= '<li class="active"><a href="index.php?page=dashboard?add">Add Server</a></li>';
                } else {
