@@ -17,13 +17,13 @@ while ($row = $result->fetch_assoc()) {
  <meta http-equiv="refresh" content="60">
  <div class="container base-box">
 
-    <h3>CPU Load</h3>
+    <center><h3>CPU Load</h3></center>
     <div id="chart-cpu"></div>
 
-    <h3>Network Inbound</h3>
+    <center><h3>Network Inbound</h3></center>
     <div id="chart-network-in"></div>
 
-    <h3>Network Outbound</h3>
+    <center><h3>Network Outbound</h3></center>
     <div id="chart-network-out"></div>
 
     <script>
