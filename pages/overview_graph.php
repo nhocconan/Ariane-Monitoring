@@ -10,6 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (is_numeric($_POST['timestamp'])) {
       $in = strtotime('-1 hour', $_POST['timestamp']);
       $out = strtotime('+1 hour', $_POST['timestamp']);
+      $_SESSION['timestamp_overview'] = $_POST['timestamp'];
     }
   }
 }
@@ -21,6 +22,10 @@ $stmt->execute();
 $result = $stmt->get_result();
 while ($row = $result->fetch_assoc()) {
   if ($in != 0 AND $out != 0) {
+    $data = generateBacon($row['id'],0,$in,$out);
+  } elseif (!empty($_SESSION['timestamp_overview'])) {
+    $in = strtotime('-1 hour', $_SESSION['timestamp_overview']);
+    $out = strtotime('+1 hour', $_SESSION['timestamp_overview']);
     $data = generateBacon($row['id'],0,$in,$out);
   } else {
     $data = generateBacon($row['id'],2);
