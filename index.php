@@ -27,10 +27,16 @@ if (!is_numeric($USER_ID)) {
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/c3.min.css" rel="stylesheet">
     <link href="css/bg_night.css" rel="stylesheet">
+    <link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <link href="css/bootstrap-toggle.min.css" rel="stylesheet">
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="js/jquery.min.js"></script>
+    <script src="js/moment.js"></script>
+    <script src="js/transition.js"></script>
+    <script src="js/collapse.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap-datetimepicker.js"></script>
     <script src="js/bootstrap-toggle.min.js"></script>
 
     <!-- Load d3.js and c3.js -->
@@ -75,7 +81,5 @@ if ($page=="login") {
       });
     });
     </script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
   </body>
 </html>
