@@ -11,7 +11,7 @@ if ($result = $mysqli->query($query)) {
     /* fetch object array */
     while ($row = $result->fetch_row()) {
       $time = time();
-      $delete = strtotime('+4 day', $row[1]);
+      $delete = strtotime('+30 day', $row[1]);
       if ($time > $delete) {
         $stmt = $mysqli->prepare("DELETE FROM servers_data WHERE id = ?");
         $stmt->bind_param('i', $row[0]);
