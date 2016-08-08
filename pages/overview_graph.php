@@ -30,7 +30,9 @@ while ($row = $result->fetch_assoc()) {
   } else {
     $data = generateBacon($row['id'],2);
   }
-  $server_ids[$row['server_name']] = $data;
+  if (!empty($data)) {
+      $server_ids[$row['server_name']] = $data;
+  }
 }
 
  $last_key = "";
