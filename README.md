@@ -14,8 +14,8 @@ work. If not, see https://creativecommons.org/licenses/by-nc-sa/4.0/
 Server Overview:
 ![alt tag](http://i.imgur.com/RqAbntO.jpg)
 
-Memory History
-![alt tag](http://i.imgur.com/iQLEGrL.jpg)
+Network History
+![alt tag](http://i.imgur.com/VBE16ig.jpg)
 
 Triggers (We will adding more)
 ![alt tag](http://i.imgur.com/XAXBCP8.jpg)
