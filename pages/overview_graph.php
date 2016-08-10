@@ -60,7 +60,8 @@ while ($row = $result->fetch_assoc()) {
             </div>
             <script type="text/javascript">
                 $(function () {
-                    var $dp = $('#datetimepicker').datetimepicker({
+                    $('#datetimepicker').datetimepicker({
+                       defaultDate: new Date(<?php $time = (empty($_SESSION['timestamp_overview']) ? time() : $_SESSION['timestamp_overview']); echo escape($time); ?>*1000),
                        format: 'DD/MM/YYYY HH:mm',
                     });
                 });
