@@ -6,13 +6,17 @@ $in = 0;
 $out = 0;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-  if (isset($_POST['timestamp'])) {
-    if (is_numeric($_POST['timestamp'])) {
-      $in = strtotime('-1 hour', $_POST['timestamp']);
-      $out = strtotime('+1 hour', $_POST['timestamp']);
-      $_SESSION['timestamp_overview'] = $_POST['timestamp'];
+    if (isset($_POST['timestamp'])) {
+      if ($_POST['timestamp'] == 'reset') {
+        unset($_SESSION['timestamp_overview']);
+      } else {
+        if (is_numeric($_POST['timestamp'])) {
+          $in = strtotime('-1 hour', $_POST['timestamp']);
+          $out = strtotime('+1 hour', $_POST['timestamp']);
+          $_SESSION['timestamp_overview'] = $_POST['timestamp'];
+        }
+      }
     }
-  }
 }
 
 $query = "SELECT id,server_name FROM servers WHERE user_id = ?";
@@ -52,7 +56,8 @@ while ($row = $result->fetch_assoc()) {
                               <span class="glyphicon glyphicon-calendar"></span>
                           </span>
                           <span class="input-group-btn">
-                               <button class="btn btn-default" type="button" id="timestamp_submit">Go!</button>
+                               <button class="btn btn-default" type="button" id="timestamp_reset"><i class="fa fa-undo" aria-hidden="true"></i></button>
+                               <button class="btn btn-default" type="button" id="timestamp_submit"><i class="fa fa-play" aria-hidden="true"></i></button>
                           </span>
                       </div>
                   </div>
@@ -72,6 +77,11 @@ while ($row = $result->fetch_assoc()) {
 
                 var form = document.getElementById("timestamp");
                 document.getElementById("timestamp_submit").addEventListener("click", function () {
+                    form.submit();
+                });
+
+                document.getElementById("timestamp_reset").addEventListener("click", function () {
+                    document.getElementById('timestamp_box').value = 'reset';
                     form.submit();
                 });
             </script>
