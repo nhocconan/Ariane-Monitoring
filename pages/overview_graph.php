@@ -46,7 +46,7 @@ while ($row = $result->fetch_assoc()) {
 
        <div class="container space-top">
         <div class="row">
-            <div class='col-sm-3'>
+            <div class='col-sm-4'>
               <form method="POST" action="index.php?page=overview" id="timestamp">
                <input type="hidden" name="timestamp" id="timestamp_box" value="" />
                   <div class="form-group">

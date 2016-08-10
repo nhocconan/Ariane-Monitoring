@@ -72,19 +72,27 @@ if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); 
 
   <?php
 
-   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-     $range = explode("-", $_POST['selector']);
-     if (is_numeric($range['0']) AND is_numeric($range['1'])) {
-       $data_start = $range['0'];
-       $data_stop = $range['1'];
-     } else {
-       $data_start = time() - 6000;
-       $data_stop = time();
-     }
-   } else {
-     $data_start = time() - 6000;
-     $data_stop = time();
-   }
+  $data_start = 0;
+  $data_stop = 0;
+
+  if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+      if (isset($_POST['timestamp'])) {
+        if ($_POST['timestamp'] == 'reset') {
+          unset($_SESSION['timestamp_overview']);
+        } else {
+          if (is_numeric($_POST['timestamp'])) {
+            $data_start = strtotime('-1 hour', $_POST['timestamp']);
+            $data_stop = strtotime('+1 hour', $_POST['timestamp']);
+            $_SESSION['timestamp_overview'] = $_POST['timestamp'];
+          }
+        }
+      }
+  }
+
+  if ($data_start == 0 OR $data_stop == 0){
+    $data_start = time() - 6000;
+    $data_stop = time();
+  }
 
    $navbar_elments = "";
 
@@ -234,40 +242,49 @@ if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); 
 
   ?>
 
-  <form method="post">
-    <div class="dropdown dropdown-submit-input">
-      <input type="hidden" name="selector" />
-      <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <?php echo escape(date("d.m.Y H:i",$data_start)).'-'.escape(date("H:i",$data_stop)); ?>
-        <span class="caret"></span>
-      </button>
-      <ul class="dropdown-menu scrollable-menu" aria-labelledby="dropdownMenu1">
-        <?php
-        $query = "SELECT server_timestamp FROM servers_data WHERE server_id = ".$id." ORDER by id DESC";
+  <div class="container space-top">
+   <div class="row">
+       <div class='col-sm-4'>
+         <form method="POST" id="timestamp">
+          <input type="hidden" name="timestamp" id="timestamp_box" value="" />
+             <div class="form-group">
+                 <div class='input-group date' id='datetimepicker'>
+                     <input type='text' class="form-control" />
+                     <span class="input-group-addon">
+                         <span class="glyphicon glyphicon-calendar"></span>
+                     </span>
+                     <span class="input-group-btn">
+                          <button class="btn btn-default" type="button" id="timestamp_reset"><i class="fa fa-undo" aria-hidden="true"></i></button>
+                          <button class="btn btn-default" type="button" id="timestamp_submit"><i class="fa fa-play" aria-hidden="true"></i></button>
+                     </span>
+                 </div>
+             </div>
+           </form>
+       </div>
+       <script type="text/javascript">
+           $(function () {
+               $('#datetimepicker').datetimepicker({
+                  defaultDate: new Date(<?php $time = (empty($_SESSION['timestamp_overview']) ? time() : $_SESSION['timestamp_overview']); echo escape($time); ?>*1000),
+                  format: 'DD/MM/YYYY HH:mm',
+               });
+           });
 
-        if ($result = $database->query($query)) {
+           $('#datetimepicker').on('dp.change', function (e) {
+           document.getElementById('timestamp_box').value = e.date.unix();
+           });
 
-            $start="";
-            $cycles=1;
+           var form = document.getElementById("timestamp");
+           document.getElementById("timestamp_submit").addEventListener("click", function () {
+               form.submit();
+           });
 
-            /* fetch object array */
-            while ($row = $result->fetch_row()) {
-              if ($cycles == 60) {
-                if ($start != "") {
-                  echo '<li><a href="#" data-value="'.escape($row['0']).'-'.escape($start).'">'.escape(date("d.m.Y H:i",$row['0'])).'-'.escape(date("H:i",$start)).'</a></li>';
-                }
-                $start = $row['0'];
-                $cycles = 1;
-              }
-              $cycles++;
-            }
-            /* free result set */
-            $result->close();
-        }
-        ?>
-      </ul>
-    </div>
-  </form>
+           document.getElementById("timestamp_reset").addEventListener("click", function () {
+               document.getElementById('timestamp_box').value = 'reset';
+               form.submit();
+           });
+       </script>
+   </div>
+  </div>
 
   <?php
 
