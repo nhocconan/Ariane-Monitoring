@@ -368,6 +368,8 @@ if (strpos($page, 'network') !== false) {
 
     ?>
      <div id="chart-memory"></div>
+     <center><h2>Free Memory</h2></center>
+     <div id="chart-memory-free"></div>
 
    <?php $Bacon = generateBacon($id,0,$data_start,$data_stop); ?>
 
@@ -383,6 +385,7 @@ if (strpos($page, 'network') !== false) {
      })(jQuery);
      var server_timestamp = [<?php echo implode(',',$Bacon['server_timestamp']); ?>];
      var memory_free = <?php echo json_encode($Bacon['memory_free']); ?>;
+     var memory_free_total = <?php echo json_encode($Bacon['memory_free_total']); ?>;
      var memory_cached = <?php echo json_encode($Bacon['memory_cached']); ?>;
      var memory_buffer = <?php echo json_encode($Bacon['memory_buffer']); ?>;
      var memory_used = <?php echo json_encode($Bacon['memory_used']); ?>;
@@ -390,6 +393,7 @@ if (strpos($page, 'network') !== false) {
      var memory_inactive = <?php echo json_encode($Bacon['memory_inactive']); ?>;
    </script>
    <script src="../js/mem.js"></script>
+   <script src="../js/mem_free.js"></script>
  <?php
 
 }

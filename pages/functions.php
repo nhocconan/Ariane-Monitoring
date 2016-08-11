@@ -86,6 +86,7 @@ function generateBacon($server_id,$timeframe,$start_in = 0,$end_in = 0) {
       $server_data['memory_inactive'][] = escape(round($row['memory_inactive'] / 1024,1));
       $used = $row['memory_total']-($row['memory_free']);
       $server_data['memory_used'][] = escape(round($used/ 1024,1));
+      $server_data['memory_free_total'][] = escape(round(($row['memory_free'] + $row['memory_buffer'] + $row['memory_cached']) / 1024,0));
 
       $server_data['cpu_load'][] = escape(round($row['cpu_load'],2));
       $server_data['cpu_steal'][] = escape(round($row['cpu_steal'],2));
