@@ -20,6 +20,10 @@ Network History
 Triggers (We will adding more)
 ![alt tag](http://i.imgur.com/XAXBCP8.jpg)
 
+Well if you dont like the Theme, you can replace it with one from: https://bootswatch.com/
+
+We have already some Theme's included, Default Theme: Flatly
+
 Quick Setup:
 
 - Create a Database, add a User to the Database, Import the sql/ariane.sql file
