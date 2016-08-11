@@ -25,7 +25,7 @@ if (!is_numeric($USER_ID)) {
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>Ariane</title>
     <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap_flatly.min.css" rel="stylesheet">
     <link href="css/c3.min.css" rel="stylesheet">
     <link href="css/bg_night.css" rel="stylesheet">
     <link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet">
