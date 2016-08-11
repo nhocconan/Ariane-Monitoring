@@ -297,15 +297,6 @@ if (strpos($page, 'network') !== false) {
    <?php $Bacon = generateBacon($id,0,$data_start,$data_stop); ?>
 
    <script>
-   (function($) {
-
-       $('.dropdown-submit-input .dropdown-menu a').click(function (e) {
-         e.preventDefault();
-         $(this).closest('.dropdown-submit-input').find('input').val($(this).data('value'));
-         $(this).closest('form').submit();
-       });
-
-     })(jQuery);
      var server_timestamp = [<?php echo implode(',',$Bacon['server_timestamp']); ?>];
      var server_tx_diff = <?php echo json_encode($Bacon['server_tx_diff']); ?>;
      var server_rx_diff = <?php echo json_encode($Bacon['server_rx_diff']); ?>;
@@ -323,15 +314,6 @@ if (strpos($page, 'network') !== false) {
    <?php $Bacon = generateBacon($id,0,$data_start,$data_stop); ?>
 
   <script>
-  (function($) {
-
-      $('.dropdown-submit-input .dropdown-menu a').click(function (e) {
-        e.preventDefault();
-        $(this).closest('.dropdown-submit-input').find('input').val($(this).data('value'));
-        $(this).closest('form').submit();
-      });
-
-    })(jQuery);
     var server_timestamp = [<?php echo implode(',',$Bacon['server_timestamp']); ?>];
     var hdd_usage = <?php echo json_encode($Bacon['hdd_usage']); ?>;
     var hdd_total = <?php echo json_encode($Bacon['hdd_total']); ?>;
@@ -347,15 +329,6 @@ if (strpos($page, 'network') !== false) {
    <?php $Bacon = generateBacon($id,0,$data_start,$data_stop); ?>
 
    <script>
-   (function($) {
-
-       $('.dropdown-submit-input .dropdown-menu a').click(function (e) {
-         e.preventDefault();
-         $(this).closest('.dropdown-submit-input').find('input').val($(this).data('value'));
-         $(this).closest('form').submit();
-       });
-
-     })(jQuery);
      var server_timestamp = [<?php echo implode(',',$Bacon['server_timestamp']); ?>];
      var cpu_load = <?php echo json_encode($Bacon['cpu_load']); ?>;
      var cpu_steal = <?php echo json_encode($Bacon['cpu_steal']); ?>;
@@ -374,15 +347,6 @@ if (strpos($page, 'network') !== false) {
    <?php $Bacon = generateBacon($id,0,$data_start,$data_stop); ?>
 
    <script>
-   (function($) {
-
-       $('.dropdown-submit-input .dropdown-menu a').click(function (e) {
-         e.preventDefault();
-         $(this).closest('.dropdown-submit-input').find('input').val($(this).data('value'));
-         $(this).closest('form').submit();
-       });
-
-     })(jQuery);
      var server_timestamp = [<?php echo implode(',',$Bacon['server_timestamp']); ?>];
      var memory_free = <?php echo json_encode($Bacon['memory_free']); ?>;
      var memory_free_total = <?php echo json_encode($Bacon['memory_free_total']); ?>;
