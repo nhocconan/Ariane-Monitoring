@@ -16,6 +16,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' AND isset($_POST['confirm'])) {
     $msg = "The Login works only with SSL enabled."; $error = true;
   }
 
+  if ($_SERVER['HTTP_HOST'] != _Domain) {
+    $msg = "Domain seems to be invalid, check config."; $error = true;
+  }
+
     if ($error == false) {
 
       $success = false;
