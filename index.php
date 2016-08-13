@@ -40,11 +40,9 @@ if (!is_numeric($USER_ID)) {
     <script src="js/bootstrap.min.js"></script>
     <script src="js/bootstrap-datetimepicker.js"></script>
     <script src="js/bootstrap-toggle.min.js"></script>
-
     <!-- Load d3.js and c3.js -->
     <script src="js/d3.min.js" charset="utf-8"></script>
     <script src="js/c3.min.js"></script>
-
   </head>
   <body>
 <?php

@@ -37,6 +37,9 @@ Requirements VPS/Dedicated:
   - curl & cron (Will be installed via install.sh)
   - Tested on Debian 7/8 should work fine with Ubuntu, could work also on other Distros but not tested yet
 
+Upgrading:
+ - If you want to Upgrade Ariane, take a look into our Wiki: https://github.com/Ne00n/Ariane-Monitoring/wiki/Upgrade
+
 Quick Setup:
 
 - Create a Database, add a User to the Database, Import the sql/ariane.sql file
