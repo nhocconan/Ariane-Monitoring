@@ -17,6 +17,9 @@ Server Overview:
 Network History
 ![alt tag](http://i.imgur.com/VBE16ig.jpg)
 
+Memory History
+![alt tag](http://i.imgur.com/xETKvA0.jpg)
+
 Triggers (We will adding more)
 ![alt tag](http://i.imgur.com/XAXBCP8.jpg)
 
