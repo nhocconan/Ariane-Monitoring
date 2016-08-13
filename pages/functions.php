@@ -5,6 +5,14 @@ include 'config.php';
 session_set_cookie_params(0,'/','.'._Domain,true,true);
 session_start();
 
+if (!isset($_SESSION['token'])) {
+  if (function_exists('mcrypt_create_iv')) {
+       $_SESSION['token'] = bin2hex(mcrypt_create_iv(32, MCRYPT_DEV_URANDOM));
+   } else {
+       $_SESSION['token'] = bin2hex(openssl_random_pseudo_bytes(32));
+   }
+}
+
 $database = new mysqli(_db_host, _db_login, _db_password, _db);
 
 if ($database->connect_error) { //Checks if the MySQL Connection works, if not it returns you a error msg and exits.

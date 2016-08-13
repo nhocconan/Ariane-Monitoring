@@ -4,49 +4,54 @@ $msg = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-if (isset($_POST['confirm'])) {
+  $success = true;
+  $token = $_POST['token'];
 
- $old_pw = $_POST['old_pw'];
- $pw = $_POST['new_pw'];
- $pw2 = $_POST['new_pw2'];
+  if ($token != $_SESSION['token']) {
+    $msg = "Token invalid."; $success = false;
+  }
 
- $success = true;
+  if (isset($_POST['confirm_password'])) {
 
- if (strlen($pw) < 10 ) {$msg = "Passwords to short."; $success = false;}
- if (strlen($pw) > 160 ) {$msg = "Passwords are to long."; $success = false;}
- if ($pw != $pw2) {$msg = "Passwords not equal."; $success = false;}
+   $old_pw = $_POST['old_pw'];
+   $pw = $_POST['new_pw'];
+   $pw2 = $_POST['new_pw2'];
 
- $stmt = $database->prepare("SELECT password FROM users WHERE id = ?");
- $stmt->bind_param('i', $USER_ID);
- $stmt->execute();
- $stmt->bind_result($password_db);
- $stmt->fetch();
- $stmt->close();
+   if (strlen($pw) < 10 ) {$msg = "Passwords to short."; $success = false;}
+   if (strlen($pw) > 160 ) {$msg = "Passwords are to long."; $success = false;}
+   if ($pw != $pw2) {$msg = "Passwords not equal."; $success = false;}
 
- if ($password_db == NULL) {
-   session_unset();
-   session_destroy();
-   header('Location: index.php');
- }
+   $stmt = $database->prepare("SELECT password FROM users WHERE id = ?");
+   $stmt->bind_param('i', $USER_ID);
+   $stmt->execute();
+   $stmt->bind_result($password_db);
+   $stmt->fetch();
+   $stmt->close();
 
- if ($success == true) {
-   if (password_verify($old_pw, $password_db)) {
-
-     $hash = password_hash($pw, PASSWORD_DEFAULT);
-
-     $stmt = $database->prepare("UPDATE users SET password = ?  WHERE id = ?");
-     $stmt->bind_param('si',$hash,$_SESSION['user_id']);
-     $stmt->execute();
-     $stmt->close();
-
-     $msg = "Password changed.";
-     $success = true;
-   } else {
-     $msg = "Old Password is incorrect.";
-     $success = false;
+   if ($password_db == NULL) {
+     session_unset();
+     session_destroy();
+     header('Location: index.php');
    }
- }
-}
+
+   if ($success == true) {
+     if (password_verify($old_pw, $password_db)) {
+
+       $hash = password_hash($pw, PASSWORD_DEFAULT);
+
+       $stmt = $database->prepare("UPDATE users SET password = ?  WHERE id = ?");
+       $stmt->bind_param('si',$hash,$_SESSION['user_id']);
+       $stmt->execute();
+       $stmt->close();
+
+       $msg = "Password changed.";
+       $success = true;
+     } else {
+       $msg = "Old Password is incorrect.";
+       $success = false;
+     }
+   }
+  }
 }
 
 ?>
@@ -85,9 +90,10 @@ if (isset($_POST['confirm'])) {
            <input type="password" class="form-control" placeholder="Repeat Password" name="new_pw2">
        </div>
    </div>
+   <input type="hidden" name="token" value="<?php echo escape($_SESSION['token']); ?>" />
    <div class="form-group">
        <div class="col-xs-offset-2 col-xs-10">
-           <button type="submit" name="confirm" class="btn btn-primary">Save</button>
+           <button type="submit" name="confirm_password" class="btn btn-primary">Save</button>
        </div>
    </div>
 </form>
