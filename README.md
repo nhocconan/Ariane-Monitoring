@@ -27,6 +27,15 @@ Well if you dont like the Theme, you can replace it with one from: https://boots
 
 We have already some Theme's included, Default Theme: Flatly
 
+Requirements Webserver:
+  - PHP 5.5 or higher, 7.0+ recommended
+  - MySQL Database
+
+Requirements VPS/Dedicated:
+    - curl & cron (Will be installed via install.sh)
+    - Tested on Debian 7/8 should work fine with Ubuntu, could work also on other Distros but not tested yet
+
+
 Quick Setup:
 
 - Create a Database, add a User to the Database, Import the sql/ariane.sql file
