@@ -27,6 +27,8 @@ Well if you dont like the Theme, you can replace it with one from: https://boots
 
 We have already some Theme's included, Default Theme: Flatly
 
+Wallpaper used: http://aquafugit.deviantart.com/art/Ubuntu-Grunge-165623955
+
 Requirements Webserver:
   - PHP 5.5 or higher, 7.0+ recommended
   - MySQL Database
@@ -45,8 +47,6 @@ Quick Setup:
 - Login with the Details from create_account.php
 - Delete create_account.php or add the exit() again.
 - Add the cron.php to your Crontab, like:  "* * * * * /usr/bin/php /var/www/ariane/cron.php"
-
-Wallpaper used: http://aquafugit.deviantart.com/art/Ubuntu-Grunge-165623955
 
 Quick Removal:
 
