@@ -32,9 +32,8 @@ Requirements Webserver:
   - MySQL Database
 
 Requirements VPS/Dedicated:
-    - curl & cron (Will be installed via install.sh)
-    - Tested on Debian 7/8 should work fine with Ubuntu, could work also on other Distros but not tested yet
-
+  - curl & cron (Will be installed via install.sh)
+  - Tested on Debian 7/8 should work fine with Ubuntu, could work also on other Distros but not tested yet
 
 Quick Setup:
 
