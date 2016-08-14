@@ -50,5 +50,5 @@
 ?>
  </tbody>
 </table>
-<center><p>Version: 0.1.95</p></center>
+<center><p>Version: 0.2.95</p></center>
 </div>

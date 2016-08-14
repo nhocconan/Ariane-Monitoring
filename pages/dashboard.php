@@ -100,7 +100,19 @@ if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); 
 
 
 <?= $title ?>
-<?php if (strpos($page, 'trigger') !== false) {
+<?php
+
+$stmt = $database->prepare("SELECT server_name  FROM servers WHERE id = ? LIMIT 1");
+$stmt->bind_param('i', $id);
+$stmt->execute();
+$stmt->bind_result($db_server_name);
+$stmt->fetch();
+$stmt->close();
+
+echo '<script>document.title = "Ariane - '.escape($db_server_name).'";</script>';
+
+
+ if (strpos($page, 'trigger') !== false) {
 
  ?>
 
