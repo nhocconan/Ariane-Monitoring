@@ -99,7 +99,7 @@ if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); 
    ?>
 
 
-<?= $title ?>
+<?php if (isset($title)) { echo $title; } ?>
 <?php
 
 $stmt = $database->prepare("SELECT server_name  FROM servers WHERE id = ? LIMIT 1");

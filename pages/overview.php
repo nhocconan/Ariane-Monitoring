@@ -1,3 +1,25 @@
+<?php
+
+if (startsWith($page,"dashboard?remove=")) {
+  $id = str_replace("dashboard?remove=", "", $page);
+  if(!preg_match("/^[0-9]+$/",$id)){ header('Location: index.php?page=dashboard'); }
+  if(!checkAccess($id,$USER_ID)) {  header('Location: index.php?page=dashboard'); }
+
+  $stmt = $database->prepare("DELETE FROM servers WHERE id = ?");
+  $stmt->bind_param('i', $id);
+  $stmt->execute();
+  $stmt->close();
+
+  $stmt = $database->prepare("DELETE FROM servers_data WHERE server_id = ?");
+  $stmt->bind_param('i', $id);
+  $stmt->execute();
+  $stmt->close();
+
+}
+
+
+ ?>
+
 <meta http-equiv="refresh" content="60">
 <div class="container base-box">
  <table class="table table-hover">
@@ -8,7 +30,7 @@
      <th>Memory</th>
      <th>HDD</th>
      <th>IP</th>
-     <th>Status</th>
+     <th span="2">Status</th>
    </tr>
  </thead>
  <tbody>
@@ -44,11 +66,12 @@
         } else {
           echo "<td>Okay</td>";
         }
+        echo '<td><a href="index.php?page=dashboard?remove='.escape($row['id']).'" '; ?> onclick="return confirm('Are you sure?');" <?php echo' class="btn btn-danger btn-xs"><i class="fa fa-remove" aria-hidden="true"></i></a>';
       echo "<tr>";
     }
 
 ?>
  </tbody>
 </table>
-<center><p>Version: 0.2.96</p></center>
+<center><p>Version: 0.3.97</p></center>
 </div>

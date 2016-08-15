@@ -63,6 +63,9 @@ if ($page=="login") {
  } elseif ($page == "dashboard" AND $_SESSION['login'] === 1 AND $USER_ID != "") {
     getNavbar($page);
     include 'pages/overview.php';
+  } elseif (startsWith($page,"dashboard?remove=") AND $_SESSION['login'] === 1 AND $USER_ID != "") {
+     getNavbar($page);
+     include 'pages/overview.php';
   } elseif ($page == "overview" AND $_SESSION['login'] === 1 AND $USER_ID != "") {
      getNavbar($page);
      include 'pages/overview_graph.php';
