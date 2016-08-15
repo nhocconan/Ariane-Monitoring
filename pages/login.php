@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' AND isset($_POST['confirm'])) {
         // Success!
         $_SESSION['login'] = 1;
         $_SESSION['user_id'] = $id;
-        header('Location: index.php?page=dashboard');
+        echo '<meta http-equiv="Refresh" content="2; url=index.php?page=dashboard">';
         } else {
           $error = true;
           $msg = "Incorrect Login.";
@@ -57,11 +57,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' AND isset($_POST['confirm'])) {
               <h3 class="panel-title">Please sign in</h3>
             </div>
             <div class="panel-body">
-            <?php if ($error == true) {
-              echo'<div class="alert alert-danger">
-                  <h4><center>Error!</center></h4>
-                  <p><center>'.$msg.'</center></p>
-                  </div>';  } ?>
+            <?php if ($error == true) { echo'<div class="alert alert-danger"><h4><center>Error!</center></h4><p><center>'.$msg.'</center></p></div>';  }
+            elseif ($error == false AND $success == true) { echo'<div class="alert alert-success"><h4><center>Success!</center></h4><p><center>Redirection in 2 seconds otherwise <a style="color:white;" href="index.php?page=dashboard">click here</a></center></p></div>'; } ?>
                 <form action="index.php" method="post">
                       <fieldset>
                   <div class="form-group">
