@@ -13,7 +13,7 @@
 
     //addLog(2,1,"Test");
 
-    $query = "SELECT id,type,msg,timestamp FROM logs WHERE user_id = ? ORDER by id LIMIT 50";
+    $query = "SELECT id,type,msg,timestamp FROM logs WHERE user_id = ? ORDER by id DESC LIMIT 50";
     $stmt = $database->prepare($query);
     $stmt->bind_param('i', $USER_ID);
     $stmt->execute();
