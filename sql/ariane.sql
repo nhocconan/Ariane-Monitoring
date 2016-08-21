@@ -43,6 +43,7 @@ CREATE TABLE `servers_data` (
   `memory_active` int(11) NOT NULL,
   `memory_inactive` int(11) NOT NULL,
   `cpu_load` double NOT NULL,
+  `cpu_load_sys` double NOT NULL DEFAULT '0',
   `cpu_steal` decimal(2,1) NOT NULL,
   `io_wait` decimal(5,1) NOT NULL,
   `server_tx` bigint(20) NOT NULL,
