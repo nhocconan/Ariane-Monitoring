@@ -2,15 +2,18 @@ var chart = c3.generate({
   bindto: '#chart-cpu',
   data: {
     columns: [
-        ['Usage', ...cpu_load],
+        ['User', ...cpu_load],
+        ['System', ...cpu_load_sys],
         ['Steal', ...cpu_steal],
         ['I/O Wait', ...io_wait]
     ],
     types: {
-        Usage: 'area',
+        User: 'area',
+        System: 'area',
         Steal :'area',
         'I/O Wait' : 'area'
     },
+    groups: [['User' , 'System']]
 },
 point: {
      show: false

@@ -4,7 +4,7 @@
 #
 # Version 0.2
 
-apt-get -y install curl && cron && sed && gawk
+apt-get -y install curl cron sed gawk
 mkdir /etc/ariane_agent/
 cd /etc/ariane_agent/
 useradd ariane_agent -r -d /etc/ariane_agent -s /bin/false

@@ -105,7 +105,7 @@ while ($row = $result->fetch_assoc()) {
             <?php
             foreach ($server_ids as $key => $row) {
                 $last_key = $key;
-                echo "['".$key."', ".implode(',',$row['cpu_load'])."],";
+                echo "['".$key."', ".implode(',',($row['cpu_load']+$row['cpu_load_sys']))."],";
             }
              ?>
         ],

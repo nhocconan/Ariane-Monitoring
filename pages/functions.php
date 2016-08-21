@@ -77,7 +77,7 @@ function generateBacon($server_id,$timeframe,$start_in = 0,$end_in = 0) {
         $steps = 5;
   }
 
-  $query = "SELECT memory_total,memory_free,memory_cached,memory_buffer,cpu_load,server_rx_diff,server_tx_diff,memory_active,memory_inactive,hdd_usage,hdd_total,cpu_steal,io_wait,server_timestamp FROM servers_data WHERE server_id = ? AND server_timestamp >= ? AND server_timestamp <= ? ORDER by id";
+  $query = "SELECT memory_total,memory_free,memory_cached,memory_buffer,cpu_load,cpu_load_sys,server_rx_diff,server_tx_diff,memory_active,memory_inactive,hdd_usage,hdd_total,cpu_steal,io_wait,server_timestamp FROM servers_data WHERE server_id = ? AND server_timestamp >= ? AND server_timestamp <= ? ORDER by id";
   $stmt = $database->prepare($query);
   $stmt->bind_param('iii', $server_id,$start,$end);
   $stmt->execute();
@@ -97,6 +97,7 @@ function generateBacon($server_id,$timeframe,$start_in = 0,$end_in = 0) {
       $server_data['memory_free_total'][] = escape(round(($row['memory_free'] + $row['memory_buffer'] + $row['memory_cached']) / 1024,0));
 
       $server_data['cpu_load'][] = escape(round($row['cpu_load'],2));
+      $server_data['cpu_load_sys'][] = escape(round($row['cpu_load_sys'],2));
       $server_data['cpu_steal'][] = escape(round($row['cpu_steal'],2));
 
       $server_data['server_rx_diff'][] = escape(round($row['server_rx_diff'] / 1048576 / 60,2));

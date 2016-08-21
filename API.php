@@ -19,17 +19,25 @@ $cpu_usage_sys = $_POST['CPU_USAGE_SYS']; //System Usage
 $cpu_steal = $_POST['CPU_STEAL'];
 $io_wait = $_POST['IO_WAIT'];
 
-//Filter values
-$cpu_steal = explode("\n", $cpu_steal); $cpu_steal = $cpu_steal[1];
+//Filter values thanks Ubuntu
+if(strstr($cpu_steal, "\n")) {
+  $cpu_steal = explode("\n", $cpu_steal); $cpu_steal = $cpu_steal[1];
+};
 $cpu_steal = str_replace(' st', '', $cpu_steal);
 $cpu_steal = str_replace('%st', '', $cpu_steal);
-$io_wait = explode("\n", $io_wait); $io_wait = $io_wait[1];
+if(strstr($io_wait, "\n")) {
+  $io_wait = explode("\n", $io_wait); $io_wait = $io_wait[1];
+};
 $io_wait = str_replace(' wa', '', $io_wait);
 $io_wait = str_replace('%wa', '', $io_wait);
-$cpu_usage = explode("\n", $cpu_usage); $cpu_usage = $cpu_usage[1];
+if(strstr($cpu_usage, "\n")) {
+  $cpu_usage = explode("\n", $cpu_usage); $cpu_usage = $cpu_usage[1];
+};
 $cpu_usage = str_replace(' us', '', $cpu_usage);
 $cpu_usage = str_replace('%us', '', $cpu_usage);
-$cpu_usage_sys = explode("\n", $cpu_usage_sys); $cpu_usage_sys = $cpu_usage_sys[1];
+if(strstr($cpu_usage_sys, "\n")) {
+  $cpu_usage_sys = explode("\n", $cpu_usage_sys); $cpu_usage_sys = $cpu_usage_sys[1];
+};
 $cpu_usage_sys = str_replace(' sy', '', $cpu_usage_sys);
 $cpu_usage_sys = str_replace('%sy', '', $cpu_usage_sys);
 
@@ -76,7 +84,8 @@ if(!preg_match("/^[A-Za-z0-9 ()@.-]+$/",$cpu)){ addLog($user_id,1,"CPU Name cont
 
 if(!is_numeric($cpu_cores)){ addLog($user_id,1,"CPU Cores contains invalid Letters!"); die("CPU contains invalid Letters!");}
 if(!is_numeric($cpu_mhz)){ addLog($user_id,1,"CPU Mhz contains invalid Letters!"); die("CPU contains invalid Letters!");}
-if(!is_numeric($cpu_usage)){ addLog($user_id,1,"CPU Usage contains invalid Letters!"); die("CPU contains invalid Letters!");}
+if(!is_numeric($cpu_usage)){ addLog($user_id,1,"CPU User Usage contains invalid Letters!"); die("CPU contains invalid Letters!");}
+if(!is_numeric($cpu_usage_sys)){ addLog($user_id,1,"CPU Sys Usage contains invalid Letters!"); die("CPU contains invalid Letters!");}
 if(!is_numeric($cpu_steal)){ addLog($user_id,1,"CPU Steal contains invalid Letters!"); die("CPU contains invalid Letters!");}
 if(!is_numeric($io_wait)){ addLog($user_id,1,"I/O Wait contains invalid Letters!"); die("IO contains invalid Letters!");}
 
@@ -130,8 +139,8 @@ if ($success == false) {
 $tx_diff = $tx - $db_server_tx;
 $rx_diff = $rx - $db_server_rx;
 
-$stmt = $database->prepare("INSERT INTO servers_data(server_id,memory_total,memory_free,memory_cached,memory_buffer,server_tx,server_rx,cpu_load,server_timestamp,server_tx_diff,server_rx_diff,memory_active,memory_inactive,hdd_usage,hdd_total,cpu_steal,io_wait) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,?, ?, ?)");
-$stmt->bind_param('iiiiiiididdiiiidd', $server_id,$memory_total,$memory_free,$memory_cached,$memory_buffer,$tx,$rx,$cpu_usage,$server_time,$tx_diff,$rx_diff,$memory_active,$memory_inactive,$hdd_usage,$hdd_total,$cpu_steal,$io_wait);
+$stmt = $database->prepare("INSERT INTO servers_data(server_id,memory_total,memory_free,memory_cached,memory_buffer,server_tx,server_rx,cpu_load,cpu_load_sys,server_timestamp,server_tx_diff,server_rx_diff,memory_active,memory_inactive,hdd_usage,hdd_total,cpu_steal,io_wait) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,?, ?, ?, ?)");
+$stmt->bind_param('iiiiiiiddiddiiiidd', $server_id,$memory_total,$memory_free,$memory_cached,$memory_buffer,$tx,$rx,$cpu_usage,$cpu_usage_sys,$server_time,$tx_diff,$rx_diff,$memory_active,$memory_inactive,$hdd_usage,$hdd_total,$cpu_steal,$io_wait);
 if (!$stmt->execute()) { $success = false; }
 $stmt->close();
 
@@ -153,7 +162,7 @@ if ($success == false) {
 }
 
 //CPU alert
-if ($cpu_usage >= $db_cpu AND $db_cpu != NULL AND $db_cpu_send <= time()) {
+if ( ($cpu_usage + $cpu_usage_sys) >= $db_cpu AND $db_cpu != NULL AND $db_cpu_send <= time()) {
 
     $msg = "Alert: The CPU Load of the Server ". escape($server_name) . " has reached " . $cpu_usage . "%";
     $headers = "From: "._email_sender."\r\n";

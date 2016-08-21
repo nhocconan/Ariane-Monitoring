@@ -44,16 +44,16 @@ if (startsWith($page,"dashboard?remove=")) {
     $result = $stmt->get_result();
     while ($row = $result->fetch_assoc()) {
 
-      $stmt = $database->prepare("SELECT cpu_load, memory_free, memory_buffer, memory_cached, memory_total, hdd_total, hdd_usage   FROM servers_data WHERE server_id = ? ORDER by server_timestamp DESC LIMIT 1");
+      $stmt = $database->prepare("SELECT cpu_load, cpu_load_sys, memory_free, memory_buffer, memory_cached, memory_total, hdd_total, hdd_usage FROM servers_data WHERE server_id = ? ORDER by server_timestamp DESC LIMIT 1");
       $stmt->bind_param('i', $row['id']);
       $stmt->execute();
-      $stmt->bind_result($cpu_load,$memory_free,$memory_buffer,$memory_cached,$memory_total,$hdd_total,$hdd_usage);
+      $stmt->bind_result($cpu_load,$cpu_load_sys,$memory_free,$memory_buffer,$memory_cached,$memory_total,$hdd_total,$hdd_usage);
       $stmt->fetch();
       $stmt->close();
 
       echo "<tr class='clickable-row' data-href='index.php?page=dashboard?server=".escape($row['id'])."'>";
         echo "<td>".escape($row['server_name'])."</td>";
-        echo "<td>".escape($cpu_load)."%</td>";
+        echo "<td>".escape($cpu_load + $cpu_load_sys)."%</td>";
         echo "<td>".escape(round(($memory_free + $memory_buffer + $memory_cached) / 1024,0)."/".round($memory_total / 1024,0))."MB</td>";
         echo "<td>".escape(round(($hdd_usage) / 1024 / 1024 / 1024,0)."/".round($hdd_total / 1024 / 1024 / 1024,0))."GB</td>";
         if (empty($row['server_ip'])) {
@@ -73,5 +73,5 @@ if (startsWith($page,"dashboard?remove=")) {
 ?>
  </tbody>
 </table>
-<center><p>Version: 1.4.103</p></center>
+<center><p>Version: 1.4.105</p></center>
 </div>

@@ -343,6 +343,7 @@ if (strpos($page, 'network') !== false) {
    <script>
      var server_timestamp = [<?php echo implode(',',$Bacon['server_timestamp']); ?>];
      var cpu_load = <?php echo json_encode($Bacon['cpu_load']); ?>;
+     var cpu_load_sys = <?php echo json_encode($Bacon['cpu_load_sys']); ?>;
      var cpu_steal = <?php echo json_encode($Bacon['cpu_steal']); ?>;
      var io_wait = <?php echo json_encode($Bacon['io_wait']); ?>;
    </script>
@@ -470,6 +471,7 @@ if (isset($_POST['timeframe'])) {
    var memory_active = <?php echo json_encode($Bacon['memory_active']); ?>;
    var memory_inactive = <?php echo json_encode($Bacon['memory_inactive']); ?>;
    var cpu_load = <?php echo json_encode($Bacon['cpu_load']); ?>;
+   var cpu_load_sys = <?php echo json_encode($Bacon['cpu_load_sys']); ?>;
    var cpu_steal = <?php echo json_encode($Bacon['cpu_steal']); ?>;
    var io_wait = <?php echo json_encode($Bacon['io_wait']); ?>;
    var hdd_usage = <?php echo json_encode($Bacon['hdd_usage']); ?>;
