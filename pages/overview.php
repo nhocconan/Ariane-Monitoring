@@ -73,5 +73,5 @@ if (startsWith($page,"dashboard?remove=")) {
 ?>
  </tbody>
 </table>
-<center><p>Version: 1.4.105</p></center>
+<center><p>Version: 1.4.106</p></center>
 </div>

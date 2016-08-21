@@ -41,6 +41,14 @@ if(strstr($cpu_usage_sys, "\n")) {
 $cpu_usage_sys = str_replace(' sy', '', $cpu_usage_sys);
 $cpu_usage_sys = str_replace('%sy', '', $cpu_usage_sys);
 
+if(strstr($cpu, "\n")) {
+  $cpu = explode("\n", $cpu); $cpu = $cpu[0];
+};
+
+if(strstr($cpu_mhz, "\n")) {
+  $cpu_mhz = explode("\n", $cpu_mhz); $cpu_mhz = $cpu_mhz[0];
+};
+
 $memory_total = $_POST['RAM_TOTAL'];
 $memory_free = $_POST['RAM_FREE'];
 $memory_cached = $_POST['RAM_CACHED'];
