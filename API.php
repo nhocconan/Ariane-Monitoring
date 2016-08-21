@@ -14,13 +14,24 @@ $kernel = $_POST['KERNEL'];
 $cpu = $_POST['CPU'];
 $cpu_cores = $_POST['CPU_CORES'];
 $cpu_mhz = $_POST['CPU_MHZ'];
-$cpu_usage = $_POST['CPU_USAGE'];
+$cpu_usage = $_POST['CPU_USAGE']; //User Usage
+$cpu_usage_sys = $_POST['CPU_USAGE_SYS']; //System Usage
 $cpu_steal = $_POST['CPU_STEAL'];
 $io_wait = $_POST['IO_WAIT'];
 
-$cpu_steal = str_replace(' ', '', $cpu_steal);
-$io_wait = str_replace(' ', '', $io_wait);
-$io_wait = str_replace('wa', '', $io_wait);
+//Filter values
+$cpu_steal = explode("\n", $cpu_steal); $cpu_steal = $cpu_steal[1];
+$cpu_steal = str_replace(' st', '', $cpu_steal);
+$cpu_steal = str_replace('%st', '', $cpu_steal);
+$io_wait = explode("\n", $io_wait); $io_wait = $io_wait[1];
+$io_wait = str_replace(' wa', '', $io_wait);
+$io_wait = str_replace('%wa', '', $io_wait);
+$cpu_usage = explode("\n", $cpu_usage); $cpu_usage = $cpu_usage[1];
+$cpu_usage = str_replace(' us', '', $cpu_usage);
+$cpu_usage = str_replace('%us', '', $cpu_usage);
+$cpu_usage_sys = explode("\n", $cpu_usage_sys); $cpu_usage_sys = $cpu_usage_sys[1];
+$cpu_usage_sys = str_replace(' sy', '', $cpu_usage_sys);
+$cpu_usage_sys = str_replace('%sy', '', $cpu_usage_sys);
 
 $memory_total = $_POST['RAM_TOTAL'];
 $memory_free = $_POST['RAM_FREE'];
@@ -28,6 +39,9 @@ $memory_cached = $_POST['RAM_CACHED'];
 $memory_buffer = $_POST['RAM_BUFFER'];
 $memory_active = $_POST['RAM_ACTIVE'];
 $memory_inactive = $_POST['RAM_INACTIVE'];
+
+//Filter Values thanks Ubuntu 12.04
+$memory_cached = preg_replace( "/\r|\n/", "", $memory_cached );
 
 $hdd_usage = $_POST['HDD_USAGE'];
 $hdd_total = $_POST['HDD_TOTAL'];
@@ -68,7 +82,7 @@ if(!is_numeric($io_wait)){ addLog($user_id,1,"I/O Wait contains invalid Letters!
 
 if(!is_numeric($memory_total)){ addLog($user_id,1,"Memory Total contains invalid Letters!"); die("Memory contains invalid Letters!");}
 if(!is_numeric($memory_free)){ addLog($user_id,1,"Memory Free contains invalid Letters!"); die("Memory contains invalid Letters!");}
-if(!is_numeric($memory_cached)){ addLog($user_id,1,"Memory Cached invalid Letters!"); die("Memory contains invalid Letters!");}
+if(!is_numeric($memory_cached)){ addLog($user_id,1,"Memory Cached contains invalid Letters!"); die("Memory contains invalid Letters!");}
 if(!is_numeric($memory_buffer)){ addLog($user_id,1,"Memory Buffer contains invalid Letters!"); die("Memory contains invalid Letters!");}
 if(!is_numeric($memory_active)){ addLog($user_id,1,"Memory Active contains invalid Letters!"); die("Memory contains invalid Letters!");}
 if(!is_numeric($memory_inactive)){ addLog($user_id,1,"Memory Inactive contains invalid Letters!"); die("Memory contains invalid Letters!");}
