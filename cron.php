@@ -11,7 +11,7 @@ if ($result = $database->query($query)) {
     /* fetch object array */
     while ($row = $result->fetch_row()) {
       $time = time();
-      $delete = strtotime('+30 day', $row[1]);
+      $delete = strtotime('+'._cron_data_cleanup.' day', $row[1]);
       if ($time > $delete) {
         $stmt = $database->prepare("DELETE FROM servers_data WHERE id = ?");
         $stmt->bind_param('i', $row[0]);
@@ -31,7 +31,7 @@ if ($result = $database->query($query)) {
     /* fetch object array */
     while ($row = $result->fetch_row()) {
       $time = time();
-      $delete = strtotime('+7 day', $row[1]);
+      $delete = strtotime('+'._cron_log_cleanup.' day', $row[1]);
       if ($time > $delete) {
         $stmt = $database->prepare("DELETE FROM logs WHERE id = ?");
         $stmt->bind_param('i', $row[0]);

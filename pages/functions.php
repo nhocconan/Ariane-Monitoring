@@ -20,6 +20,8 @@ if ($database->connect_error) { //Checks if the MySQL Connection works, if not i
    exit;
 }
 
+checkConfig();
+
 if (version_compare(PHP_VERSION, '5.5.1') < 0) { //PHP Version check
     die("This Script needs at least PHP Version 5.5.0");
 }
@@ -186,6 +188,11 @@ function isSecure() {
   return
     (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
     || $_SERVER['SERVER_PORT'] == 443;
+}
+
+function checkConfig() {
+  if (!defined('_cron_data_cleanup')) { die('Missing var _cron_data_cleanup in config.php, update your config.php');}
+  if (!defined('_cron_log_cleanup')) { die('Missing var _cron_log_cleanup in config.php, update your config.php');}
 }
 
 function checkAccess($server_id,$user_id) {
