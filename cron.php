@@ -3,7 +3,7 @@ include 'pages/functions.php';
 
 if (php_sapi_name() == "cli") { //Make sure you can only run it, with "php cron.php" localy
 
-//Cleanup Data which is older then 4 Days
+//Cleanup Data which is older then 30 Days
 $query = "SELECT id,server_timestamp FROM servers_data ORDER by id";
 
 if ($result = $database->query($query)) {
@@ -14,6 +14,26 @@ if ($result = $database->query($query)) {
       $delete = strtotime('+30 day', $row[1]);
       if ($time > $delete) {
         $stmt = $database->prepare("DELETE FROM servers_data WHERE id = ?");
+        $stmt->bind_param('i', $row[0]);
+        $stmt->execute();
+        $stmt->close();
+      }
+    }
+    /* free result set */
+    $result->close();
+}
+
+//Cleanup Log entries which are older then 7 Days
+$query = "SELECT id,timestamp FROM logs ORDER by id";
+
+if ($result = $database->query($query)) {
+
+    /* fetch object array */
+    while ($row = $result->fetch_row()) {
+      $time = time();
+      $delete = strtotime('+7 day', $row[1]);
+      if ($time > $delete) {
+        $stmt = $database->prepare("DELETE FROM logs WHERE id = ?");
         $stmt->bind_param('i', $row[0]);
         $stmt->execute();
         $stmt->close();
@@ -65,7 +85,7 @@ if ($result = $database->query($query)) {
 
 
 
-echo "ok";
+echo "Ok";
 
 }
 
