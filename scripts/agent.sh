@@ -2,15 +2,17 @@
 #
 # Ariane Agent, All data belongs to us! Bro.
 #
-# Version 0.2
+# Version 0.3
 
 KEY='INSERT_KEY_HERE';
-VERSION='0.2';
+VERSION='0.3';
 
-IP="$(/sbin/ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}')";
+IP=$(ip route get 8.8.8.8 | cut -d' ' -f8); IFS='\n' read -r -a array <<< "$IP"; IP=${array[0]};
+NIC=$(ip route get 8.8.8.8 | cut -d' ' -f5); IFS='\n' read -r -a array <<< "$NIC"; NIC=${array[0]};
 if [ "$IP" == "" ];  then
-  IP="$(/sbin/ifconfig venet0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}')";
+  IP="$(/sbin/ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}')";
 fi
+
 UPTIME=$(cat /proc/uptime | cut -d ' ' -f1);
 KERNEL=$(uname -r);
 CPU=$(cat /proc/cpuinfo | grep 'model name' | cut -d: -f 2);
@@ -34,13 +36,13 @@ HDD_USAGE=$(df -P -B 1 | grep '^/' | awk '{ print $3 }' | sed -e :a -e '$!N;s/\n
 HDD_TOTAL=$((${HDD_TOTAL}));
 HDD_USAGE=$((${HDD_USAGE}));
 
-RX="$(cat /sys/class/net/eth0/statistics/rx_bytes)";
+RX="$(cat /sys/class/net/${NIC}/statistics/rx_bytes)"
+TX="$(cat /sys/class/net/${NIC}/statistics/tx_bytes)";
 if [ "$RX" == "" ];  then
-  RX="$(cat /sys/class/net/venet0/statistics/rx_bytes)";
+  RX="$(cat /sys/class/net/eth0/statistics/rx_bytes)";
 fi
-TX="$(cat /sys/class/net/eth0/statistics/tx_bytes)";
 if [ "$TX" == "" ];  then
-  TX="$(cat /sys/class/net/venet0/statistics/tx_bytes)";
+  TX="$(cat /sys/class/net/eth0/statistics/tx_bytes)";
 fi
 
 curl -d "KEY=${KEY}&IP=${IP}&UPTIME=${UPTIME}&KERNEL=${KERNEL}&CPU=${CPU}&CPU_CORES=${CPU_CORES}&CPU_MHZ=${CPU_MHZ}&CPU_USAGE=${CPU_USAGE}&CPU_USAGE_SYS=${CPU_USAGE_SYS}&RAM_TOTAL=${RAM_TOTAL}&RAM_FREE=${RAM_FREE}&RAM_CACHED=${RAM_CACHED}
