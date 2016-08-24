@@ -5,10 +5,17 @@
 # Version 0.3
 
 KEY='INSERT_KEY_HERE';
-VERSION='0.3';
+VERSION='0.4';
 
-IP=$(ip route get 8.8.8.8 | cut -d' ' -f8); IFS='\n' read -r -a array <<< "$IP"; IP=${array[0]};
-NIC=$(ip route get 8.8.8.8 | cut -d' ' -f5); IFS='\n' read -r -a array <<< "$NIC"; NIC=${array[0]};
+if [[ $(ip route get 8.8.8.8) == *"via"* ]] #If KVM/Dedi
+then
+  IP=$(ip route get 8.8.8.8 | cut -d' ' -f8); IFS='\n' read -r -a array <<< "$IP"; IP=${array[0]};
+  NIC=$(ip route get 8.8.8.8 | cut -d' ' -f5); IFS=$'\n' read -r -a array <<< "$NIC"; NIC=${array[0]};
+else #OVZ
+ IP=$(ip route get 8.8.8.8 | cut -d' ' -f6); IFS='\n' read -r -a array <<< "$IP"; IP=${array[0]};
+ NIC=$(ip route get 8.8.8.8 | cut -d' ' -f3); IFS=$'\n' read -r -a array <<< "$NIC"; NIC=${array[0]};
+fi
+
 if [ "$IP" == "" ];  then
   IP="$(/sbin/ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}')";
 fi
